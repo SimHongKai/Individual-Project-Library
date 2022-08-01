@@ -801,3 +801,11 @@ a:focus {
 /*# sourceMappingURL=style.css.map */
 
 /* Sim Hong Kai*/
+/* unvisited link */
+a {
+  color: inherit;
+}
+/* mouse over link */
+a:hover {
+  color: #8ebf42;
+}

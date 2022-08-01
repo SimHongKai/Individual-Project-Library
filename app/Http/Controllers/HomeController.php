@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Book;
 
 class HomeController extends Controller
 {
@@ -17,12 +18,17 @@ class HomeController extends Controller
     // }
 
     /**
-     * Show the application dashboard.
+     * Show the application home screen.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        return view('home');
+        $popularBooks = Book::all();
+        $newBooks = Book::all();
+        $recentBooks = Book::all();
+        return view('home')->with(compact('popularBooks', 'newBooks', 'recentBooks'));
     }
+
+
 }

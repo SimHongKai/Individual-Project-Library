@@ -14,6 +14,16 @@
 
           	<div class="collapse navbar-collapse" id="navbarSupportedContent">
             	<ul class="navbar-nav">
+					<!-- Admin Bar Link -->
+					@guest
+					@else
+					@if (Auth::user()->privilige == 1)
+					<li class="nav-item">
+						<a class="nav-link pl-lg-0" href="{{route('admin_panel')}}">Admin</a>
+					</li>
+					@endif
+					@endguest
+					<!-- Regular Nav Bar -->
               		<li class="nav-item">
                 		<a class="nav-link pl-lg-0" href="{{route('home')}}">Home</a>
               		</li>

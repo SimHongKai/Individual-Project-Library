@@ -7,7 +7,7 @@
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- Site Metas -->
-    <link rel="icon" href="images/favicon.png" type="image/gif" />
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/gif" />
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -17,14 +17,14 @@
     <title>Home</title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
     <!-- font awesome style -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" />
 
     <!-- Custom styles -->
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
     <!-- responsive style -->
-    <link href="css/responsive.css" rel="stylesheet" />
+    <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" />
 </head>
 
 <body>
@@ -42,20 +42,50 @@
                         @endif
                         {{ __('You are logged in!') }}
                     </div>
-                    <!-- Popular Books -->
-                    <!-- New Books -->
-                    <!-- Recently Borrowed Books -->
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Popular Books section -->
+    <section class="catagory_section layout_padding">
+        <div class="catagory_container">
+            <div class="container ">
+                <div class="heading_container heading_center">
+                    <h2>
+                        Popular Books
+                    </h2>
+                </div>
+                <div class="row">
+                    @foreach ($popularBooks as $book)
+                        <div class="col-sm-6 col-md-4 ">
+                            <a href="{{route('home')}}">
+                                <div class="box ">
+                                <div class="img-box">
+                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}" alt="{{ $book->cover_img }}">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        {{ $book->title }}
+                                    </h5>
+                                </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Popular section -->
+    <!--New, Recently Borrowed -->
+
     @include('footer')
 
     <!-- jQery -->
-    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <!-- bootstrap js -->
-    <script src="js/bootstrap.js"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
 
 </body>
 

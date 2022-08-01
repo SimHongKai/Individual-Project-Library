@@ -19,6 +19,7 @@ class Book extends Model
         'publication_date',
         'language',
         'price',
+        'total_qty',
         'available_qty',
         'access_level'
     ];

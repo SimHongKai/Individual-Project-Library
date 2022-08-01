@@ -12,7 +12,7 @@ class Configuration extends Model
     protected $fillable = [
         'no_of_borrows',
         'borrow_duration',
-        'late_fees',
-        'missing_fees'
+        'late_fees_base',
+        'late_fees_increment'
     ];
 }
