@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
-    protected $primarykey = 'ISBN';
+    protected $primaryKey = 'ISBN';
     protected $table = 'books';
     protected $fillable = [
         'title',

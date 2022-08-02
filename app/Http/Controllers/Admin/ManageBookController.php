@@ -16,11 +16,31 @@ class ManageBookController extends Controller
     public function index()
     {
         $books = Book::paginate(2);
-        return view('admin.books')->with(compact('books'));
+        return view('admin.catalog.books')->with(compact('books'));
     }
 
+    /**
+     * Return the view for Admin to view Book Details
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function bookDetailsView(Request $request){
+        if ($request != null){
+            $book = Book::find($request->ISBN);
+            return view('admin.catalog.bookDetails')->with('book', $book);
+        }
+        else{
+            return view('home');
+        }
+    }
+
+    /**
+     * Return the view for Admin to Add Books
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function addBooksView(){
-        return view('admin.addBooks');
+        return view('admin.catalog.addBooks');
     }
 
     /**
@@ -51,7 +71,6 @@ class ManageBookController extends Controller
             $image = $request->file('cover_img');
             $imageFileType = strtolower(pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION));
             $image_name = $request->ISBN. '.' .$imageFileType;
-            //$image->getClientOriginalName();
 
             // move image onto server folder for future use 
             $path = public_path().'/images/book_covers';
@@ -81,6 +100,5 @@ class ManageBookController extends Controller
         else{
             return redirect('add_book')->with('fail','Fail to Update Stock');
         }
-        
     }
 }

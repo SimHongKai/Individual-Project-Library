@@ -83,14 +83,14 @@
                         </a>
                     </div>
                     <div class="col-sm-6 col-md-4 ">
-                        <a href="{{ route('home') }}">
+                        <a href="{{ route('admin_borrow_records') }}">
                             <div class="box ">
                             <div class="img-box">
-                                <img src="images/cat4.png" alt="">
+                                <img src="{{ asset('images/icons/record.png')}}" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
-                                    Missing
+                                    Records
                                 </h5>
                             </div>
                             </div>

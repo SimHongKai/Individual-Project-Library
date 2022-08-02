@@ -706,5 +706,28 @@ a:focus {
   }
 }
 
-
 // end footer section
+
+// Start history Nav Bar section
+.history_navbar {
+  display:table;
+  border-collapse:collapse;
+  border-radius:.25em;
+  box-shadow:#d0d0d0 0px 0px 0px 1px;
+  
+  li{
+      display:table-cell;
+      box-sizing:border-box;
+      border-left:#e0e0e0 1px solid;
+      border-right:#e0e0e0 1px solid;
+      &:first-child{
+        border-left:0;
+        & > a{ border-top-left-radius: .25em; border-bottom-left-radius: .25em; }
+      }
+      &:last-child{
+        border-right:0;
+        & > a{ border-top-right-radius: .25em; border-bottom-right-radius: .25em; }
+      }
+  }
+}
+// End History Nav Bar section

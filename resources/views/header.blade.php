@@ -25,16 +25,16 @@
 					@endguest
 					<!-- Regular Nav Bar -->
               		<li class="nav-item">
-                		<a class="nav-link pl-lg-0" href="{{route('home')}}">Home</a>
+                		<a class="nav-link" href="{{ route('home') }}">Home</a>
               		</li>
               		<li class="nav-item">
-                		<a class="nav-link" href="{{route('home')}}">Books</a>
+                		<a class="nav-link" href="{{ route('catalog') }}">Books</a>
               		</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('home')}}">Shop</a>
+						<a class="nav-link" href="{{ route('home') }}">Shop</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('home')}}">Leaderboard</a>
+						<a class="nav-link" href="{{ route('home') }}">Leaderboard</a>
 					</li>
 					<!-- Right Side Of Navbar -->
 					<!-- Authentication Links -->

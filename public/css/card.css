@@ -1,26 +1,7 @@
 /*Display Stock Tables*/
-.cardStock {
+.card-book {
    display:inline-block;
    width:100%;
-   max-width:850px;
-   margin-top: 20px;
-   margin-bottom: 20px;
-}
-
-.card-stock-details{
-   display:inline-block;
-   background-color: rgb(247, 240, 199);
-   width:100%;
-   max-width:1000px;
-   margin-top: 20px;
-   margin-bottom: 20px;
-}
-
-.card-book-details{
-   display:inline-block;
-   background-color: #fff4a3;
-   width:100%;
-   max-width:1000px;
    margin-top: 20px;
    margin-bottom: 20px;
 }
@@ -29,21 +10,44 @@
    display:inline-block;
    margin-right:-4px;
    vertical-align:top;
-   width:30%;
+   width:20%;
    text-align:left;
 }
+
+.card-img-left {
+   max-width:80%;
+   max-height:auto;
+}
+
 .innerRight {
    display:inline-block;
    vertical-align:top;
-   width:70%;
+   width:80%;
    text-align:left;
-   padding:10px;
+   padding:5px;
 }
 
-.card-text-stock{
+.card-text-title{
    display: inline-block;
-   font-size: 22px;
+   font-size: 24px;
    font-weight: bold;
+}
+
+.card-text-title-content{
+   display: inline-block;
+   font-size: 24px;
+   font-weight: bold;
+}
+
+.card-text-detail{
+   display: inline-block;
+   font-size: 14px;
+   font-weight: bold;
+}
+
+.card-text-detail-content{
+   display: inline-block;
+   font-size: 14px;
 }
 
 .card-text-nostock{
@@ -51,25 +55,4 @@
    color: red;
    font-size: 22px;
    font-weight: bold;
-}
-
-.card-text-details{
-   color: #4c4a37; 
-   font-family: 'Source Sans Pro', sans-serif; 
-   font-size: 22px;
-   font-weight: bold;
-}
-
-.card-text-nostock-details{
-   color: red; 
-   font-family: 'Source Sans Pro', sans-serif; 
-   font-size: 22px;
-   font-weight: bold;
-}
-
-.card-title-stock {
-   color: #7c795d; 
-   font-family: 'Trocchi', serif; 
-   font-size: 26px; 
-   font-weight: bolder; 
 }
