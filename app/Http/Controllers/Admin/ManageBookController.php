@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Material;
 
 class ManageBookController extends Controller
 {
@@ -25,9 +26,10 @@ class ManageBookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function bookDetailsView(Request $request){
-        if ($request != null){
+        if ($request->ISBN != null){
             $book = Book::find($request->ISBN);
-            return view('admin.catalog.bookDetails')->with('book', $book);
+            $materials = Material::where('ISBN', $request->ISBN)->get();
+            return view('admin.catalog.bookDetails')->with(compact('book', 'materials'));
         }
         else{
             return view('home');
@@ -39,8 +41,8 @@ class ManageBookController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function addBooksView(){
-        return view('admin.catalog.addBooks');
+    public function addBookView(){
+        return view('admin.catalog.addBook');
     }
 
     /**
@@ -52,7 +54,7 @@ class ManageBookController extends Controller
     {
         //validate book info before storing to database
         $request->validate([
-            'ISBN'=>'required|min:13|max:13|unique:books|regex:/[0-9]/',
+            'ISBN'=>'required|min:13|max:13|unique:books,ISBN|regex:/[0-9]/',
             'title'=>'required|max:255',
             'description' => 'required',
             'author' => 'required|max:255|regex:/[a-z]/|regex:/[A-Z]/',
@@ -95,10 +97,80 @@ class ManageBookController extends Controller
         $res = $book->save();
 
         if($res){
-            return redirect('add_book')->with('success', 'Stock has been updated Succesfully!');
+            return redirect()->route('manage_book_details', [ 'ISBN'=> $request->ISBN ])->with('Success', 'Book has been Added');
         }
         else{
-            return redirect('add_book')->with('fail','Fail to Update Stock');
+            return redirect()->back()->with('Fail','Failed to Add Book');
         }
+    }
+
+    /**
+     * Return the view for Admin to Edit Books
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function editBookView(Request $request){
+        if ($request->ISBN != null){
+            $book = Book::find($request->ISBN);
+            return view('admin.catalog.editBook')->with(compact('book'));
+        }
+        else{
+            return redirect()->back()->with("Error", "No such Book with specified ISBN found");
+        }
+    }
+
+    /**
+     * Edit Book Data
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function editBook(Request $request){
+        if ($request->ISBN != null){
+            $book = Book::find($request->ISBN);
+            return view('admin.catalog.editBook')->with(compact('book'));
+        }
+        else{
+            return redirect()->back()->with("Error", "Failed to Edit Book Details");
+        }
+    }
+
+    /**
+     * Delete specified Book
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteBook(Request $request){
+        // check ISBN passed
+        if ($request->ISBN != null){
+            $book = Book::find($request->ISBN);
+            // check if any material is being borrowed
+            if ($this->borrowedExists($request->ISBN)){
+                return redirect()->back()
+                ->with("Fail", "Failed to Delete. This Book still has Material that is being Borrowed!");
+            }
+
+            // delete
+            $res = $book->delete();
+            if ($res){
+                return redirect()->route('manage_books')->with('Success', 'Book has been deleted!');
+            }
+        }
+        // fail
+        return redirect()->back()->with("Fail", "Specified Book could not be deleted!");
+    }
+
+    /**
+     * Check if specified ISBN has borrowed material
+     * 
+     * @return boolean
+     */
+    public function borrowedExists($ISBN){
+        $count = Material::where('ISBN', $ISBN)
+                ->where('status', 2)
+                ->count();
+        if ($count){
+            return true;
+        }
+        return false;
     }
 }

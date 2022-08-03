@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BorrowHistory;
 use App\Models\Book;
+use DB;
 
 class BorrowHistoryController extends Controller
 {
@@ -16,7 +17,13 @@ class BorrowHistoryController extends Controller
      */
     public function index()
     {
-        $borrowHistory = BorrowHistory::paginate(2);
+        $borrowHistory = DB::table('borrowHistory')
+            ->select('users.username', 'books.ISBN', 'books.title', 'books.cover_img',
+            'borrowHistory.material_no', 'borrowHistory.borrowed_at', 'borrowHistory.due_at', 'borrowHistory.returned_at')
+            ->join('books', 'borrowHistory.ISBN', '=', 'books.ISBN')
+            ->join('users', 'borrowHistory.user_id', '=' ,'users.id')
+            ->paginate(2);
+
         return view('admin.record.borrowRecords')->with(compact('borrowHistory'));
     }
 

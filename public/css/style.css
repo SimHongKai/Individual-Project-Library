@@ -1020,7 +1020,7 @@ a:hover {
 }
 .book-action-bar li {
   display: table-cell;
-  width: inherit;
+  width: fit-content;
   margin: 0;
   padding: 0;
   text-align: center;
@@ -1045,7 +1045,7 @@ a:hover {
 .book-action-bar a {
   display: block;
   width: 100%;
-  padding: 1em 0;
+  padding: 5px 0;
   text-shadow: rgba(255, 255, 255, 0.5) 0px 1px 0px;
   background-color: #f0f0f0;
   background-image: -webkit-linear-gradient(#f8f8f8, #f0f0f0);
@@ -1103,6 +1103,30 @@ a:hover {
 
 .record-table p {
   display:inline;
+}
+
+.record-table-title{
+  text-align: center;
+  font: 14px Arial, Helvetica, sans-serif, bold;
+}
+
+.record-table img{
+  width: 120px;
+  min-width: 120px;
+  height: 160px;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 /* Material Table */

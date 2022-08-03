@@ -30,24 +30,33 @@
 
 <body>
     @include('header')
+    
+    <!-- Action Buttons -->
     <div class="container">
-
         <br/>
-        <div class="row justify-content-end">
-            <div class = 'stock_buttons'>
-                <a href="{{ route('add_book') }}" class="btn btn-info">Add Books</a>
+        <div class="row">
+            <div class="col-6 text-left"> 
+                <div class = 'btn'>
+                    <a href="{{ route('admin_panel') }}" class="btn btn-info">Return</a>
+                </div>
+            </div>
+            <div class="col-6 text-right">
+                <div class = 'btn'>
+                    <a href="{{ route('add_book') }}" class="btn btn-info">Add Book</a>
+                </div>
             </div>
         </div>
-        <br/>
+    </div>
 
+    <div class="container">
         <div class="row justify-content-center">
             @foreach ($books as $book)
                 <div class="card-book">
                     <div class="row">
-                        <div class="innerLeft">
+                        <div class="col-2">
                             <img class="card-img-left" src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}"/>
                         </div>
-                        <div class="innerRight">
+                        <div class="col-10">
                             <div class="horizontal-card-footer"><br>
                                 <a href = "{{ route('manage_book_details', [ 'ISBN'=> $book->ISBN ]) }}">
                                 <span class="card-text-title">Book Title:</span>

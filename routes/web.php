@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ManageBookController;
+use App\Http\Controllers\Admin\ManageMaterialController;
 use App\Http\Controllers\Admin\BorrowHistoryController;
 
 /*
@@ -44,9 +45,26 @@ Route::middleware('authAdmin')->group(function(){
     // Book Details View
     Route::get('/manage_book_details/{ISBN}', [ManageBookController::class, 'bookDetailsView'])->name('manage_book_details');
     // Add Book View
-    Route::get('/add_book', [ManageBookController::class, 'addBooksView'])->name('add_book');
+    Route::get('/add_book', [ManageBookController::class, 'addBookView'])->name('add_book');
     // Add Book Form Submit
     Route::post('/add_book', [ManageBookController::class, 'addBook'])->name('add_book_submit');
+    // Edit Book View
+    Route::get('/edit_book/{ISBN}', [ManageBookController::class, 'editBookView'])->name('edit_book');
+    // Edit Book Submit
+    Route::post('/edit_book', [ManageBookController::class, 'editBook'])->name('edit_book_submit');
+    // Remove Book
+    Route::get('/remove_book/{ISBN}', [ManageBookController::class, 'deleteBook'])->name('remove_book');
+
+    // Add Material View
+    Route::get('/add_material/{ISBN}', [ManageMaterialController::class, 'addMaterialView'])->name('add_material');
+    // Add Material Form Submit
+    Route::post('/add_material', [ManageMaterialController::class, 'addMaterial'])->name('add_material_submit');
+    // Edit Material View
+    Route::get('/edit_material/{material_no}', [ManageMaterialController::class, 'editMaterialView'])->name('edit_material');
+    // Edit Material Submit
+    Route::post('/edit_material', [ManageMaterialController::class, 'editMaterial'])->name('edit_material_submit');
+    // Remove Material
+    Route::get('/remove_material/{material_no}', [ManageMaterialController::class, 'deleteMaterial'])->name('remove_material');
 
     // Records Views
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');

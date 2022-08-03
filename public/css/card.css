@@ -2,8 +2,8 @@
 .card-book {
    display:inline-block;
    width:100%;
-   margin-top: 20px;
-   margin-bottom: 20px;
+   margin: 10px;
+   margin-left: 20px;
 }
 
 .innerLeft {
@@ -48,6 +48,17 @@
 .card-text-detail-content{
    display: inline-block;
    font-size: 14px;
+}
+
+.card-text-description{
+   display: inline-block;
+   font-size: 22px;
+   font-weight: bold;
+}
+
+.card-text-description-content{
+   display: inline-block;
+   font-size: 18px;
 }
 
 .card-text-nostock{

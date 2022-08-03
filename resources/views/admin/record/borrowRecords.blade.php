@@ -29,6 +29,17 @@
 
 <body>
     @include('header')
+    <div class="container">
+        <!-- Action Buttons -->
+        <div class="row">
+            <div class="col-6 text-left"> 
+                <div class = 'btn'>
+                    <a href="{{ route('admin_panel') }}" class="btn btn-info">Return</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- action bar -->
     <div class="container">
         <ul class="action_bar">
@@ -59,8 +70,18 @@
             </tr>
             @foreach($borrowHistory as $record) 
                 <tr id = "{{ $record->ISBN }}Row">
-                    <td>{{ $record -> ISBN }}</td>
-                    <td><img src="{{ asset('images/book_covers')}}/1234523876954.jpg" width="150px" height="200px"></td>
+                    <td class = "record-table-title">
+                        <a href = "{{ route('manage_book_details', [ 'ISBN'=> $record->ISBN ]) }}">
+                        {{ $record -> title }} <br>
+                        {{ $record -> ISBN }} <br>
+                        {{ sprintf('%08d', $record->material_no) }} <br>
+                        </a>
+                    </td>
+                    <td><img src="{{ asset('images/book_covers') }}/{{ $record -> cover_img }}"></td>
+                    <td>{{ $record -> username }}</td>
+                    <td>{{ $record -> borrowed_at }}</td>
+                    <td>{{ $record -> due_at }}</td>
+                    <td>{{ $record -> returned_at }}</td>
                 </tr>
             @endforeach
         </table>
