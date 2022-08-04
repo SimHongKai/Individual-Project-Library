@@ -7,6 +7,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ManageBookController;
 use App\Http\Controllers\Admin\ManageMaterialController;
+use App\Http\Controllers\Admin\BorrowBookController;
 use App\Http\Controllers\Admin\BorrowHistoryController;
 
 /*
@@ -65,6 +66,14 @@ Route::middleware('authAdmin')->group(function(){
     Route::post('/edit_material', [ManageMaterialController::class, 'editMaterial'])->name('edit_material_submit');
     // Remove Material
     Route::get('/remove_material/{material_no}', [ManageMaterialController::class, 'deleteMaterial'])->name('remove_material');
+
+    // Borrow Book Form
+    Route::get('/borrow_book', [BorrowBookController::class, 'borrowBookView'])->name('borrow_book');
+    // Borrow Book Submit
+    Route::post('/borrow_book', [BorrowBookController::class, 'borrowBook'])->name('borrow_book_submit');
+    // Route for XMLHttp Requests using fetch
+    Route::post('/borrow_book/get-user', [BorrowBookController::class, 'borrowBook'])->name('borrow_book_get_user');
+    Route::post('/borrow_book/get-material', [BorrowBookController::class, 'borrowBook'])->name('borrow_book_get_material');
 
     // Records Views
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');

@@ -5,7 +5,7 @@
         <div class="card-book">
             <div class="row">
                 <div class="innerLeft">
-                    <img class="card-img-left" src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}"/>
+                    <img class="card-img-left" src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}"/>
                 </div>
                 <div class="innerRight">
                     <div class="horizontal-card-footer"><br>

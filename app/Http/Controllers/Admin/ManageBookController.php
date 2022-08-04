@@ -69,7 +69,7 @@ class ManageBookController extends Controller
         $book = new Book();
         // assign cover_img
         if($request->hasFile('cover_img')) {
-            // define image file and set file name to ISBN as prefix
+            // define image file and set file name to ISBN.ext
             $image = $request->file('cover_img');
             $imageFileType = strtolower(pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION));
             $image_name = $request->ISBN. '.' .$imageFileType;
@@ -125,12 +125,56 @@ class ManageBookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editBook(Request $request){
-        if ($request->ISBN != null){
-            $book = Book::find($request->ISBN);
-            return view('admin.catalog.editBook')->with(compact('book'));
+        //validate book info before storing to database
+        $request->validate([
+            'ISBN'=>'required|min:13|max:13|exists:books,ISBN|regex:/[0-9]/',
+            'title'=>'required|max:255',
+            'description' => 'required',
+            'author' => 'required|max:255|regex:/[a-z]/|regex:/[A-Z]/',
+            'publication' => 'required|max:255',
+            'publication_date'=>'required|date_format:Y-m-d|before_or_equal:today',
+            'price'=>'required|numeric|max:100',
+            'language'=>'required',
+            'access_level'=>'required|numeric|min:1|max:3',
+        ]);
+        
+        // create new Book to be saved 
+        $book = Book::find($request->ISBN);
+
+        // assign cover_img if exists
+        if($request->hasFile('cover_img')) {
+            // define image file and set file name to ISBN.ext
+            $image = $request->file('cover_img');
+            $imageFileType = strtolower(pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION));
+            $image_name = $request->ISBN. '.' .$imageFileType;
+
+            // move image onto server folder for future use, override old image
+            $path = public_path().'/images/book_covers';
+            $image->move($path, $image_name);
+            // Edit File Name in case extension change
+            $book->cover_img = $image_name;
+        }
+        // assign other data
+        $book->title = $request->title;
+        $book->description = $request->description;
+        $book->author = $request->author;
+        $book->publication = $request->publication;
+        $book->publication_date = $request->publication_date;
+        $book->price = $request->price;
+        $book->language = $request->language;
+        $book->access_level = $request->access_level;
+ 
+        // save book record
+        $res = $book->save();
+
+        if($res){
+            // call touch in case only image is updated to update updated_at timestamp
+            $book->touch();
+            return redirect()->route('manage_book_details', [ 'ISBN'=> $request->ISBN ])
+            ->with('Success', 'Book Details has been Edited');
         }
         else{
-            return redirect()->back()->with("Error", "Failed to Edit Book Details");
+            return redirect()->back()->with('Fail','Failed to Edit Book Details');
         }
     }
 

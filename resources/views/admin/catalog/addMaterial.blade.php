@@ -32,8 +32,7 @@
     @include('header')
     <!-- Title and Button -->
     <div class="container">
-        <br>
-        <div class="row justify-content-start">
+        <div class="row justify-content-start my-3">
             <div class = 'stock_buttons'>
                 <a href="{{ route('manage_book_details', [ 'ISBN'=> $book->ISBN ]) }}" 
                 class="btn btn-info">Return</a>
@@ -92,12 +91,11 @@
                             <span class="text-danger">@error('intake_date') {{$message}} @enderror</span>
                         </div>
                     </div>
-                    <div class="form-group row justify-content-center">
+                    <div class="form-group row justify-content-center my-3">
                         <button class="btn btn-block btn-primary col-4" type="submit">
                             Add Material
                         </button>
                     </div>
-                    <br>
                 </form> 
             </div>
         </div>

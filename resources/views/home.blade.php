@@ -62,7 +62,8 @@
                             <a href="{{route('home')}}">
                                 <div class="box ">
                                 <div class="cover-img-box">
-                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}" alt="{{ $book->cover_img }}">
+                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}" 
+                                    alt="{{ $book->cover_img }}">
                                 </div>
                                 <div class="detail-box">
                                     <h5>
@@ -94,7 +95,8 @@
                             <a href="{{route('home')}}">
                                 <div class="box ">
                                 <div class="cover-img-box">
-                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}" alt="{{ $book->cover_img }}">
+                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}" 
+                                    alt="{{ $book->cover_img }}">
                                 </div>
                                 <div class="detail-box">
                                     <h5>
@@ -126,7 +128,8 @@
                             <a href="{{route('home')}}">
                                 <div class="box ">
                                 <div class="cover-img-box">
-                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}" alt="{{ $book->cover_img }}">
+                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}" 
+                                    alt="{{ $book->cover_img }}">
                                 </div>
                                 <div class="detail-box">
                                     <h5>

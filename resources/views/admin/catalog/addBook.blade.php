@@ -30,9 +30,8 @@
 
 <body>
     @include('header')
-    <br/>
     <div class="container">
-        <div class='row justify-content-center'>
+        <div class='row justify-content-center my-3'>
             <div class = 'col-md-8'>
                 <h1><font face='Impact'>Add Book</font></h1>
                 <form action="{{route('add_book_submit')}}" method="post" enctype="multipart/form-data"
@@ -134,7 +133,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row justify-content-center">
+                    <div class="form-group row justify-content-center my-3">
                         <div class="col-sm-4">
                             <a class="btn btn-block btn-secondary btn-md" href="{{ route('manage_books') }}">Cancel</a>
                         </div>
@@ -142,7 +141,6 @@
                             <button class="btn btn-block btn-primary btn-md" type="submit">Add Book</button>
                         </div>
                     </div>
-                    <br>
                 </form> 
             </div>
         </div>

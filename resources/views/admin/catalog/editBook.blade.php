@@ -30,13 +30,12 @@
 
 <body>
     @include('header')
-    <br/>
     <div class="container">
-        <div class='row justify-content-center'>
+        <div class='row justify-content-center my-3'>
             <div class = 'col-md-8'>
                 <h1><font face='Impact'>Edit Book</font></h1>
-                <form action="{{route('add_book_submit')}}" method="post" enctype="multipart/form-data"
-                onSubmit="return confirm('Are you sure you wish to Edit Book?');">
+                <form action="{{route('edit_book_submit')}}" method="post" enctype="multipart/form-data"
+                onSubmit="return confirm('Are you sure you wish to Edit this Book?');">
                     @csrf
                     <!-- Print error message that Books was NOT edited -->
                     @if(Session::has('Fail'))
@@ -47,7 +46,7 @@
                         <label for="ISBN" class="col-4 col-form-label">ISBN</label> 
                         <div class="col-8">
                             <input id="ISBN" name="ISBN" placeholder="ISBN" type="text" class="form-control" 
-                            required value="{{ $book->ISBN }}">
+                            required readonly value="{{ $book->ISBN }}">
                             <span class="text-danger">@error('ISBN') {{ $message }} @enderror</span>
                         </div>
                     </div>
@@ -91,7 +90,7 @@
                         <label for="publication" class="col-4 col-form-label">Publication</label> 
                         <div class="col-8">
                             <input id="publication" name="publication" placeholder="Publication" type="text" 
-                            class="form-control" required value="{{ old('publication') }}">
+                            class="form-control" required value="{{ $book->publication }}">
                             <span class="text-danger">@error('publication') {{$message}} @enderror</span>
                         </div>
                     </div>
@@ -137,7 +136,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row justify-content-center">
+                    <div class="form-group row justify-content-center my-3">
                         <div class="col-sm-4">
                             <a class="btn btn-block btn-secondary btn-md" 
                             href="{{ route('manage_book_details', [ 'ISBN'=> $book->ISBN ]) }}">Cancel</a>
@@ -146,7 +145,6 @@
                             <button class="btn btn-block btn-primary btn-md" type="submit">Edit Book</button>
                         </div>
                     </div>
-                    <br>
                 </form> 
             </div>
         </div>

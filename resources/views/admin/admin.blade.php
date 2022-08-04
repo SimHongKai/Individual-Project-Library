@@ -55,7 +55,7 @@
                         </a>
                     </div>
                     <div class="col-sm-6 col-md-4 ">
-                        <a href="{{ route('home') }}">
+                        <a href="{{ route('borrow_book') }}">
                             <div class="box ">
                             <div class="img-box">
                                 <img src="{{ asset('images/icons/borrow_book.png')}}" alt="">
