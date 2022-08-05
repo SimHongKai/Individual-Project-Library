@@ -13,7 +13,8 @@ class Reward extends Model
     protected $fillable = [
         'name',
         'description',
-        'points_required'
+        'points_required',
+        'reward_img',
     ];
     public $timestamps = true;
 }

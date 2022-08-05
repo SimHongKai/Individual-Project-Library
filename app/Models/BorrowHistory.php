@@ -21,12 +21,4 @@ class BorrowHistory extends Model
         'created_by'
     ];
     public $timestamps = false;
-
-    public function book(){
-        return $this->belongsTo('App\Models\Book', 'ISBN', 'ISBN');
-    }
-
-    public function user(){
-        return $this->belongsTo('App\Models\User', 'user_id', 'id');
-    }
 }

@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Borrow Book</title>
+    <title>Return Book</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -45,10 +45,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class = 'col-md-10'>
-                <h1><font face='Impact'>Borrow Book</font></h1>
-                <form action="{{route('borrow_book_submit')}}" method="post" enctype="multipart/form-data">
+                <h1><font face='Impact'>Return Book</font></h1>
+                <form action="{{ route('return_book_submit') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <!-- Print success message that Books WAS borrowed -->
+                    <!-- Print error message that Books WAS borrowed -->
                     @isset($Success)
                         <div class="alert alert-danger">{{ $Success }}</div>
                     @endisset
@@ -56,73 +56,48 @@
                     @if(Session::has('Fail'))
                         <div class="alert alert-danger">{{Session::get('Fail')}}</div>
                     @endif
+                    
+                    <!-- Form Input -->   
+                    <div class="form-group row">
+                        <label for="material_no" class="col-3 col-form-label">Material No</label> 
+                        <div class="col-6">
+                            <input id="material_no" name="material_no" placeholder="Material No" 
+                            type="text" class="form-control" required
+                            onkeyup="getReturnDetails(this.value)">
+                            <span class="text-danger">@error('material_no') {{ $message }} @enderror</span>
+                        </div>
+                    </div>   
+                    <!-- Form Input End -->
 
-                    <!-- User Borrowing -->
+                    <!-- User Returning -->
                     <div class="card my-3">
                         <div class="card-header">
-                            Borrowing User Details
+                            User Details
                         </div>
-                        <div class="card-body">      
-                            <!-- Form Input -->   
-                            <div class="form-group row">
-                                <div class="col-sm-1"></div>
-                                <label for="user_id" class="col-4 col-form-label">User ID</label> 
-                                <div class="col-5">
-                                    <input id="user_id" name="user_id" placeholder="User ID" type="text" 
-                                    class="form-control" required onkeyup="getUserDetails(this.value)"
-                                    @if ($user->id)
-                                        value="{{ sprintf('%08d', $user->id) }}" 
-                                    @endif>
-                                    <span class="text-danger">@error('user_id') {{ $message }} @enderror</span>
-                                </div>
-                            </div>   
-                            <!-- Form Input End -->                       
+                        <div class="card-body">                       
                             <span class="card-text-title col-4">Username:</span>
-                            <span class="card-text-title-content" id="username">{{ $user->username }}</span>
+                            <span class="card-text-title-content" id="username"></span>
                             <br>
                             <span class="card-text-detail col-4">Privilege Level:</span>
-                            <span class="card-text-detail-content" id="privilege">
-                            @switch($user->privilege)
-                                @case(1)
-                                    Admin
-                                    @break
-                                @case(2)
-                                    Privileged User
-                                    @break
-                                @case(3)
-                                    Basic User
-                                    @break
-                            @endswitch
-                            </span>
+                            <span class="card-text-detail-content" id="privilege"></span>
                             <br>
                             <span class="card-text-detail col-4">No. of Currently Borrowed Books:</span>
-                            <span class="card-text-detail-content" id="borrowed">{{ $user->borrowed }}</span>
+                            <span class="card-text-detail-content" id="borrowed"></span>
                             <br>
                             <span class="card-text-detail col-4">No. of Available Borrows:</span>
-                            <span class="card-text-detail-content" id="available">{{ $user->available }}</span>
+                            <span class="card-text-detail-content" id="available"></span>
                         </div>
                     </div>
 
-                    <!-- Book Being Borrowed -->
+                    <!-- Book Being Returned -->
                     <div class="card my-3">
-                        <div class="card-header">Book to be Borrowed</div>
+                        <div class="card-header">Book to be Returned</div>
                         <div class="row no-gutters">                            
                             <div class="col-sm-3">
                                 <img src="{{ asset('images/book_covers/no_book_cover.jpg') }}" class="card-img" id="cover_img">
                             </div>
                             <div class="col-sm-9">
-                                <div class="card-body">      
-                                    <!-- Form Input -->   
-                                    <div class="form-group row">
-                                        <label for="material_no" class="col-3 col-form-label">Material No</label> 
-                                        <div class="col-6">
-                                            <input id="material_no" name="material_no" placeholder="Material No" 
-                                            type="text" class="form-control" required
-                                            onkeyup="getMaterialDetails(this.value)">
-                                            <span class="text-danger">@error('material_no') {{ $message }} @enderror</span>
-                                        </div>
-                                    </div>   
-                                    <!-- Form Input End -->        
+                                <div class="card-body">            
                                     <span class="card-text-title col-3">Book Title:</span>
                                     <span class="card-text-title-content" id="title"></span>
                                     <br>
@@ -140,6 +115,15 @@
                                     <br>
                                     <span class="card-text-detail col-3">Access Level:</span>
                                     <span class="card-text-detail-content" id="access_level"></span>
+                                    <br>
+                                    <span class="card-text-detail col-3">Borrowed At:</span>
+                                    <span class="card-text-detail-content" id="borrowed_at"></span>
+                                    <br>
+                                    <span class="card-text-detail col-3">Due At:</span>
+                                    <span class="card-text-detail-content" id="due_at"></span>
+                                    <br>
+                                    <span class="card-text-detail col-3">Late Fee (RM): </span>
+                                    <span class="card-text-detail-content text-danger" id="late_fee"></span>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +131,7 @@
                     <!-- Submit Buttons -->
                     <div class="form-group row justify-content-center">
                         <div class="col-sm-4">
-                            <button class="btn btn-block btn-primary btn-md" type="submit">Borrow Book</button>
+                            <button class="btn btn-block btn-primary btn-md" type="submit">Return Book</button>
                         </div>
                     </div>
                 </form> 
@@ -163,8 +147,8 @@
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <!-- bootstrap js -->
     <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <!-- borrow ajax query js -->
-    <script src="{{ asset('js/borrow.js') }}"></script>
+    <!-- return js -->
+    <script src="{{ asset('js/return.js') }}"></script>
 
 
 </body>

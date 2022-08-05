@@ -21,7 +21,7 @@ class AdminController extends Controller
 
     //         // compare if user is admin
     //         $this->user = Auth::user();
-    //         if ($this->user->privilige != 1){
+    //         if ($this->user->privilege != 1){
     //             return redirect('home');
     //         }
     //         // else continue

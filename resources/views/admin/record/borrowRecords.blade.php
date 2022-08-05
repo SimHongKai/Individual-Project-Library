@@ -75,12 +75,15 @@
                         {{ $record -> title }} <br>
                         {{ $record -> ISBN }} <br>
                         {{ sprintf('%08d', $record->material_no) }} <br>
+                        <span>{!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->material_no), 'UPCA') !!}</span>
                         </a>
                     </td>
                     <td><img src="{{ asset('images/book_covers') }}/{{ $record -> cover_img }}"></td>
                     <td>{{ $record -> username }}</td>
                     <td>{{ $record -> borrowed_at }}</td>
-                    <td>{{ $record -> due_at }}</td>
+                    <td @if ($record->status == 1 && $record->due_at < date('Y-m-d'))class="text-danger"@endif>
+                        {{ $record -> due_at }}
+                    </td>
                     <td>{{ $record -> returned_at }}</td>
                 </tr>
             @endforeach

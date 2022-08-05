@@ -22,7 +22,7 @@ class IsAdminMiddleware
             return redirect()->route('home');
         }
         // check if is Admin
-        if(Auth::user()->privilige == 1){
+        if(Auth::user()->privilege == 1){
             return $next($request);
         }
 

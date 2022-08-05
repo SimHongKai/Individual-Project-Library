@@ -72,8 +72,15 @@ Route::middleware('authAdmin')->group(function(){
     // Borrow Book Submit
     Route::post('/borrow_book', [BorrowBookController::class, 'borrowBook'])->name('borrow_book_submit');
     // Route for XMLHttp Requests using fetch
-    Route::post('/borrow_book/get-user', [BorrowBookController::class, 'borrowBook'])->name('borrow_book_get_user');
-    Route::post('/borrow_book/get-material', [BorrowBookController::class, 'borrowBook'])->name('borrow_book_get_material');
+    Route::post('/borrow_book/get-user', [BorrowBookController::class, 'getUser'])->name('borrow_book_get_user');
+    Route::post('/borrow_book/get-material', [BorrowBookController::class, 'getMaterial'])->name('borrow_book_get_material');
+
+    // Return Book Form
+    Route::get('/return_book', [BorrowBookController::class, 'returnBookView'])->name('return_book');
+    // Return Book Submit
+    Route::post('/return_book', [BorrowBookController::class, 'returnBook'])->name('return_book_submit');
+    // Route for XMLHttp Requests using fetch
+    Route::post('/return_book/get-return-details', [BorrowBookController::class, 'getReturnDetails'])->name('get_return_details');
 
     // Records Views
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');

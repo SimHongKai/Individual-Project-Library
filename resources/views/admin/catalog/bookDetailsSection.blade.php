@@ -31,7 +31,21 @@
                         <span class="card-text-detail-content">{{ $book->price }}</span>
                         <br>
                         <span class="card-text-detail">Access Level:</span>
-                        <span class="card-text-detail-content">{{ $book->access_level }}</span>
+                        <span class="card-text-detail-content">
+                        @switch($book->access_level)
+                            @case(1)
+                                No Restrictions
+                                @break
+                            @case(2)
+                                Priviliged Only
+                                @break
+                            @case(3)
+                                Full Restrictions
+                                @break
+                            @default
+                                Error Status
+                        @endswitch
+                        </span>
                         <br>
                         <span class="card-text-detail">Total Qty:</span>
                         <span class="card-text-detail-content">{{ $book->total_qty }}</span>

@@ -18,7 +18,7 @@ class BorrowHistoryController extends Controller
     public function index()
     {
         $borrowHistory = DB::table('borrowHistory')
-            ->select('users.username', 'books.ISBN', 'books.title', 'books.cover_img',
+            ->select('users.username', 'books.ISBN', 'books.title', 'books.cover_img', 'borrowHistory.status',
             'borrowHistory.material_no', 'borrowHistory.borrowed_at', 'borrowHistory.due_at', 'borrowHistory.returned_at')
             ->join('books', 'borrowHistory.ISBN', '=', 'books.ISBN')
             ->join('users', 'borrowHistory.user_id', '=' ,'users.id')

@@ -17,7 +17,7 @@
 					<!-- Admin Bar Link -->
 					@guest
 					@else
-					@if (Auth::user()->privilige == 1)
+					@if (Auth::user()->privilege == 1)
 					<li class="nav-item">
 						<a class="nav-link pl-lg-0" href="{{route('admin_panel')}}">Admin</a>
 					</li>
