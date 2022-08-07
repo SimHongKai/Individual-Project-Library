@@ -1161,3 +1161,30 @@ a:hover {
 .material-table p {
   display:inline;
 }
+
+/** Dots Color **/
+.red-dot {
+  height: 15px;
+  width: 15px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.yellow-dot {
+  height: 15px;
+  width: 15px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.green-dot {
+  height: 15px;
+  width: 15px;
+  background-color: #09B051;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/** Dots End **/

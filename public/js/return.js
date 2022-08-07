@@ -10,6 +10,7 @@ var author = document.getElementById("author");
 var publication = document.getElementById("publication");
 var language = document.getElementById("language");
 var access_level = document.getElementById("access_level");
+var access_dot = document.getElementById("access_dot");
 var borrowed_at = document.getElementById("borrowed_at");
 var due_at = document.getElementById("due_at");
 var cover_img = document.getElementById("cover_img");
@@ -78,12 +79,15 @@ function setReturnDetails(response){
     switch(response.access_level){
         case 1:
             access_level.innerHTML = "No Restrictions";
+            access_dot.className = "green-dot";
             break;
         case 2:
             access_level.innerHTML = "Privileged Only";
+            access_dot.className = "yellow-dot";
             break;
         case 3:
             access_level.innerHTML = "Full Restrictions";
+            access_dot.className = "red-dot";
             break;
         default:
             access_level.innerHTML = "Undefined";
@@ -108,6 +112,7 @@ function clearReturnDetails(book){
     publication.innerHTML = "";
     language.innerHTML = "";
     access_level.innerHTML = "";
+    access_dot.className = "";
     cover_img.src = "images/book_covers/no_book_cover.jpg";
     borrowed_at.innerHTML = "";
     due_at.innerHTML = "";

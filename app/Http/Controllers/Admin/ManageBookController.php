@@ -25,11 +25,11 @@ class ManageBookController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function bookDetailsView(Request $request){
+    public function manageBookDetailsView(Request $request){
         if ($request->ISBN != null){
             $book = Book::find($request->ISBN);
             $materials = Material::where('ISBN', $request->ISBN)->get();
-            return view('admin.catalog.bookDetails')->with(compact('book', 'materials'));
+            return view('admin.catalog.manageBookDetails')->with(compact('book', 'materials'));
         }
         else{
             return view('home');

@@ -46,6 +46,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center">
+        {{ $books->links() }}
+    </div>
+    
     <!-- card detail box -->
     <div class="container">
         <div class="row justify-content-center">
@@ -70,6 +76,23 @@
                                     <br>
                                     <span class="card-text-detail">Language:</span>
                                     <span class="card-text-detail-content">{{ $book->language }}</span>
+                                    <br>
+                                    <span class="card-text-detail">Access Level:</span>
+                                    <span class="card-text-detail-content">
+                                    @switch($book->access_level)
+                                        @case(1)
+                                            No Restrictions <span class="green-dot"></span>
+                                            @break
+                                        @case(2)
+                                            Priviliged Only <span class="yellow-dot"></span>
+                                            @break
+                                        @case(3)
+                                            Full Restrictions <span class="red-dot"></span>
+                                            @break
+                                        @default
+                                            Error Status
+                                    @endswitch
+                                    </span>
                                 </div>
                             </div>
                         </div>

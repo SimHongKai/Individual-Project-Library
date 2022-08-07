@@ -34,13 +34,13 @@
                         <span class="card-text-detail-content">
                         @switch($book->access_level)
                             @case(1)
-                                No Restrictions
+                                No Restrictions <span class="green-dot"></span>
                                 @break
                             @case(2)
-                                Priviliged Only
+                                Priviliged Only <span class="yellow-dot"></span>
                                 @break
                             @case(3)
-                                Full Restrictions
+                                Full Restrictions <span class="red-dot"></span>
                                 @break
                             @default
                                 Error Status

@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 // Controllers
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\RewardController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ManageBookController;
 use App\Http\Controllers\Admin\ManageMaterialController;
+use App\Http\Controllers\Admin\ManageRewardController;
 use App\Http\Controllers\Admin\BorrowBookController;
 use App\Http\Controllers\Admin\BorrowHistoryController;
 
@@ -30,10 +33,24 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //Display Catalog
 Route::get('/catalog', [BookController::class, 'index'])->name('catalog');
+// Book Details View
+Route::get('/book_details/{ISBN}', [BookController::class, 'bookDetailsView'])->name('book_details');
 
 // Authentication Routes, Login, Register, etc
 Auth::routes();
 
+// All Routes which needs account to access
+Route::middleware('auth')->group(function(){
+    // Bookmark
+    Route::post('/add_bookmark', [BookmarkController::class, 'addBookmark'])->name('add_bookmark');
+    // Bookmark
+    Route::post('/delete_bookmark', [BookmarkController::class, 'deleteBookmark'])->name('delete_bookmark');
+
+    // Reward Shop view
+    Route::get('/reward_shop', [RewardController::class, 'index'])->name('reward_shop');
+    // Claim Reward
+    Route::get('/claim_reward/{reward_id}', [RewardController::class, 'claimReward'])->name('claim_reward');
+});
 
 // All Routes which needs admin privilige to access
 Route::middleware('authAdmin')->group(function(){
@@ -44,7 +61,7 @@ Route::middleware('authAdmin')->group(function(){
     // Manage Books View
     Route::get('/manage_books', [ManageBookController::class, 'index'])->name('manage_books');
     // Book Details View
-    Route::get('/manage_book_details/{ISBN}', [ManageBookController::class, 'bookDetailsView'])->name('manage_book_details');
+    Route::get('/manage_book_details/{ISBN}', [ManageBookController::class, 'manageBookDetailsView'])->name('manage_book_details');
     // Add Book View
     Route::get('/add_book', [ManageBookController::class, 'addBookView'])->name('add_book');
     // Add Book Form Submit
@@ -84,6 +101,19 @@ Route::middleware('authAdmin')->group(function(){
 
     // Records Views
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');
+
+    // Reward List Views
+    Route::get('/manage_rewards', [ManageRewardController::class, 'index'])->name('manage_rewards');
+    // Add Reward Form
+    Route::get('/add_reward', [ManageRewardController::class, 'addRewardView'])->name('add_reward');
+    // Add Reward Submit
+    Route::post('/add_reward', [ManageRewardController::class, 'addReward'])->name('add_reward_submit');
+    // Edit Reward Form
+    Route::get('/edit_reward/{reward_id}', [ManageRewardController::class, 'editRewardView'])->name('edit_reward');
+    // Edit Reward Submit
+    Route::post('/edit_reward', [ManageRewardController::class, 'editReward'])->name('edit_reward_submit');
+    // Delete Reward Submit
+    Route::get('/delete_reward/{reward_id}', [ManageRewardController::class, 'deleteReward'])->name('delete_reward');
 });
 
 

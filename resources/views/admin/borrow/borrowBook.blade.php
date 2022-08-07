@@ -49,9 +49,9 @@
                 <form action="{{route('borrow_book_submit')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <!-- Print success message that Books WAS borrowed -->
-                    @isset($Success)
-                        <div class="alert alert-danger">{{ $Success }}</div>
-                    @endisset
+                    @if(Session::has('Success'))
+                        <div class="alert alert-success">{{Session::get('Success')}}</div>
+                    @endif
                     <!-- Print error message that Books was NOT borrowed -->
                     @if(Session::has('Fail'))
                         <div class="alert alert-danger">{{Session::get('Fail')}}</div>
@@ -140,6 +140,7 @@
                                     <br>
                                     <span class="card-text-detail col-3">Access Level:</span>
                                     <span class="card-text-detail-content" id="access_level"></span>
+                                    <span class="" id="access_dot"></span>
                                 </div>
                             </div>
                         </div>

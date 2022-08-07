@@ -59,7 +59,7 @@
                 <div class="row">
                     @foreach ($popularBooks as $book)
                         <div class="col-sm-6 col-md-4 ">
-                            <a href="{{route('home')}}">
+                            <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">
                                 <div class="box ">
                                 <div class="cover-img-box">
                                     <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}" 
@@ -92,7 +92,7 @@
                 <div class="row">
                     @foreach ($newBooks as $book)
                         <div class="col-sm-6 col-md-4 ">
-                            <a href="{{route('home')}}">
+                            <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">
                                 <div class="box ">
                                 <div class="cover-img-box">
                                     <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}" 
@@ -125,7 +125,7 @@
                 <div class="row">
                     @foreach ($recentBooks as $book)
                         <div class="col-sm-6 col-md-4 ">
-                            <a href="{{route('home')}}">
+                            <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">
                                 <div class="box ">
                                 <div class="cover-img-box">
                                     <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}" 

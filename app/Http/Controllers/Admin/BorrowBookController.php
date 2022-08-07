@@ -145,8 +145,7 @@ class BorrowBookController extends Controller
             // update user->available and borrowed
             $user->borrowed = $user->borrowed + 1;
             $user->available = $user->available - 1;
-            $Success = "Book was Borrowed!";
-            return view('admin.borrow.borrowBook')->with(compact('user', 'Success'));
+            return redirect()->route('borrow_book')->with('Success', 'Book has been Borrowed Successfully');
         }
         // fail
         return redirect()->back()->with("Fail", "Book was not Borrowed!");
@@ -241,8 +240,7 @@ class BorrowBookController extends Controller
 
             // reward user with points
             $this->giveUserPoints($borrowHistory->user_id, 50);
-            $Success = "Book Returned Successfully!";
-            return view('admin.borrow.returnBook')->with(compact('Success'));
+            return redirect()->route('return_book')->with('Success', 'Book Returned Successfully!');
         }
         return redirect()->back()->with('Fail', 'Material was not Borrowed!');
         

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class BorrowHistory extends Model
 {
     use HasFactory;
+    protected $PL = null;
     protected $table = 'borrowhistory';
     protected $fillable = [
         'user_id',

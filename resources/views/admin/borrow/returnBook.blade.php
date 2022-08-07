@@ -48,11 +48,11 @@
                 <h1><font face='Impact'>Return Book</font></h1>
                 <form action="{{ route('return_book_submit') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <!-- Print error message that Books WAS borrowed -->
-                    @isset($Success)
-                        <div class="alert alert-danger">{{ $Success }}</div>
-                    @endisset
-                    <!-- Print error message that Books was NOT borrowed -->
+                    <!-- Print success message that Books WAS returned -->
+                    @if(Session::has('Success'))
+                        <div class="alert alert-success">{{Session::get('Success')}}</div>
+                    @endif
+                    <!-- Print error message that Books was NOT returned -->
                     @if(Session::has('Fail'))
                         <div class="alert alert-danger">{{Session::get('Fail')}}</div>
                     @endif
@@ -115,6 +115,7 @@
                                     <br>
                                     <span class="card-text-detail col-3">Access Level:</span>
                                     <span class="card-text-detail-content" id="access_level"></span>
+                                    <span class="" id="access_dot"></span>
                                     <br>
                                     <span class="card-text-detail col-3">Borrowed At:</span>
                                     <span class="card-text-detail-content" id="borrowed_at"></span>

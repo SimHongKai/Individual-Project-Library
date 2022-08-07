@@ -57,7 +57,7 @@ class ManageMaterialController extends Controller
 
         if($res){
             return redirect()->route('manage_book_details', [ $material->ISBN ])
-            ->with('Success', 'Material has been added!');
+            ->with('Mat Success', 'Material has been added!');
         }
         else{
             return redirect()->back()->with('Fail','Failed to Add Material');
