@@ -4,14 +4,17 @@ use Illuminate\Support\Facades\Route;
 // Controllers
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ManageBookController;
 use App\Http\Controllers\Admin\ManageMaterialController;
 use App\Http\Controllers\Admin\ManageRewardController;
 use App\Http\Controllers\Admin\BorrowBookController;
 use App\Http\Controllers\Admin\BorrowHistoryController;
+use App\Http\Controllers\Admin\RewardHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +53,12 @@ Route::middleware('auth')->group(function(){
     Route::get('/reward_shop', [RewardController::class, 'index'])->name('reward_shop');
     // Claim Reward
     Route::get('/claim_reward/{reward_id}', [RewardController::class, 'claimReward'])->name('claim_reward');
+
+    // Leaderboard View
+    Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+
+    // Default Profile View
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
 
 // All Routes which needs admin privilige to access
@@ -99,8 +108,10 @@ Route::middleware('authAdmin')->group(function(){
     // Route for XMLHttp Requests using fetch
     Route::post('/return_book/get-return-details', [BorrowBookController::class, 'getReturnDetails'])->name('get_return_details');
 
-    // Records Views
+    // Borrow Records Views
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');
+    // Records Views
+    Route::get('/admin_reward_records', [RewardHistoryController::class, 'index'])->name('admin_reward_records');
 
     // Reward List Views
     Route::get('/manage_rewards', [ManageRewardController::class, 'index'])->name('manage_rewards');

@@ -34,7 +34,7 @@
 						<a class="nav-link" href="{{ route('reward_shop') }}">Shop</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ route('home') }}">Leaderboard</a>
+						<a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
 					</li>
 					<!-- Right Side Of Navbar -->
 					<!-- Authentication Links -->
@@ -44,7 +44,7 @@
 					</li>				
 					@else
 					<li class="nav-item">
-						<a class="nav-link" href="{{ route('home') }}">{{ Auth::user()->username }}</a>
+						<a class="nav-link" href="{{ route('profile') }}">{{ Auth::user()->username }}</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('logout') }}"

@@ -44,12 +44,12 @@
     <div class="container">
         <ul class="action_bar">
             <li>
-                <a href="admin_borrow_records">
+                <a href="{{ route('admin_borrow_records') }}">
                     Borrow History
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('admin_reward_records') }}">
                     Reward History
                 </a>
             </li>
@@ -68,10 +68,14 @@
                 <th>Due At</th>
                 <th>Returned At</th>
             </tr>
+            @php
+                $i = $borrowHistory->firstItem()
+            @endphp
             @foreach($borrowHistory as $record) 
                 <tr id = "{{ $record->ISBN }}Row">
                     <td class = "record-table-title">
                         <a href = "{{ route('manage_book_details', [ 'ISBN'=> $record->ISBN ]) }}">
+                        {{ $i++ }}<br>
                         {{ $record -> title }} <br>
                         {{ $record -> ISBN }} <br>
                         {{ sprintf('%08d', $record->material_no) }} <br>

@@ -83,7 +83,7 @@
             <tr>
                 <td>
                     {{ sprintf('%08d', $material->material_no) }}<br>
-                    {!! DNS1D::getBarcodeHTML(sprintf('%08d', $material->material_no), 'UPCA') !!}   
+                    {!! DNS1D::getBarcodeHTML(sprintf('%08d', $material->material_no), 'C128') !!}   
                 </td>
                 <td>{{ $material->call_no }}</td>
                 <td>
