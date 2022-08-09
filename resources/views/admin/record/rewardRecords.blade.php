@@ -56,8 +56,8 @@
         </ul>
     </div>
 
-    <!-- Borrow Table -->
-    <div class = "container">
+    <!-- Reward Table -->
+    <div class = "container my-3">
         
         <table class = "record-table">
             <tr>

@@ -36,6 +36,13 @@
     <div class="container">
         <div class="row my-3">
             <div class="col-12 text-center"> 
+                <h6 class = 'title'>
+                    <span>You are ranked {{ $position }}, with {{ Auth::user()->total_points }} points.</span>
+                </h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center"> 
                 <div class = 'btn'>
                     <a href="{{ route('leaderboard') }}?page={{ $pageNumber }}" class="btn btn-info">Go to Your Position</a>
                 </div>

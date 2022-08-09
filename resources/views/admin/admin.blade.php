@@ -111,7 +111,7 @@
                         </a>
                     </div>
                     <div class="col-sm-6 col-md-4 ">
-                        <a href="{{ route('home') }}">
+                        <a href="{{ route('edit_configuration') }}">
                             <div class="box ">
                             <div class="img-box">
                                 <img src="{{ asset('images/icons/config.png')}}" alt="">

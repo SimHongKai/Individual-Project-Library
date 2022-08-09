@@ -11,6 +11,7 @@ use App\Models\Material;
 use App\Models\Configuration;
 use DB;
 use Auth;
+use Session;
 
 class BorrowBookController extends Controller
 {
@@ -145,7 +146,9 @@ class BorrowBookController extends Controller
             // update user->available and borrowed
             $user->borrowed = $user->borrowed + 1;
             $user->available = $user->available - 1;
-            return redirect()->route('borrow_book')->with('Success', 'Book has been Borrowed Successfully');
+            // flash message
+            Session::flash('Success', 'Book has been Borrowed Successfully');
+            return view('admin.borrow.borrowBook')->with(compact('user'));
         }
         // fail
         return redirect()->back()->with("Fail", "Book was not Borrowed!");

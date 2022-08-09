@@ -15,28 +15,17 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
+        $paginationValue = 1;
         $user = Auth::user();
-        $pageNumber = $this->getPaginationNumber(1, $user->total_points);
+        // find number of people that have points higer than user then + 1 to get user pos
+        $position = User::where('total_points','>',$user->total_points)->count() + 1;
+        $pageNumber = $position/$paginationValue;
 
-        $users = User::orderBy('total_points', 'desc')->paginate(1);
+        $users = User::orderBy('total_points', 'desc')->paginate($paginationValue);
         $topUsers = User::orderBy('total_points', 'desc')->limit(3)->get();
 
-        return view('leaderboard')->with(compact('users', 'topUsers', 'pageNumber'));
+        return view('leaderboard')->with(compact('users', 'topUsers', 'pageNumber', 'position'));
     }
-
-    /**
-     * Get the pagination number
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function getPaginationNumber($paginationValue, $points)
-    {
-        $position = User::where('total_points','<=',$points)->count(); // for example 601
-        $inserted_id_in_page = 2; //$position / $paginationValue; // then goes to page 2
-
-        return $inserted_id_in_page;
-    }
-
 
 }
 

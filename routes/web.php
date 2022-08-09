@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ManageBookController;
 use App\Http\Controllers\Admin\ManageMaterialController;
 use App\Http\Controllers\Admin\ManageRewardController;
+use App\Http\Controllers\Admin\ManageConfigurationController;
 use App\Http\Controllers\Admin\BorrowBookController;
 use App\Http\Controllers\Admin\BorrowHistoryController;
 use App\Http\Controllers\Admin\RewardHistoryController;
@@ -58,7 +59,14 @@ Route::middleware('auth')->group(function(){
     Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
     // Default Profile View
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/bookmarks', [ProfileController::class, 'bookmarkView'])->name('profile');
+    // Default Profile View
+    Route::get('/profile/borrow', [ProfileController::class, 'borrowHistoryView'])->name('profile_borrows');
+    // Default Profile View
+    Route::get('/profile/rewards', [ProfileController::class, 'rewardHistoryView'])->name('profile_rewards');
+
+    // Claim Daily Points
+    Route::get('/profile/claim_daily', [ProfileController::class, 'claimDaily'])->name('claim_daily');
 });
 
 // All Routes which needs admin privilige to access
@@ -125,6 +133,11 @@ Route::middleware('authAdmin')->group(function(){
     Route::post('/edit_reward', [ManageRewardController::class, 'editReward'])->name('edit_reward_submit');
     // Delete Reward Submit
     Route::get('/delete_reward/{reward_id}', [ManageRewardController::class, 'deleteReward'])->name('delete_reward');
+
+    // Edit Config Form
+    Route::get('/edit_configuration', [ManageConfigurationController::class, 'editConfigurationView'])->name('edit_configuration');
+    // Edit Confid Form Submit
+    Route::post('/edit_configuration', [ManageConfigurationController::class, 'editConfiguration'])->name('edit_configuration_submit');
 });
 
 

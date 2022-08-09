@@ -61,7 +61,8 @@ class HomeController extends Controller
         // get ISBN of Top 3 Borrowed
         $recentBooks = DB::table('borrowHistory')
                         ->select('ISBN')
-                        ->orderBy('borrowed_at')
+                        ->distinct() // distinct to prevent 3 same
+                        ->orderBy('borrowed_at', 'desc')
                         ->limit(3)
                         ->pluck('ISBN')->toArray();
         

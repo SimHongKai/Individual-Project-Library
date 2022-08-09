@@ -116,8 +116,10 @@
             @foreach ($materials as $material)
             <tr>
                 <td>
-                    {{ sprintf('%08d', $material->material_no) }}<br>
-                    {!! DNS1D::getBarcodeHTML(sprintf('%08d', $material->material_no), 'C128') !!}   
+                    {{ sprintf('%08d', $material->material_no) }}
+                    <div class = "row justify-content-center">
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $material->material_no), 'C128') !!}
+                    </div>
                 </td>
                 <td>{{ $material->call_no }}</td>
                 <td>

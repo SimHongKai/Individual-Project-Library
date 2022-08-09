@@ -23,78 +23,72 @@
 
     <!-- Custom styles -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/profile.css') }}" rel="stylesheet" />
     <!-- responsive style -->
     <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" />
 </head>
 
 <body>
     @include('header')
-    <div class="container">
-        <!-- Action Buttons -->
-        <div class="row">
-            <div class="col-6 text-left"> 
-                <div class = 'btn'>
-                    <a href="{{ route('admin_panel') }}" class="btn btn-info">Return</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    @include('profile')
 
     <!-- action bar -->
     <div class="container">
         <ul class="action_bar">
             <li>
-                <a href="{{ route('admin_borrow_records') }}">
+                <a href="{{ route('profile') }}">
+                    Bookmarks
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('profile_borrows') }}">
                     Borrow History
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin_reward_records') }}">
+                <a href="{{ route('profile_rewards') }}">
                     Reward History
                 </a>
             </li>
         </ul>
     </div>
 
-    <!-- Borrow Table -->
-    <div class = "container my-3">
+    <div class="heading_container heading_center my-3">
+        <h2>
+            Bookmarks
+        </h2>
+    </div>
+
+    <!-- Bookmarks Table -->
+    <div class = "container">
         
         <table class = "record-table">
             <tr>
                 <th>Book</th>
                 <th>Book Cover</th>
-                <th>User</th>
-                <th>Borrowed At</th>
-                <th>Due At</th>
-                <th>Returned At</th>
+                <th>Available Qty</th>
             </tr>
-            @foreach($borrowHistory as $record) 
+            @foreach($bookmarks as $record) 
                 <tr id = "{{ $record->ISBN }}Row">
                     <td class = "record-table-title">
-                        <a href = "{{ route('manage_book_details', [ 'ISBN'=> $record->ISBN ]) }}">
+                        <a href = "{{ route('book_details', [ 'ISBN'=> $record->ISBN ]) }}">
                         Title: {{ $record -> title }} <br>
                         ISBN: {{ $record -> ISBN }} <br>
-                        Material No: {{ sprintf('%08d', $record->material_no) }}
-                        <div class = "row justify-content-center">
-                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->material_no), 'UPCA') !!}
-                        </div>
                         </a>
                     </td>
                     <td><img src="{{ asset('images/book_covers') }}/{{ $record -> cover_img }}"></td>
-                    <td>{{ $record -> username }}</td>
-                    <td>{{ $record -> borrowed_at }}</td>
-                    <td @if ($record->status == 1 && $record->due_at < date('Y-m-d'))class="text-danger"@endif>
-                        {{ $record -> due_at }}
+                    <td @if ($record->available_qty < 1) class="text-danger"@endif>
+                        {{ $record -> available_qty }}
                     </td>
-                    <td>{{ $record -> returned_at }}</td>
                 </tr>
             @endforeach
         </table>
     </div>
     
     <!-- Pagination -->
-    <div class="d-flex justify-content-center">
-        {{ $borrowHistory->links() }}
+    <div class="d-flex justify-content-center my-3">
+        {{ $bookmarks->links() }}
     </div>
 
     @include('footer')
