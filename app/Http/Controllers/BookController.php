@@ -33,7 +33,10 @@ class BookController extends Controller
             $book->bookmarked = Bookmark::where('user_id', Auth::id())->where('ISBN', $request->ISBN)
                                 ->count();
             $materials = Material::where('ISBN', $request->ISBN)->get();
-            return view('bookDetails')->with(compact('book', 'materials'));
+
+            $recs = Book::limit(3)->get();
+
+            return view('bookDetails')->with(compact('book', 'materials', 'recs'));
         }
         else{
             return view('home');

@@ -68,7 +68,7 @@
     @include('admin.catalog.bookDetailsSection')
 
     <!-- Material Table -->
-    <div class = "container">
+    <div class = "container my-3">
         <div class="heading_container heading_center">
             <h2>
                 Material Instances
@@ -105,6 +105,39 @@
             @endforeach
         </table>
     </div>
+
+    <!-- Recommended Books section -->
+    <section class="new_section layout_padding">
+        <div class="new_container">
+            <div class="container ">
+                <div class="heading_container heading_center">
+                    <h2>
+                        Recommendations
+                    </h2>
+                </div>
+                <div class="row">
+                    @foreach ($recs as $book)
+                        <div class="col-sm-6 col-md-4 ">
+                            <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">
+                                <div class="box ">
+                                <div class="cover-img-box">
+                                    <img src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}" 
+                                    alt="{{ $book->cover_img }}">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        {{ $book->title }}
+                                    </h5>
+                                </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Recommended New section -->
 
     @include('footer')
 
