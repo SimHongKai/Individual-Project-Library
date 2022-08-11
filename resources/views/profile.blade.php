@@ -32,6 +32,7 @@
                     <h5 class="mt-2 mb-0">{{ $user->username }}</h5>
                     <span>Current Points: {{ $user->current_points }}</span>
                     <span>Total Points: {{ $user->total_points }}</span>
+                    <h5 class="mt-2 mb-0">{{ Auth::id() }}</h5>
 
                     <div class="px-4 mt-1">
                         <p class="fonts">

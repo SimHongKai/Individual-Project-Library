@@ -29,18 +29,24 @@
 
 <body>
     @include('header')
-    <div class="container">
+    <div class="container my-3">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+                    <div class="card-header">
+
+                        {{ __('Quick Search') }}
+                        
+                        <form action="{{ route('catalog_search_submit') }}" method="get" class="search-bar">
+                            @csrf
+                            <div class="searchInputWrapper mx-3">
+                                <input id="title" name="title" class="searchInput" type="text" placeholder='Search By Title'>
+                                    <i class="searchInputIcon fa fa-search"></i>
+                                </input>
                             </div>
-                        @endif
-                        {{ __('You are logged in!') }}
+                        </form>
+                        
+                        <a href="{{ route('catalog_search') }}">Advanced Search Here</a>
                     </div>
                 </div>
             </div>

@@ -35,10 +35,18 @@ Route::get('/', function () {
 // Display Home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-//Display Catalog
+// Display Catalog
 Route::get('/catalog', [BookController::class, 'index'])->name('catalog');
+
 // Book Details View
 Route::get('/book_details/{ISBN}', [BookController::class, 'bookDetailsView'])->name('book_details');
+
+
+// Display Catalog Search
+Route::get('/catalog_search', [BookController::class, 'searchCatalogView'])->name('catalog_search');
+// Submit Catalog Search
+Route::get('/catalog_filtered', [BookController::class, 'searchCatalog'])->name('catalog_search_submit');
+
 
 // Authentication Routes, Login, Register, etc
 Auth::routes();

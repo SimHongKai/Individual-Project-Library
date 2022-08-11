@@ -80,7 +80,7 @@ class BorrowBookController extends Controller
     {
         //validate user and material exists
         $request->validate([
-            'user_id'=>'required|exists:users,id|regex:/[0-9]/',
+            'user_id'=>'required|exists:users,id',
             'material_no'=>'required|exists:materials,material_no|regex:/[0-9]/',
         ]);
 

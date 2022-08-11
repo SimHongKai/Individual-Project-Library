@@ -89,8 +89,8 @@ function clearMaterialDetails(book){
 function getUserDetails(user_id){
     // always clear details
     clearUserDetails();
-    // do nothing unless 8 characters are entered
-    if (user_id.length < 8){
+    // do nothing unless 36 characters are entered
+    if (user_id.length < 36){
         return;
     }
     // fetch
