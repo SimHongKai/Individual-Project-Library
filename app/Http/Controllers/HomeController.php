@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $popularBooks = $this->getPopularBooks();
-        $newBooks = Book::orderBy('created_at')->limit(3)->get();
+        $newBooks = Book::orderBy('created_at', 'desc')->limit(3)->get();
         $recentBooks = $this->getRecentBooks();
         return view('home')->with(compact('popularBooks', 'newBooks', 'recentBooks'));
     }

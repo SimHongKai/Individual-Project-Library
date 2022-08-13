@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-1 text-left"> 
                 <div class = 'btn'>
-                    <a href="{{ route('manage_books') }}" class="btn btn-info">Return</a>
+                    <a href="{{ URL::previous() }}" class="btn btn-info">Return</a>
                 </div>
             </div>
             <div class="col-11 text-center">
@@ -84,7 +84,7 @@
     @include('admin.catalog.bookDetailsSection')
 
     <!-- Material Table -->
-    <div class = "container">
+    <div class = "container my-3">
         <div class="heading_container heading_center">
             <h2>
                 Material Instances

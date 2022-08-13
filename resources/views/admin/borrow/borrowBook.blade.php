@@ -71,7 +71,7 @@
                                     <input id="user_id" name="user_id" placeholder="User ID" type="text" 
                                     class="form-control" required onkeyup="getUserDetails(this.value)"
                                     @if ($user->id)
-                                        value="{{ sprintf('%08d', $user->id) }}" 
+                                        value="{{ $user->id }}" 
                                     @endif>
                                     <span class="text-danger">@error('user_id') {{ $message }} @enderror</span>
                                 </div>

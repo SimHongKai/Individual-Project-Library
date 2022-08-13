@@ -61,7 +61,7 @@
     </div>
 
     <!-- Reward Table -->
-    <div class = "container">
+    <div class = "container my-3">
         <table class = "record-table">
             <tr>
                 <th>Time Claimed</th>
