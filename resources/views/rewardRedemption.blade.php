@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Manage Rewards</title>
+    <title>Reward Redemption</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -30,27 +30,22 @@
 <body>
     @include('header')
     
-    <!-- Action Buttons -->
+    <!-- Title -->
+    <div class="heading_container heading_center my-3">
+        <h2>
+            Reward Redemption
+        </h2>
+    </div>
+
+    <!-- Flash Messages -->
     <div class="container">
-        <div class="row my-3">
-            <div class="col-6 text-left"> 
-                <div class = 'btn'>
-                    <a href="{{ route('admin_panel') }}" class="btn btn-info">Return</a>
-                </div>
-            </div>
-            <div class="col-6 text-right">
-                <div class = 'btn'>
-                    <a href="{{ route('add_reward') }}" class="btn btn-info">Add Reward</a>
-                </div>
-            </div>
-        </div>
-        <!-- Print success message that Reward was added -->
+        <!-- Print success message that Reward was claimed -->
         @if(Session::has('Success'))
             <div class="alert alert-success">{{Session::get('Success')}}</div>
         @endif
         
-        @if(Session::has('Error'))
-            <div class="alert alert-danger">{{Session::get('Error')}}</div>
+        @if(Session::has('Fail'))
+            <div class="alert alert-danger">{{Session::get('Fail')}}</div>
         @endif
     </div>    
 
@@ -70,10 +65,14 @@
                     </p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{{ route('edit_reward', [ 'reward_id'=> $reward->id ]) }}" class="card-link">Edit</a>
-                    <a href="{{ route('delete_reward', [ 'reward_id'=> $reward->id ]) }}" 
-                    class="card-link" onclick="return confirm('Are you sure you wish to Delete this Reward? {{ $reward->name }}');">
-                        Delete
+                    <!-- Only enable Link if User has ENOUGH points to CLAIM reward -->
+                    @if (Auth::user()->current_points >= $reward->points_required)
+                        <a href="{{ route('claim_reward', [ 'reward_id'=> $reward->id ]) }}" class="card-link"
+                        onclick="return confirm('Are you sure you wish to Claim this Reward? {{ $reward->name }}');">
+                    @else
+                        <a class="card-subtitle mb-2 text-muted">
+                    @endif
+                        Redeem
                     </a>
                 </div>
             </div>

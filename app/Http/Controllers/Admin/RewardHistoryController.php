@@ -16,7 +16,7 @@ class RewardHistoryController extends Controller
     public function index()
     {
         $rewardHistory = DB::table('rewardHistory')
-            ->select('users.username',
+            ->select('users.username', 'rewardHistory.status',
             'rewardHistory.name', 'rewardHistory.description', 'rewardHistory.points_required', 'rewardHistory.created_at')
             ->join('users', 'rewardHistory.user_id', '=' ,'users.id')
             ->paginate(2);

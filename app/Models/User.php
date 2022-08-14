@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'total_points',
         'current_points',
+        'weekly_points',
         'privilege',
         'last_check_in'
     ];

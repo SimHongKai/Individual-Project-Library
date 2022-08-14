@@ -14,7 +14,7 @@ class RewardHistory extends Model
         'name',
         'description',
         'points_required', 
-        'created_at'
+        'status',
     ];
-    public $timestamps = false;
+    public $timestamps = true;
 }

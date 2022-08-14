@@ -30,8 +30,12 @@
                     @endswitch
                     </span>
                     <h5 class="mt-2 mb-0">{{ $user->username }}</h5>
-                    <span>Current Points: {{ $user->current_points }}</span>
-                    <span>Total Points: {{ $user->total_points }}</span>
+                    <span class="font-weight-bold">Current Points:</span> 
+                    <span>{{ $user->current_points }}</span>
+                    <span class="font-weight-bold">Total Points:</span> 
+                    <span>{{ $user->total_points }}</span>
+                    <span class="font-weight-bold">Weekly Points:</span> 
+                    <span>{{ $user->weekly_points }}/{{ $user->point_limit }}</span>
                     <h5 class="mt-2 mb-0">{{ Auth::id() }}</h5>
 
                     <div class="px-4 mt-1">

@@ -15,5 +15,6 @@ class Configuration extends Model
         'borrow_duration',
         'late_fees_base',
         'late_fees_increment',
+        'point_limit',
     ];
 }

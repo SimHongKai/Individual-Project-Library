@@ -67,6 +67,7 @@
                 <th>Borrowed At</th>
                 <th>Due At</th>
                 <th>Returned At</th>
+                <th>Late Fee (RM)</th>
             </tr>
             @foreach($borrowHistory as $record) 
                 <tr id = "{{ $record->ISBN }}Row">
@@ -87,6 +88,7 @@
                         {{ $record -> due_at }}
                     </td>
                     <td>{{ $record -> returned_at }}</td>
+                    <td>{{ sprintf('%.2f', $record -> late_fees) ?? "0.00" }}</td>
                 </tr>
             @endforeach
         </table>

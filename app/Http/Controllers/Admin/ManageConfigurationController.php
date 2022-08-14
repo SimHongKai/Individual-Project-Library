@@ -39,16 +39,18 @@ class ManageConfigurationController extends Controller
             'regular_borrow_duration'=>'required|numeric|min:0',
             'late_fees_base'=>'required|numeric|min:0',
             'late_fees_increment'=>'required|numeric|min:0',
+            'point_limit'=>'required|numeric|min:0',
         ]);
 
-        // update all status
+        // update all status borrow no of books and duration
         if ($this->updateConfiguration(1, $request->admin_borrow_no, $request->admin_borrow_duration) && 
         $this->updateConfiguration(2, $request->privileged_borrow_no, $request->privileged_borrow_duration) && 
         $this->updateConfiguration(3, $request->regular_borrow_no, $request->regular_borrow_duration)){
 
             $res = DB::table('configurations')
-                    ->update(['late_fees_base'=>$request->late_fees_base, 
-                    'late_fees_increment'=>$request->late_fees_increment]);
+                    ->update(['late_fees_base' => $request->late_fees_base, 
+                    'late_fees_increment' => $request->late_fees_increment,
+                    'point_limit' => $request->point_limit]);
 
             if ($res){
                 return redirect()->route('edit_configuration')->with('Success', 'Configuration Edited Successfully');

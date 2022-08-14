@@ -30,10 +30,18 @@
 <div class="form-group row">
     <label for="points_required" class="col-4 col-form-label">Points Required</label>
     <div class="col-8">
-        <input id="points_required" name="points_required" type="number" min="0" max="999999" required
+        <input id="points_required" name="points_required" type="number" min="0" max="999999" step="100" required
         value="{{ old('points_required') }}" placeholder="0" class="form-control">
     </div>
     <span class="text-danger">@error('points_required') {{$message}} @enderror</span>
+</div>
+<div class="form-group row">
+    <label for="qty_available" class="col-4 col-form-label">Quantity Available</label>
+    <div class="col-8">
+        <input id="qty_available" name="qty_available" type="number" min="0" max="999999" required
+        value="{{ old('qty_available') }}" placeholder="0" class="form-control">
+    </div>
+    <span class="text-danger">@error('qty_available') {{$message}} @enderror</span>
 </div>
 <div class="form-group row justify-content-center my-3">
     <div class="col-sm-4">

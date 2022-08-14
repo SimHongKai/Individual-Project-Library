@@ -13,6 +13,7 @@ class Reward extends Model
         'name',
         'description',
         'points_required',
+        'available_qty',
         'reward_img',
     ];
     public $timestamps = true;

@@ -43,7 +43,8 @@ class ManageRewardController extends Controller
         $request->validate([
             'name'=>'required|max:255',
             'description' => 'required',
-            'points_required'=>'required|numeric|max:999999',
+            'points_required'=>'required|numeric|min:0',
+            'available_qty' => 'required|numeric|min:0',
         ]);
         
         // create new reward to be saved 
@@ -63,11 +64,12 @@ class ManageRewardController extends Controller
         else {
             $reward->reward_img = 'no_img_available.jpg';
         }
-        // assign other data
         
+        // assign other data
         $reward->name = $request->name;
         $reward->description = $request->description;
         $reward->points_required = $request->points_required;
+        $reward->available_qty = $request->available_qty;
  
         // save reward record
         $res = $reward->save();
@@ -105,10 +107,11 @@ class ManageRewardController extends Controller
     {
         //validate book info before storing to database
         $request->validate([
-            'reward_id'=>'required|exists:rewards,id',
-            'name'=>'required|max:255',
+            'reward_id' => 'required|exists:rewards,id',
+            'name' => 'required|max:255',
             'description' => 'required',
-            'points_required'=>'required|numeric|max:999999',
+            'points_required' => 'required|numeric|min:0',
+            'available_qty' => 'required|numeric|min:0',
         ]);
         
         // find the reward
@@ -130,11 +133,12 @@ class ManageRewardController extends Controller
             $image->move($path, $image_name);
             $reward->reward_img = $image_name;
         }
+
         // assign other data
-        
         $reward->name = $request->name;
         $reward->description = $request->description;
         $reward->points_required = $request->points_required;
+        $reward->available_qty = $request->available_qty;
  
         // save edited reward record
         $res = $reward->save();

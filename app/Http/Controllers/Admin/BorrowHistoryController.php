@@ -17,7 +17,8 @@ class BorrowHistoryController extends Controller
     {
         $borrowHistory = DB::table('borrowHistory')
             ->select('users.username', 'books.ISBN', 'books.title', 'books.cover_img', 'borrowHistory.status',
-            'borrowHistory.material_no', 'borrowHistory.borrowed_at', 'borrowHistory.due_at', 'borrowHistory.returned_at')
+            'borrowHistory.material_no', 'borrowHistory.borrowed_at', 'borrowHistory.due_at', 
+            'borrowHistory.returned_at', 'borrowHistory.late_fees')
             ->join('books', 'borrowHistory.ISBN', '=', 'books.ISBN')
             ->join('users', 'borrowHistory.user_id', '=' ,'users.id')
             ->orderBy('borrowHistory.borrowed_at', 'desc')

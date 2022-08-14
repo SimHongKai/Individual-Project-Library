@@ -17,8 +17,9 @@ class RewardController extends Controller
      */
     public function index()
     {
-        $rewards = Reward::all();
-        return view('rewardShop')->with(compact('rewards'));
+        // get all rewards that have qty
+        $rewards = Reward::where('available_qty', '>', 0)->get();
+        return view('rewardRedemption')->with(compact('rewards'));
     }
 
     /**
@@ -31,13 +32,14 @@ class RewardController extends Controller
         // get Reward
         $reward = Reward::find($reward_id);
         
-        // deduct Points
+        // find user to deduct Points
         $user = User::find(Auth::id());
         
-        // check if points sufficient
-        if ($user->current_points >= $reward->points_required){
-            // deduct 
+        // check if points sufficient and reward still available
+        if ($user->current_points >= $reward->points_required && $reward->available_qty > 0){
+            // deduct points and qty
             $user->decrement('current_points', $reward->points_required);
+            $reward->decrement('available_qty', 1);
             // add Reward History
             $res = RewardHistory::Create([
                 'user_id' => Auth::id(),

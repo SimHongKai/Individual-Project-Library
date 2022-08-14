@@ -61,11 +61,12 @@
         
         <table class = "record-table">
             <tr>
-                <th>Time Claimed</th>
+                <th>Time Redeemed</th>
                 <th>User</th>
                 <th>Reward</th>
                 <th>Description</th>
                 <th>Points Spent</th>
+                <th>Status</th>
             </tr>
             @foreach($rewardHistory as $record) 
                 <tr>
@@ -77,6 +78,21 @@
                     <td>{{ $record -> description }}</td>
                     <td>
                         {{ $record -> points_required }}
+                    </td>
+                    <td>
+                        @switch($record->status)
+                            @case(1)
+                                Unclaimed/Redeemed
+                                @break
+                            @case(2)
+                                Claimed
+                                @break
+                            @case(3)
+                                Canceled
+                                @break
+                            @default
+                                Error Status
+                        @endswitch
                     </td>
                 </tr>
             @endforeach

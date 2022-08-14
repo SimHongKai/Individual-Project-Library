@@ -195,14 +195,15 @@ class BorrowBookController extends Controller
             $returnDetails->available = $available;
             $returnDetails->late_fee = 0.00;
 
-            $today = date('Y-m-d');
             // calculate Late Fee
+            $today = date('Y-m-d');
             if ($returnDetails->due_at < $today){ // if late
                 $dueDate = date_create($returnDetails->due_at);
                 $today = date_create($today);
                 $diff = date_diff($dueDate, $today);
                 $diff = $diff->format("%a");
-                $config = Configuration::find($returnDetails->id);
+
+                $config = Configuration::find($returnDetails->privilege);
                 $returnDetails->late_fee = $config->late_fees_base + ($config->late_fees_increment * ($diff-1));
             }
 
@@ -223,17 +224,35 @@ class BorrowBookController extends Controller
             'material_no'=>'required|exists:borrowHistory,material_no|regex:/[0-9]/',
         ]);
 
-        $borrowHistory = DB::table('borrowHistory')->select('ISBN', 'user_id')
+        $borrowHistory = DB::table('borrowHistory')->select('ISBN', 'user_id', 'due_at')
                         ->where('material_no', $request->material_no) // same material
                         ->where('status', 1) // not returned
                         ->first();
+        // return if exists
         if ($borrowHistory != null){
+
+            // calculate Late Fee
+            $today = date('Y-m-d');
+            $late_fees = 0;
+            if ($borrowHistory->due_at < $today){ // if late
+                $dueDate = date_create($borrowHistory->due_at);
+                $today = date_create($today);
+                $diff = date_diff($dueDate, $today);
+                $diff = $diff->format("%a");
+
+                // penalty is equal for all
+                $config = Configuration::find(1);
+                // set late fee
+                $late_fees = $config->late_fees_base + ($config->late_fees_increment * ($diff-1));
+            }
+
+            // update Borrow History
             DB::table('borrowHistory')
             ->where('material_no', $request->material_no) // same material
             ->where('status', 1) // not returned
-            ->update(['status' => 2, 'returned_at' => date("Y-m-d H:i:s")]);
+            ->update(['status' => 2, 'returned_at' => date("Y-m-d H:i:s"), 'late_fees' => $late_fees]);
 
-            // set material status to available
+            // update material status to available
             $material = Material::find($request->material_no);
             $material->status = 1;
             $material->save();
@@ -306,7 +325,18 @@ class BorrowBookController extends Controller
     public function giveUserPoints($user_id, $increase)
     {
         $user = User::find($user_id);
+        $config = Configuration::find($user->privilege);
+
+        $weekly_points = $user->weekly_points + $increase;
+
+        // check if over point limit
+        if($weekly_points > $config->point_limit){
+            // if over add till the max point_limit add(limit - current weekly), if max then will add 0
+            $increase = $config->point_limit - $user->weekly_points;
+        }
+        
         $user->increment('total_points', $increase);
         $user->increment('current_points', $increase);
+        $user->increment('weekly_points', $increase);
     }
 }

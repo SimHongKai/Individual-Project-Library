@@ -16,8 +16,9 @@ class BorrowHistory extends Model
         'material_no',
         'ISBN',
         'borrowed_at',
-        'due_at', 
+        'due_at',
         'returned_at',
+        'late_fees',
         'status',
         'created_by'
     ];
