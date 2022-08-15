@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Reward;
 use App\Models\RewardHistory;
 use Auth;
@@ -175,4 +176,59 @@ class ManageRewardController extends Controller
         return redirect()->back()->with("Error", "Specified Reward could not be deleted!");
     }
 
+    /**
+     * Claim Reward
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function claimRewardRedemption(Request $request, $reward_history_id){
+
+        $reward_history = RewardHistory::find($reward_history_id);
+
+        // check reward History found
+        if ($reward_history != null){
+            // update Status
+            $reward_history->status = 2;
+            $res = $reward_history->save();
+            // Success
+            if ($res){
+                return redirect()->route('admin_unclaimed_rewards')->with('Success', 'Reward set to Claimed Successfully!');
+            }
+        }
+        // Fail
+        return redirect()->back()->with("Error", "Failed to Claim Reward!");
+    }
+
+    /**
+     * Cancel Reward Redemption
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function cancelRewardRedemption(Request $request, $reward_history_id){
+
+        $reward_history = RewardHistory::find($reward_history_id);
+
+        // check reward History found
+        if ($reward_history != null){
+            // update Status
+            $reward_history->status = 3;
+            $res = $reward_history->save();
+            // if Success
+            if ($res){
+                // Refund points
+                $user = User::find($reward_history->user_id);
+                $user->increment('current_points', $reward_history->points_required);
+
+                // refund qty to reward if still exist
+                $reward = Reward::find($reward_history->reward_id);
+                if ($reward != null){
+                    $reward->increment('available_qty', 1);
+                }
+
+                return redirect()->route('admin_unclaimed_rewards')->with('Success', 'Reward Redemption Successfully Cancelled!');
+            }
+        }
+        // Fail
+        return redirect()->back()->with("Error", "Failed to Cancelled Reward!");
+    }
 }

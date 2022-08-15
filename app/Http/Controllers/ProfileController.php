@@ -70,7 +70,7 @@ class ProfileController extends Controller
         $rewardHistory = DB::table('rewardHistory')
             ->select('name', 'description', 'points_required', 'status', 'created_at')
             ->where('user_id', '=', $user->id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
         return view('rewardHistory')->with(compact('rewardHistory', 'user'));

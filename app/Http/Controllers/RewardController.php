@@ -27,7 +27,7 @@ class RewardController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function claimReward($reward_id)
+    public function redeemReward($reward_id)
     {
         // get Reward
         $reward = Reward::find($reward_id);
@@ -43,6 +43,7 @@ class RewardController extends Controller
             // add Reward History
             $res = RewardHistory::Create([
                 'user_id' => Auth::id(),
+                'reward_id' => $reward_id,
                 'name' => $reward->name,
                 'description' => $reward->description,
                 'points_required' => $reward->points_required,

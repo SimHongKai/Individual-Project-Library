@@ -53,6 +53,11 @@
                     Reward History
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin_unclaimed_rewards') }}">
+                    Unclaimed Rewards
+                </a>
+            </li>
         </ul>
     </div>
 

@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Reward Records</title>
+    <title>Unclaimed Reward Records</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -61,9 +61,22 @@
         </ul>
     </div>
 
-    <!-- Reward Table -->
+    
+
+    <!-- Unclaimed Reward Table -->
     <div class = "container my-3">
-        
+        <!-- Print success message that Reward Claimed or Cancelled -->
+        @if(Session::has('Success'))
+            <div class="alert alert-success">{{Session::get('Success')}}</div>
+        @endif
+        <!-- Print error message for Claim/Cancel of Reward -->
+        @if(Session::has('Fail'))
+            <div class="alert alert-danger">{{Session::get('Fail')}}</div>
+        @endif
+
+        @if($rewardHistory->count() == 0)
+        <h2 class="text-muted text-center">No Unclaimed Rewards Found</h2>
+        @else
         <table class = "record-table">
             <tr>
                 <th>Time Redeemed</th>
@@ -85,23 +98,16 @@
                         {{ $record -> points_required }}
                     </td>
                     <td>
-                        @switch($record->status)
-                            @case(1)
-                                <p class="text-warning">Unclaimed/Redeemed</p>
-                                @break
-                            @case(2)
-                                <p class="text-success">Claimed</p>
-                                @break
-                            @case(3)
-                                <p class="text-danger">Canceled</p>
-                                @break
-                            @default
-                                Error Status
-                        @endswitch
+                        <!-- Claim or Cancel -->
+                        <a href="{{ route('claim_reward', [ 'reward_history_id'=> $record->id ]) }}" class="btn btn-success"
+                        onclick="return confirm('Set the Reward as Claimed?');">Claim</a>
+                        <a href="{{ route('cancel_reward', [ 'reward_history_id'=> $record->id ]) }}" class="btn btn-danger"
+                        onclick="return confirm('Cancel Reward Redemption?');">Cancel</a>
                     </td>
                 </tr>
             @endforeach
         </table>
+        @endif
     </div>
     
     <!-- Pagination -->

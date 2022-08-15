@@ -60,8 +60,8 @@ Route::middleware('auth')->group(function(){
 
     // Reward Shop view
     Route::get('/reward_shop', [RewardController::class, 'index'])->name('reward_shop');
-    // Claim Reward
-    Route::get('/claim_reward/{reward_id}', [RewardController::class, 'claimReward'])->name('claim_reward');
+    // Redeem Reward
+    Route::get('/redeem_reward/{reward_id}', [RewardController::class, 'redeemReward'])->name('redeem_reward');
 
     // Leaderboard View
     Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
@@ -126,8 +126,14 @@ Route::middleware('authAdmin')->group(function(){
 
     // Borrow Records Views
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');
-    // Records Views
+    // Reward Records Views
     Route::get('/admin_reward_records', [RewardHistoryController::class, 'index'])->name('admin_reward_records');
+    // Unclaimed Reward Records Views
+    Route::get('/admin_unclaimed_rewards', [RewardHistoryController::class, 'unclaimedRewardView'])->name('admin_unclaimed_rewards');
+    // Claim Reward
+    Route::get('/claim_reward/{reward_history_id}', [ManageRewardController::class, 'claimRewardRedemption'])->name('claim_reward');
+    // Cancel Reward
+    Route::get('/cancel_reward/{reward_history_id}', [ManageRewardController::class, 'cancelRewardRedemption'])->name('cancel_reward');
 
     // Reward List Views
     Route::get('/manage_rewards', [ManageRewardController::class, 'index'])->name('manage_rewards');

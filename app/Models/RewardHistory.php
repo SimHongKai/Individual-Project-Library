@@ -11,6 +11,7 @@ class RewardHistory extends Model
     protected $table = 'rewardhistory';
     protected $fillable = [
         'user_id',
+        'reward_id',
         'name',
         'description',
         'points_required', 
