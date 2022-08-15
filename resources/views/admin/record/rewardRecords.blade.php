@@ -63,7 +63,10 @@
 
     <!-- Reward Table -->
     <div class = "container my-3">
-        
+
+        @if($rewardHistory->count() == 0)
+        <h2 class="text-muted text-center">No Reward History Found</h2>
+        @else
         <table class = "record-table">
             <tr>
                 <th>Time Redeemed</th>
@@ -102,6 +105,7 @@
                 </tr>
             @endforeach
         </table>
+        @endif
     </div>
     
     <!-- Pagination -->

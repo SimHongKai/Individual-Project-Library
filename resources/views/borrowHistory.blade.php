@@ -62,7 +62,10 @@
 
     <!-- Borrow Table -->
     <div class = "container">
-        
+
+        @if($borrowHistory->count() == 0)
+        <h2 class="text-muted text-center">No Borrow History Found</h2>
+        @else
         <table class = "record-table">
             <tr>
                 <th>Book</th>
@@ -107,6 +110,7 @@
                 </tr>
             @endforeach
         </table>
+        @endif
     </div>
     
     <!-- Pagination -->

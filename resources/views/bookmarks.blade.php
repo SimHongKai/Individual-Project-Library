@@ -62,7 +62,9 @@
 
     <!-- Bookmarks Table -->
     <div class = "container">
-        
+        @if($bookmarks->count() == 0)
+        <h2 class="text-muted text-center">User has No Bookmarks</h2>
+        @else
         <table class = "record-table">
             <tr>
                 <th>Book</th>
@@ -84,6 +86,7 @@
                 </tr>
             @endforeach
         </table>
+        @endif
     </div>
     
     <!-- Pagination -->
