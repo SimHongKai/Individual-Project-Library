@@ -71,7 +71,7 @@
                 <th>Book</th>
                 <th>Book Cover</th>
                 <th>Borrowed At</th>
-                <th>Due At</th>
+                <th>Due to Return At</th>
                 <th>Returned At</th>
                 <th>Status</th>
                 <th>Late Fee (RM)</th>
@@ -94,10 +94,10 @@
                     <td>
                     @switch($record->status)
                         @case(1)
-                            Borrowed
+                            <p class="text-warning">Borrowed</p>
                             @break
                         @case(2)
-                            Returned
+                            <p class="text-success">Returned</p>
                             @break
                         @case(3)
                             Missing

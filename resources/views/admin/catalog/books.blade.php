@@ -93,6 +93,12 @@
                                             Error Status
                                     @endswitch
                                     </span>
+                                    <br>
+                                    <span class="card-text-detail">Total Qty:</span>
+                                    <span class="card-text-detail-content">{{ $book->total_qty }}</span>
+                                    <br>
+                                    <span class="card-text-detail">Available Qty:</span>
+                                    <span class="card-text-detail-content">{{ $book->available_qty }}</span>
                                 </div>
                             </div>
                         </div>

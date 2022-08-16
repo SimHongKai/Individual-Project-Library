@@ -81,6 +81,9 @@
                                             Error Status
                                     @endswitch
                                     </span>
+                                    <br>
+                                    <span class="card-text-detail">Available Qty:</span>
+                                    <span class="card-text-detail-content">{{ $book->available_qty }}</span>
                                 </div>
                             </div>
                         </div>

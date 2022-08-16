@@ -31,7 +31,7 @@
                 		<a class="nav-link" href="{{ route('catalog') }}">Books</a>
               		</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ route('reward_shop') }}">Shop</a>
+						<a class="nav-link" href="{{ route('reward_shop') }}">Rewards</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>

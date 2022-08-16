@@ -15,7 +15,7 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
-        $paginationValue = 1;
+        $paginationValue = 25;
         $user = Auth::user();
         // find number of people that have points higer than user then + 1 to get user pos
         $position = User::where('total_points','>',$user->total_points)->count() + 1;

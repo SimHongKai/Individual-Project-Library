@@ -88,11 +88,11 @@
             </div>
         </div>
         <div class="rest">
-            <div class="others flex">    
-                @php
-                    $i = $users->firstItem()
-                @endphp
-                @foreach($users as $user)
+            @php
+                $i = $users->firstItem()
+            @endphp
+            @foreach($users as $user)
+                <div class="others flex">    
                     <div class="rank">
                         <i class="fas fa-caret-up"></i>
                         <p class="num">{{ $i++ }}</p>
@@ -101,8 +101,8 @@
                         <p class="link">{{ $user->username }}</p>
                         <p class="points">{{ $user->total_points }}</p>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
         </div>
 </div>

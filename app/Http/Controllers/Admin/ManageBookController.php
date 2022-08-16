@@ -16,7 +16,7 @@ class ManageBookController extends Controller
      */
     public function index()
     {
-        $books = Book::paginate(2);
+        $books = Book::paginate(10);
         return view('admin.catalog.books')->with(compact('books'));
     }
 

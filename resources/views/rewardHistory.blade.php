@@ -87,13 +87,13 @@
                     <td>
                         @switch($record->status)
                             @case(1)
-                                Unclaimed/Redeemed
+                                <p class="text-warning">Unclaimed/Redeemed</p>
                                 @break
                             @case(2)
-                                Claimed
+                                <p class="text-success">Claimed</p>
                                 @break
                             @case(3)
-                                Canceled
+                                <p class="text-danger">Canceled</p>
                                 @break
                             @default
                                 Error Status

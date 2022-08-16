@@ -18,7 +18,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::paginate(2);
+        $books = Book::paginate(10);
         return view('catalog')->with(compact('books'));
     }
 
@@ -113,7 +113,7 @@ class BookController extends Controller
         }
 
 
-        $books = $query->paginate(2);
+        $books = $query->paginate(10);
 
         return view('catalog')->with(compact('books'));
     }

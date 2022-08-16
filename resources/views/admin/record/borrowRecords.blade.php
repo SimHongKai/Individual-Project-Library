@@ -73,7 +73,7 @@
                 <th>Book Cover</th>
                 <th>User</th>
                 <th>Borrowed At</th>
-                <th>Due At</th>
+                <th>Book Due to Return At</th>
                 <th>Returned At</th>
                 <th>Late Fee (RM)</th>
             </tr>
