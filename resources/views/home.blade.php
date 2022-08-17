@@ -29,12 +29,12 @@
 
 <body>
     @include('header')
+    <!-- Search -->
     <div class="container my-3">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-
                         {{ __('Quick Search') }}
                         
                         <form action="{{ route('catalog_search_submit') }}" method="get" class="search-bar">
@@ -45,7 +45,7 @@
                                 </input>
                             </div>
                         </form>
-                        
+
                         <a href="{{ route('catalog_search') }}">Advanced Search Here</a>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
     <!-- End Recently Borrowed section -->
     @include('footer')
 
-    <!-- jQery -->
+    <!-- jQuery -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <!-- bootstrap js -->
     <script src="{{ asset('js/bootstrap.js') }}"></script>

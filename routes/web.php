@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 // Controllers
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\BookmarkController;
@@ -27,6 +28,9 @@ use App\Http\Controllers\Admin\RewardHistoryController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Debug View Only, Remember to Comment out TODO
+Route::get('/debug', [RecommendationController::class, 'index'])->name('debug');
 
 Route::get('/', function () {
     return view('home');
@@ -87,6 +91,10 @@ Route::middleware('authAdmin')->group(function(){
     Route::get('/manage_books', [ManageBookController::class, 'index'])->name('manage_books');
     // Book Details View
     Route::get('/manage_book_details/{ISBN}', [ManageBookController::class, 'manageBookDetailsView'])->name('manage_book_details');
+    // Display Catalog Search
+    Route::get('/manage_books_search', [ManageBookController::class, 'searchCatalogView'])->name('admin_catalog_search');
+    // Submit Catalog Search
+    Route::get('/manage_books_filtered', [ManageBookController::class, 'searchCatalog'])->name('admin_catalog_search_submit');
     // Add Book View
     Route::get('/add_book', [ManageBookController::class, 'addBookView'])->name('add_book');
     // Add Book Form Submit

@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Reward Redemption</title>
+    <title>VarDump</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -33,7 +33,7 @@
     <!-- Title -->
     <div class="heading_container heading_center my-3">
         <h2>
-            Reward Redemption
+            Var Dump
         </h2>
     </div>
 
@@ -49,35 +49,9 @@
         @endif
     </div>    
 
-    <!-- reward card detail box -->
+    <!-- Var Dump -->
     <div class="container">
-        <div class="row justify-content-center no-gutters">
-        @foreach($rewards as $reward)
-            <div class="card col-3 m-3">
-                <img src="{{ asset('images/rewards') }}/{{ $reward->reward_img }}" class="card-img-top" 
-                style="height: 25vw; object-fit: contain;" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $reward->name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Points Required: {{ $reward->points_required }}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">Qty Remaining: {{ $reward->available_qty }}</h6>
-                    <p class="card-text">
-                        {{ $reward->description }}
-                    </p>
-                </div>
-                <div class="card-footer text-center">
-                    <!-- Only enable Link if User has ENOUGH points to CLAIM reward -->
-                    @if (Auth::user()->current_points >= $reward->points_required)
-                        <a href="{{ route('redeem_reward', [ 'reward_id'=> $reward->id ]) }}" class="card-link"
-                        onclick="return confirm('Are you sure you wish to Claim this Reward? {{ $reward->name }}');">
-                    @else
-                        <a class="card-subtitle mb-2 text-muted">
-                    @endif
-                        Redeem
-                    </a>
-                </div>
-            </div>
-        @endforeach
-        </div>
+        @dd($__data)
     </div>
 
     @include('footer')

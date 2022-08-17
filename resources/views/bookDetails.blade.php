@@ -115,6 +115,14 @@
                         Recommendations
                     </h2>
                 </div>
+                @if($recs->count() == 0)
+                <div class="row justify-content-center">
+                    <h2 class="text-muted text-center">No Recommendations to Be Made</h2>
+                </div>
+                <div class="row justify-content-center">
+                    <h4 class="text-muted text-center">Be One of the First to Read this Book</h4>
+                </div>
+                @else
                 <div class="row">
                     @foreach ($recs as $book)
                         <div class="col-sm-6 col-md-4 ">
@@ -134,6 +142,7 @@
                         </div>
                     @endforeach
                 </div>
+                @endif
             </div>
         </div>
     </section>

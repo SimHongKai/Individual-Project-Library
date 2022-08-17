@@ -47,6 +47,30 @@
         </div>
     </div>
 
+    <!-- Search -->
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        {{ __('Quick Search') }}
+                        
+                        <form action="{{ route('admin_catalog_search_submit') }}" method="get" class="search-bar">
+                            @csrf
+                            <div class="searchInputWrapper mx-3">
+                                <input id="title" name="title" class="searchInput" type="text" placeholder='Search By Title'>
+                                    <i class="searchInputIcon fa fa-search"></i>
+                                </input>
+                            </div>
+                        </form>
+                        
+                        <a href="{{ route('admin_catalog_search') }}">Advanced Search Here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Pagination -->
     <div class="d-flex justify-content-center">
         {{ $books->links() }}
