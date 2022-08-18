@@ -119,4 +119,62 @@ class RecommendationController extends Controller
 
         return $ISBN_array;
     }
+
+    /**
+     * returns Null or List of ISBNs that are Also borrowed by other similar users
+     * 
+     * @return Array/Null
+     */
+    public function getSimilarISBNs($user_id = '1'){
+        $similarUsers = $this->getSimilarUserIds($user_id);
+
+        // $similarUsers = []; to test result when empty. will return empty array
+        /* SELECT DISTINCT ISBN FROM `borrowhistory` WHERE `user_id` IN $similarUsers */
+        $similarISBNs = DB::table('borrowHistory')->select('ISBN')->distinct()
+                        ->whereIn('user_id', $similarUsers)
+                        ->limit(3)
+                        ->inRandomOrder()
+                        ->get();
+
+        // convert query result to array
+        $similarISBNsArray = [];
+        foreach($similarISBNs as $similarISBN){
+            array_push($similarISBNsArray, $similarISBN->ISBN);
+        }
+
+        return $similarISBNsArray;
+        // view('debug.varDump')->with(compact('similarISBNsArray', 'similarUsers'));
+    }
+
+    /**
+     * returns Null or List of user ids that are have similar borrows to current user
+     * 
+     * @return Array/Null
+     */
+    public function getSimilarUserIds($user_id = '1'){
+
+        /* SELECT COUNT(DISTINCT `ISBN`) AS 'Match', `user_id` FROM `borrowhistory` 
+        WHERE `ISBN` IN (SELECT DISTINCT `ISBN` FROM `borrowhistory` WHERE `user_id`='1') 
+        GROUP BY `user_id` ORDER BY COUNT(DISTINCT `ISBN`) DESC LIMIT 3 OFFSET 1 */
+        // get the top users that have the highest number of similar borrows(matches) as the current user.
+        $similarUsers = DB::table('borrowHistory')->select('user_id') //DB::raw('COUNT(DISTINCT `ISBN`) AS `Match`')
+                                ->whereIn('ISBN', function ($query) use($user_id){
+                                    $query->select('ISBN')->distinct()
+                                    ->from('borrowhistory')
+                                    ->where('user_id', $user_id);
+                                })
+                                ->groupBy('user_id')
+                                ->orderBy(DB::raw('COUNT(DISTINCT ISBN)'), 'DESC') 
+                                ->limit(5)                       
+                                ->offset(1)
+                                ->get();
+
+        // convert query result to array
+        $similarUsersArray = [];
+        foreach($similarUsers as $similarUser){
+            array_push($similarUsersArray, $similarUser->user_id);
+        }
+
+        return $similarUsersArray;
+    }
 }
