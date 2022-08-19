@@ -51,7 +51,7 @@ class RecommendationController extends Controller
                 continue;
             }
             array_push($recommendations, $rules[$i][0]);
-            if (count($recommendations) >= 3){
+            if (count($recommendations) >= 5){
                 break;
             }
         }
@@ -132,7 +132,7 @@ class RecommendationController extends Controller
         /* SELECT DISTINCT ISBN FROM `borrowhistory` WHERE `user_id` IN $similarUsers */
         $similarISBNs = DB::table('borrowHistory')->select('ISBN')->distinct()
                         ->whereIn('user_id', $similarUsers)
-                        ->limit(3)
+                        ->limit(5)
                         ->inRandomOrder()
                         ->get();
 

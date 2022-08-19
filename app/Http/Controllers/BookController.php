@@ -37,7 +37,7 @@ class BookController extends Controller
 
             // run recommendation with FPGrowth
             $recsISBN = app('App\Http\Controllers\RecommendationController')->getRecommendationsISBN($request->ISBN);
-            $recs = Book::whereIn('ISBN', $recsISBN)->limit(3)->get();
+            $recs = Book::whereIn('ISBN', $recsISBN)->get();
 
             return view('bookDetails')->with(compact('book', 'materials', 'recs'));
         }

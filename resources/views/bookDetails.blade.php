@@ -123,7 +123,7 @@
                     <h4 class="text-muted text-center">Be One of the First to Read this Book</h4>
                 </div>
                 @else
-                <div class="row">
+                <div class="scrollable-row">
                     @foreach ($recs as $book)
                         <div class="col-sm-6 col-md-4 ">
                             <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">

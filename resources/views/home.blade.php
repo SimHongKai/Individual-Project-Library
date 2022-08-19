@@ -62,9 +62,9 @@
                         Popular Books
                     </h2>
                 </div>
-                <div class="row">
+                <div class="scrollable-row">
                     @foreach ($popularBooks as $book)
-                        <div class="col-sm-6 col-md-4 ">
+                        <div class="col-sm-6 col-md-4">
                             <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">
                                 <div class="box ">
                                 <div class="cover-img-box">
@@ -95,9 +95,9 @@
                         New Books
                     </h2>
                 </div>
-                <div class="row">
+                <div class="scrollable-row">
                     @foreach ($newBooks as $book)
-                        <div class="col-sm-6 col-md-4 ">
+                        <div class="col-sm-6 col-md-4">
                             <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">
                                 <div class="box ">
                                 <div class="cover-img-box">
@@ -128,9 +128,9 @@
                         Recently Borrowed Books
                     </h2>
                 </div>
-                <div class="row">
+                <div class="scrollable-row">
                     @foreach ($recentBooks as $book)
-                        <div class="col-sm-6 col-md-4 ">
+                        <div class="col-sm-6 col-md-4">
                             <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">
                                 <div class="box ">
                                 <div class="cover-img-box">
@@ -163,7 +163,7 @@
                         Similar Users are Reading these
                     </h2>
                 </div>
-                <div class="row">
+                <div class="scrollable-row">
                     @foreach ($similarRecs as $book)
                         <div class="col-sm-6 col-md-4 ">
                             <a href="{{ route('book_details', [ 'ISBN'=> $book->ISBN ]) }}">

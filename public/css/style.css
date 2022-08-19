@@ -1074,6 +1074,10 @@ a:hover {
 }
 
 /* Records Table */
+.table-responsive {
+  max-height:500px;
+}
+
 .record-table {
   font-family: Arial;
   border-collapse: collapse;
@@ -1231,4 +1235,28 @@ a:hover {
 .container:focus-within > 
 .searchInputWrapper > .searchInputIcon {
   right: 0.2rem;
+}
+
+.scrollable-row{
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.scrollable-card {
+  /*float: left;*/
+  max-width: 33.333%;
+  padding: .75rem;
+  margin-bottom: 2rem;
+  border: 0;
+  flex-basis: 33.333%;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.scrollable-card > img {
+  margin-bottom: .75rem;
+  width: 100%;
 }

@@ -66,7 +66,7 @@
         @if($rewardHistory->count() == 0)
         <h2 class="text-muted text-center">No Reward History Found</h2>
         @else
-        <table class = "record-table">
+        <table class = "table-responsive record-table">
             <tr>
                 <th>Time Claimed</th>
                 <th>Reward</th>

@@ -28,7 +28,7 @@
                 		<a class="nav-link" href="{{ route('home') }}">Home</a>
               		</li>
               		<li class="nav-item">
-                		<a class="nav-link" href="{{ route('catalog') }}">Books</a>
+                		<a class="nav-link" href="{{ route('catalog') }}">Catalog</a>
               		</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('reward_shop') }}">Rewards</a>
