@@ -34,22 +34,24 @@
     <!-- action bar -->
     <div class="container">
         <div class="row my-3">
-            <div class="col-1 text-left"> 
+            <div class="col-lg-4 col-sm-6 text-left"> 
                 <div class = 'btn'>
                     <a href="{{ URL::previous() }}" class="btn btn-info">Return</a>
                 </div>
             </div>
-            <div class="col-10 text-center">
+            
+            <div class="col-lg-4 col-sm-12">
                 <div class="heading_container heading_center">
                     <h2>
                         Book Details
                     </h2>
                 </div>
             </div>
+            
             <!-- add Bookmark Button for Users -->
             @guest
             @else
-            <div class="col-1 text-right">
+            <div class="col-lg-4 col-sm-6 text-right">
                 <button type="button" data-context="investor" data-context-action="view" data-context-id="7" id="bookmark_btn"
                 onclick="bookmarkBtnClick({{ $book->ISBN }})"
                 @if ($book->bookmarked == 1)

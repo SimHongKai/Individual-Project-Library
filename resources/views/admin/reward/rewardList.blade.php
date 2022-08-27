@@ -58,7 +58,7 @@
     <div class="container">
         <div class="row justify-content-center no-gutters">
         @foreach($rewards as $reward)
-            <div class="card col-3 m-3">
+            <div class="card col-lg-3 col-sm-6 m-3">
                 <img src="{{ asset('images/rewards') }}/{{ $reward->reward_img }}" class="card-img-top" 
                 style="height: 25vw; object-fit: contain;" alt="">
                 <div class="card-body">

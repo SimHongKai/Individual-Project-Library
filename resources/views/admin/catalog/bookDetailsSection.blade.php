@@ -4,10 +4,10 @@
     <div class="row justify-content-center">
         <div class="card-book">
             <div class="row">
-                <div class="innerLeft">
+                <div class="col-lg-3 col-sm-12">
                     <img class="card-img-left" src="{{ asset('images/book_covers') }}/{{ $book->cover_img }}?{{ $book->updated_at }}"/>
                 </div>
-                <div class="innerRight">
+                <div class="col-lg-9 col-sm-12">
                     <div class="horizontal-card-footer"><br>
                         <span class="card-text-title">Book Title:</span>
                         <span class="card-text-title-content">{{ $book->title }}</span>

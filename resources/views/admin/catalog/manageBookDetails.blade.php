@@ -43,12 +43,13 @@
         @endif
 
         <div class="row">
-            <div class="col-1 text-left"> 
+            <div class="col-lg-4 col-sm-6 text-left"> 
                 <div class = 'btn'>
                     <a href="{{ URL::previous() }}" class="btn btn-info">Return</a>
                 </div>
             </div>
-            <div class="col-11 text-center">
+            
+            <div class="col-lg-4 col-sm-12">
                 <div class="heading_container heading_center">
                     <h2>
                         Book Details
