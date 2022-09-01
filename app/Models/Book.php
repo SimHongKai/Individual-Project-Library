@@ -11,6 +11,7 @@ class Book extends Model
     protected $primaryKey = 'ISBN';
     protected $table = 'books';
     protected $fillable = [
+        'ISBN',
         'title',
         'description',
         'cover_img',
@@ -21,7 +22,7 @@ class Book extends Model
         'price',
         'total_qty',
         'available_qty',
-        'access_level'
+        'access_level',
     ];
     public $timestamps = true;
 }

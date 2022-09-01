@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Booking;
 use App\Models\Bookmark;
 use App\Models\Material;
 use Auth;
@@ -35,11 +36,21 @@ class BookController extends Controller
                                 ->count();
             $materials = Material::where('ISBN', $request->ISBN)->get();
 
+            // check Booking
+            $booking = Booking::where('ISBN', $book->ISBN)
+                        ->whereIn('status', [1, 2])
+                        ->where('user_id', Auth::id())
+                        ->first();
+            // get number of people in queue
+            $bookingQueue = Booking::where('ISBN', $book->ISBN)
+                            ->where('status', 2)
+                            ->count();
+
             // run recommendation with FPGrowth
             $recsISBN = app('App\Http\Controllers\RecommendationController')->getRecommendationsISBN($request->ISBN);
             $recs = Book::whereIn('ISBN', $recsISBN)->get();
 
-            return view('bookDetails')->with(compact('book', 'materials', 'recs'));
+            return view('bookDetails')->with(compact('book', 'materials', 'recs', 'booking', 'bookingQueue'));
         }
         else{
             return view('home');

@@ -205,13 +205,13 @@ class ManageBookController extends Controller
     }
 
     /**
-     * Check if specified ISBN has borrowed material
+     * Check if specified ISBN has borrowed/booked material
      * 
      * @return boolean
      */
     public function borrowedExists($ISBN){
         $count = Material::where('ISBN', $ISBN)
-                ->where('status', 2)
+                ->where('status', [2, 3])
                 ->count();
         if ($count){
             return true;

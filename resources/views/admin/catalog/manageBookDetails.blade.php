@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Manage Book Details</title>
+    <title>Manage Book Details - {{ $book->title }}</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -132,6 +132,9 @@
                             Borrowed
                             @break
                         @case(3)
+                            Booked
+                            @break
+                        @case(4)
                             Missing
                             @break
                         @default

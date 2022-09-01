@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Reward Records</title>
+    <title>Booking Records</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -61,47 +61,53 @@
         </ul>
     </div>
 
-    <!-- Reward Table -->
+    <!-- Booking Table -->
     <div class = "container my-3">
 
-        @if($rewardHistory->count() == 0)
-        <h2 class="text-muted text-center">No Reward History Found</h2>
+        @if($bookings->count() == 0)
+        <h2 class="text-muted text-center">No Bookings Found</h2>
         @else
         <table class = "record-table">
             <tr>
-                <th>Time Redeemed</th>
                 <th>User</th>
-                <th>Reward</th>
-                <th>Description</th>
-                <th>Points Spent</th>
+                <th>Book</th>
+                <th>Specific Material</th>
                 <th>Status</th>
+                <th>Booking Made on</th>
+                <th>Last Update</th>
             </tr>
-            @foreach($rewardHistory as $record) 
+            @foreach($bookings as $record) 
                 <tr>
+                    <td>{{ $record->username }}</td>
                     <td class = "record-table-title">
-                        <span>{{ $record->created_at }}</span>
+                        <a href = "{{ route('manage_book_details', [ 'ISBN'=> $record->ISBN ]) }}">
+                        Title: {{ $record -> title }} <br>
+                        ISBN: {{ $record -> ISBN }} <br>
+                        </a>
                     </td>
-                    <td>{{ $record -> username }}</td>
-                    <td>{{ $record -> name }}</td>
-                    <td>{{ $record -> description }}</td>
-                    <td>
-                        {{ $record -> points_required }}
+                    <td>@if(isset($record->material_no))
+                            {{ sprintf('%08d', $record->material_no) }}
+                        @else
+                            -    
+                        @endif
                     </td>
                     <td>
                         @switch($record->status)
                             @case(1)
-                                <p class="text-warning">Unclaimed/Redeemed</p>
+                                <p class="text-success">Active with Material</p>
                                 @break
                             @case(2)
-                                <p class="text-success">Claimed</p>
+                                <p class="text-warning">Active</p>
                                 @break
                             @case(3)
-                                <p class="text-danger">Cancelled</p>
+                                <p class="text-success">Cancelled/Complete</p>
                                 @break
                             @default
                                 Error Status
                         @endswitch
                     </td>
+                    <td>{{ $record -> created_at }}</td>
+                    <td>{{ $record -> updated_at }}</td>
                 </tr>
             @endforeach
         </table>
@@ -110,7 +116,7 @@
     
     <!-- Pagination -->
     <div class="d-flex justify-content-center">
-        {{ $rewardHistory->links() }}
+        {{ $bookings->links() }}
     </div>
 
     @include('footer')

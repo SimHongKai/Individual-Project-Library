@@ -56,6 +56,10 @@
                     @if(Session::has('Fail'))
                         <div class="alert alert-danger">{{Session::get('Fail')}}</div>
                     @endif
+                    <!-- Print error message that Books has a booking -->
+                    @if(Session::has('Booking'))
+                        <div class="alert alert-primary">{{Session::get('Booking')}}</div>
+                    @endif
                     
                     <!-- Form Input -->   
                     <div class="form-group row">

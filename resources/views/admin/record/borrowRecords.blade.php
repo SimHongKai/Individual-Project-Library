@@ -58,6 +58,11 @@
                     Unclaimed Rewards
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin_booking_records') }}">
+                    Booking Records
+                </a>
+            </li>
         </ul>
     </div>
 

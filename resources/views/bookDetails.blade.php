@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Manage Book Details</title>
+    <title>Book Details - {{ $book->title }}</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -66,11 +66,44 @@
         </div>
     </div>
 
+    <!-- Flash Messages -->
+    <div class="container">
+        <!-- Print success message that Booking was made -->
+        @if(Session::has('Success'))
+            <div class="alert alert-success">{{Session::get('Success')}}</div>
+        @endif
+        
+        @if(Session::has('Fail'))
+            <div class="alert alert-danger">{{Session::get('Fail')}}</div>
+        @endif
+    </div>    
+
     <!-- Book Details -->
     @include('admin.catalog.bookDetailsSection')
 
     <!-- Material Table -->
     <div class = "container my-3">
+
+        <!-- add Booking Button for Users -->
+        @auth
+            <div class="col-lg-12 col-sm-12 text-right">
+                <span><b>{{ $bookingQueue }}</b> People in Queue</span>
+            </div>
+        @if(!isset($booking))
+            <div class="col-lg-12 col-sm-12 text-right">
+                <a href="{{ route('create_booking', [ 'ISBN'=> $book->ISBN ]) }}" class="btn btn-info"
+                onclick="return confirm('Are you sure you wish to Make a Booking for {{ $book->title }}?');">
+                Make a Booking</a>
+            </div>
+        @else
+            <div class="col-lg-12 col-sm-12 text-right">
+                <a href="{{ route('cancel_booking', [ 'bookingID'=> $booking->id ]) }}" class="btn btn-info">
+                    Cancel Current Booking
+                </a>
+            </div>
+        @endif
+        @endauth
+
         <div class="heading_container heading_center">
             <h2>
                 Material Instances
@@ -97,6 +130,9 @@
                             Borrowed
                             @break
                         @case(3)
+                            Booked
+                            @break
+                        @case(4)
                             Missing
                             @break
                         @default

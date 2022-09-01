@@ -78,8 +78,7 @@
                         <div class="col-8">
                             <select class="custom-select form-select-lg mb-3" id="status" name="status">
                                 <option value=1 selected>Available</option>
-                                <option value=2>Borrowed</option>
-                                <option value=3>Missing</option>
+                                <option value=4>Missing</option>
                             </select>
                         </div>
                     </div>

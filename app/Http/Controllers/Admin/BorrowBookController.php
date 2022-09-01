@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\BorrowHistory;
 use App\Models\Book;
+use App\Models\Booking;
 use App\Models\Material;
 use App\Models\Configuration;
 use DB;
@@ -36,14 +37,14 @@ class BorrowBookController extends Controller
     public function getUser(Request $request)
     {
         if ($request->user_id != null){
-            // $request->user_id = ltrim($request->user_id, '0');
+            $request->user_id = ltrim($request->user_id, '0');
 
             $user = User::find($request->user_id);
             if ($user != null){
                 $borrowed = $this->getBorrowCount($user->id);
                 $available = Configuration::find($user->privilege)->no_of_borrows - $borrowed;
 
-                // temporarily override as it is faster
+                // temporarily assign as it is faster
                 $user->borrowed = $borrowed;
                 $user->available = $available;
                 return $user;
@@ -90,6 +91,18 @@ class BorrowBookController extends Controller
         $user->borrowed = $this->getBorrowCount($user->id);
         $user->available = $config->no_of_borrows - $user->borrowed;
 
+        // check for bookings
+        $bookingFlag = false; // for borrow availability check later
+        $bookings = Booking::where('material_no', $request->material_no)
+                    ->where('status', 1)
+                    ->first();
+        if ($bookings){
+            if ($bookings->user_id != $request->user_id){
+                return redirect()->back()->with("Fail", "This Book has been Booked by another User");
+            }
+            $bookingFlag = true;
+        }
+
         // check if user can still borrow
         if ($user->available <= 0){
             // no more borrows error message
@@ -104,7 +117,7 @@ class BorrowBookController extends Controller
         // get Material and Book
         $material = Material::find($request->material_no);
         $book = Book::find($material->ISBN);
-        if ($material->status != 1){ // not available to be borrowed
+        if ($material->status != 1 && !$bookingFlag){ // not available or no booking made
             // Material not available
             return redirect()->back()->with("Fail", "The Material is not available to be borrowed!");
         }
@@ -139,6 +152,12 @@ class BorrowBookController extends Controller
 
         // success
         if ($res){
+            // if booking was made for this borrow
+            if ($bookings){
+                // update booking as complete
+                $bookings->status = 3;
+                $bookings->save();
+            }
             // update BookQty
             $this->updateBookQty($material->ISBN);
             // reward user points here
@@ -252,11 +271,30 @@ class BorrowBookController extends Controller
             ->where('status', 1) // not returned
             ->update(['status' => 2, 'returned_at' => date("Y-m-d H:i:s"), 'late_fees' => $late_fees]);
 
-            // update material status to available
+            // get material being returned
             $material = Material::find($request->material_no);
-            $material->status = 1;
+
+            // check for bookings
+            $nextBooking = Booking::where('ISBN', $borrowHistory->ISBN)
+                            ->where('status', 2)
+                            ->orderBy('created_at')
+                            ->first();
+            // if another booking exists
+            if ($nextBooking){
+                // set next booking to use this material
+                $nextBooking->material_no = $request->material_no;
+                $nextBooking->status = 1;
+                $nextBooking->save();
+                // update material status to booked
+                $material->status = 3;
+                // flash message
+                Session::flash('Booking', 'Returned Book has a Booking!');
+            }else{
+                // update material status to available
+                $material->status = 1;
+            }     
+
             $material->save();
-            
             // update BookQty
             $this->updateBookQty($borrowHistory->ISBN);
 

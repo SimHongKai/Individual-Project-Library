@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 // Controllers
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\RewardController;
@@ -62,6 +63,11 @@ Route::middleware('auth')->group(function(){
     // Bookmark
     Route::post('/delete_bookmark', [BookmarkController::class, 'deleteBookmark'])->name('delete_bookmark');
 
+    // Make Booking
+    Route::get('/create_booking/{ISBN}', [BookingController::class, 'createBooking'])->name('create_booking');
+    // Cancel Booking
+    Route::get('/cancel_booking/{bookingID}', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
+
     // Reward Shop view
     Route::get('/reward_shop', [RewardController::class, 'index'])->name('reward_shop');
     // Redeem Reward
@@ -70,11 +76,13 @@ Route::middleware('auth')->group(function(){
     // Leaderboard View
     Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
-    // Default Profile View
+    // Default Profile View - Bookmarks
     Route::get('/profile/bookmarks', [ProfileController::class, 'bookmarkView'])->name('profile');
-    // Default Profile View
+    // Profile - Bookings
+    
+    // Profile - Borrow History
     Route::get('/profile/borrow', [ProfileController::class, 'borrowHistoryView'])->name('profile_borrows');
-    // Default Profile View
+    // Profile - Reward History
     Route::get('/profile/rewards', [ProfileController::class, 'rewardHistoryView'])->name('profile_rewards');
 
     // Claim Daily Points
@@ -134,6 +142,8 @@ Route::middleware('authAdmin')->group(function(){
 
     // Borrow Records Views
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');
+    // Booking Records Views
+    Route::get('/admin_booking_records', [BookingController::class, 'index'])->name('admin_booking_records');
     // Reward Records Views
     Route::get('/admin_reward_records', [RewardHistoryController::class, 'index'])->name('admin_reward_records');
     // Unclaimed Reward Records Views

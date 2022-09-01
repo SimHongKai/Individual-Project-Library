@@ -90,7 +90,7 @@ function getUserDetails(user_id){
     // always clear details
     clearUserDetails();
     // do nothing unless 36 characters are entered
-    if (user_id.length < 36){
+    if (user_id.length < 8){
         return;
     }
     // fetch

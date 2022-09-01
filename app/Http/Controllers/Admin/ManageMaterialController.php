@@ -37,7 +37,7 @@ class ManageMaterialController extends Controller
         $request->validate([
             'ISBN'=>'required|min:13|max:13|regex:/[0-9]/',
             'call_no'=>'required|unique:materials,call_no|max:255',
-            'status' => 'required|min:1|max:3',
+            'status' => 'required|min:1|max:4',
             'intake_date'=>'nullable|date_format:Y-m-d|before_or_equal:today',
         ]);
         
@@ -90,7 +90,7 @@ class ManageMaterialController extends Controller
         $request->validate([
             'material_no'=>'required|exists:materials,material_no|regex:/[0-9]/',
             'call_no'=>'required|max:255|unique:materials,call_no,'.$request->old_call_no.',call_no',
-            'status' => 'required|min:1|max:3',
+            'status' => 'required|min:1|max:4',
         ]);
         
         // Find the Material to be edited
@@ -124,11 +124,13 @@ class ManageMaterialController extends Controller
         // check material_no passed
         if ($request->material_no != null){
             $material = Material::find($request->material_no);
-            $res = $material->delete();
-            if ($res){
-                $this->updateBookQty($material->ISBN);
-                return redirect()->route('manage_book_details', [ 'ISBN'=> $material->ISBN ])
-                ->with('Mat Success', 'Material has been deleted');
+            if ($material->status == 1 || $material->status == 4){
+                $res = $material->delete();
+                if ($res){
+                    $this->updateBookQty($material->ISBN);
+                    return redirect()->route('manage_book_details', [ 'ISBN'=> $material->ISBN ])
+                    ->with('Mat Success', 'Material has been deleted');
+                }
             }
         }
         // fail

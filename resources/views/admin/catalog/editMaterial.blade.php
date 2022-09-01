@@ -85,9 +85,15 @@
                         <label for="status" class="col-4 col-form-label">Default Status</label> 
                         <div class="col-8">
                             <select class="custom-select form-select-lg mb-3" id="status" name="status">
-                                <option value=1 @if ($material->status == 1) {{ 'selected' }} @endif>Available</option>
-                                <option value=2 @if ($material->status == 2) {{ 'selected' }} @endif>Borrowed</option>
-                                <option value=3 @if ($material->status == 3) {{ 'selected' }} @endif>Missing</option>
+                                <!-- Can't change borrowed or booked books status -->
+                                @if ($material->status == 2)
+                                    <option value=2 selected>Borrowed</option>
+                                @elseif ($material->status == 3)
+                                    <option value=3 selected>Booked</option>
+                                @else
+                                    <option value=1 @if ($material->status == 1) {{ 'selected' }} @endif>Available</option>
+                                    <option value=4 @if ($material->status == 4) {{ 'selected' }} @endif>Missing</option>
+                                @endif
                             </select>
                         </div>
                     </div>
