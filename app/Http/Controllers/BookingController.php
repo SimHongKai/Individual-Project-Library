@@ -19,13 +19,53 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = DB::table('bookings')
-        ->select('users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
-        'books.title', 'bookings.created_at', 'bookings.updated_at')
-        ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
-        ->join('users', 'bookings.user_id', '=' ,'users.id')
-        ->orderBy('bookings.status')
-        ->orderBy('bookings.created_at', 'desc')
-        ->paginate(10);
+                    ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                    'books.title', 'bookings.created_at', 'bookings.expire_at')
+                    ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
+                    ->join('users', 'bookings.user_id', '=' ,'users.id')
+                    ->orderBy('bookings.status')
+                    ->orderBy('bookings.created_at', 'desc')
+                    ->paginate(10);
+
+        return view('admin.record.bookingRecords')->with(compact('bookings'));
+    }
+
+    /**
+     * Return list of Bookings for admin
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function bookedOnlyView()
+    {
+        $bookings = DB::table('bookings')
+                    ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                    'books.title', 'bookings.created_at', 'bookings.expire_at')
+                    ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
+                    ->join('users', 'bookings.user_id', '=' ,'users.id')
+                    ->where('status', 2)
+                    ->orderBy('bookings.status')
+                    ->orderBy('bookings.created_at', 'desc')
+                    ->paginate(10);
+
+        return view('admin.record.bookingRecords')->with(compact('bookings'));
+    }
+
+    /**
+     * Return list of Bookings for admin
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function bookedWithMaterialView()
+    {
+        $bookings = DB::table('bookings')
+                    ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                    'books.title', 'bookings.created_at', 'bookings.expire_at')
+                    ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
+                    ->join('users', 'bookings.user_id', '=' ,'users.id')
+                    ->where('status', 1)
+                    ->orderBy('bookings.status')
+                    ->orderBy('bookings.created_at', 'desc')
+                    ->paginate(10);
 
         return view('admin.record.bookingRecords')->with(compact('bookings'));
     }
@@ -73,6 +113,7 @@ class BookingController extends Controller
                 // create booking
                 $booking->material_no = $material->material_no;
                 $booking->status = 1;
+                $booking->expire_at = date('Y-m-d', strtotime("+7 days"));
             }
             // else just save the booking
             $res = $booking->save();

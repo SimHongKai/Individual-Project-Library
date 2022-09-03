@@ -124,6 +124,20 @@
                             </div>
                         </a>
                     </div>
+                    <div class="col-sm-12 col-md-12 ">
+                        <a href="{{ route('admin_booking_records') }}">
+                            <div class="box ">
+                            <div class="img-box">
+                                <img src="{{ asset('images/icons/booking.png')}}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    Bookings
+                                </h5>
+                            </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

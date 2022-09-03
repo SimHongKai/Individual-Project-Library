@@ -74,12 +74,13 @@ Route::middleware('auth')->group(function(){
     Route::get('/redeem_reward/{reward_id}', [RewardController::class, 'redeemReward'])->name('redeem_reward');
 
     // Leaderboard View
-    Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+    Route::get('/leaderboard', [LeaderboardController::class, 'totalLeaderboardView'])->name('leaderboard');
+    Route::get('/weekly_leaderboard', [LeaderboardController::class, 'weeklyLeaderboardView'])->name('weekly_leaderboard');
 
     // Default Profile View - Bookmarks
     Route::get('/profile/bookmarks', [ProfileController::class, 'bookmarkView'])->name('profile');
     // Profile - Bookings
-    
+    Route::get('/profile/bookings', [ProfileController::class, 'bookingHistoryView'])->name('profile_bookings');
     // Profile - Borrow History
     Route::get('/profile/borrow', [ProfileController::class, 'borrowHistoryView'])->name('profile_borrows');
     // Profile - Reward History
@@ -144,6 +145,10 @@ Route::middleware('authAdmin')->group(function(){
     Route::get('/admin_borrow_records', [BorrowHistoryController::class, 'index'])->name('admin_borrow_records');
     // Booking Records Views
     Route::get('/admin_booking_records', [BookingController::class, 'index'])->name('admin_booking_records');
+     // Booking Record - Booked Only Views
+     Route::get('/admin_booked_only_records', [BookingController::class, 'bookedOnlyView'])->name('admin_booked_only_records');
+     // Booking Record - Booked Only Views
+     Route::get('/admin_booked_material_records', [BookingController::class, 'bookedWithMaterialView'])->name('admin_booked_material_records');
     // Reward Records Views
     Route::get('/admin_reward_records', [RewardHistoryController::class, 'index'])->name('admin_reward_records');
     // Unclaimed Reward Records Views

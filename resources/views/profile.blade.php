@@ -36,7 +36,11 @@
                     <span>{{ $user->total_points }}</span>
                     <span class="font-weight-bold">Weekly Points:</span> 
                     <span>{{ $user->weekly_points }}/{{ $user->point_limit }}</span>
-                    <h5 class="mt-2 mb-0">{{ Auth::id() }}</h5>
+                    <h5 class="mt-2 mb-0">
+                        <div class = "row justify-content-center">
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', Auth::id()), 'C128') !!}
+                        </div>
+                    </h5>
 
                     <div class="px-4 mt-1">
                         <p class="fonts">
@@ -64,4 +68,30 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- profile action bar -->
+<div class="container">
+    <ul class="action_bar">
+        <li>
+            <a href="{{ route('profile') }}">
+                Bookmarks
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('profile_bookings') }}">
+                Bookings
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('profile_borrows') }}">
+                Borrow History
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('profile_rewards') }}">
+                Reward History
+            </a>
+        </li>
+    </ul>
 </div>

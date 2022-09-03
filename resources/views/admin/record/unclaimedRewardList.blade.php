@@ -79,23 +79,29 @@
         @else
         <table class = "record-table">
             <tr>
-                <th>Time Redeemed</th>
+                <th>Redemption ID</th>
                 <th>User</th>
                 <th>Reward</th>
                 <th>Description</th>
                 <th>Points Spent</th>
-                <th>Status</th>
+                <th>Redeemed At</th>
+                <th>Action</th>
             </tr>
             @foreach($rewardHistory as $record) 
                 <tr>
-                    <td class = "record-table-title">
-                        <span>{{ $record->created_at }}</span>
+                    <td class = "col-lg-2 col-md-4 col-sm-6">
+                        <div class = "row justify-content-center">
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->id), 'C128') !!}
+                        </div>
                     </td>
                     <td>{{ $record -> username }}</td>
                     <td>{{ $record -> name }}</td>
                     <td>{{ $record -> description }}</td>
                     <td>
                         {{ $record -> points_required }}
+                    </td>
+                    <td class = "record-table-title">
+                        <span>{{ $record->created_at }}</span>
                     </td>
                     <td>
                         <!-- Claim or Cancel -->

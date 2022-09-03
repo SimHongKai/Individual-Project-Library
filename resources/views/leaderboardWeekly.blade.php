@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Leaderboard</title>
+    <title>Weekly Leaderboard</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -37,21 +37,21 @@
         <div class="row">
             <div class="col-12 text-right"> 
                 <div class = 'btn'>
-                    <a href="{{ route('weekly_leaderboard') }}" class="btn btn-info">Weekly Board</a>
+                    <a href="{{ route('leaderboard') }}" class="btn btn-info">Total Board</a>
                 </div>
             </div>
         </div>
         <div class="row my-3">
             <div class="col-12 text-center"> 
                 <h6 class = 'title'>
-                    <span>You are ranked No.{{ $position }}, with {{ Auth::user()->total_points }} points.</span>
+                    <span>You are ranked No.{{ $position }}, with {{ Auth::user()->weekly_points }} points.</span>
                 </h6>
             </div>
         </div>
         <div class="row">
             <div class="col-12 text-center"> 
                 <div class = 'btn'>
-                    <a href="{{ route('leaderboard') }}?page={{ $pageNumber }}" class="btn btn-info">Jump to Your Position</a>
+                    <a href="{{ route('weekly_leaderboard') }}?page={{ $pageNumber }}" class="btn btn-info">Jump to Your Position</a>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
     <div class ="row justify-content-center">
         <div class="card one">
             <div class="header">
-                <h3 class="title">Total Points Leaderboard</h3>
+                <h3 class="title">Weekly Points Leaderboard</h3>
                 <div></div>
             </div>
             <div class="profile">
@@ -71,7 +71,7 @@
                 <img src="{{ asset('images/icons/crown.png') }}" alt="" class="photo">
                 @isset($topUsers[1])
                     <p class="link">{{ $topUsers[1]->username }}</p>
-                    <p class="points">{{ $topUsers[1]->total_points }}</p>
+                    <p class="points">{{ $topUsers[1]->weekly_points }}</p>
                 @endisset
                 </div>
                 <div class="person first">
@@ -80,7 +80,7 @@
                 <img src="{{ asset('images/icons/2nd.png') }}" alt="" class="photo main">
                 @isset($topUsers[0])
                     <p class="link">{{ $topUsers[0]->username }}</p>
-                    <p class="points">{{ $topUsers[0]->total_points }}</p>
+                    <p class="points">{{ $topUsers[0]->weekly_points }}</p>
                 @endisset
                 </div>
                 <div class="person third">
@@ -89,7 +89,7 @@
                 <img src="{{ asset('images/icons/3rd.png') }}" alt="" class="photo">
                 @isset($topUsers[2])
                     <p class="link">{{ $topUsers[2]->username }}</p>
-                    <p class="points">{{ $topUsers[2]->total_points }}</p>
+                    <p class="points">{{ $topUsers[2]->weekly_points }}</p>
                 @endisset
                 </div>
             </div>
@@ -105,7 +105,7 @@
                         </div>
                         <div class="info">
                             <p class="link">{{ $user->username }}</p>
-                            <p class="points">{{ $user->total_points }}</p>
+                            <p class="points">{{ $user->weekly_points }}</p>
                         </div>
                     </div>
                 @endforeach

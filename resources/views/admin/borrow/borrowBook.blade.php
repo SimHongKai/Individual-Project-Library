@@ -39,12 +39,17 @@
                     <a href="{{ route('admin_panel') }}" class="btn btn-info">Return</a>
                 </div>
             </div>
+            <div class="col-6 text-right"> 
+                <div class = 'btn'>
+                    <a href="{{ route('admin_panel') }}" class="btn btn-primary">Bookings</a>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class = 'col-md-10'>
+            <div class = 'col-md-10 col-sm-12'>
                 <h1><font face='Impact'>Borrow Book</font></h1>
                 <form action="{{route('borrow_book_submit')}}" method="post" enctype="multipart/form-data">
                     @csrf

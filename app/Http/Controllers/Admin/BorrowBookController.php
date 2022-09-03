@@ -263,6 +263,8 @@ class BorrowBookController extends Controller
                 $config = Configuration::find(1);
                 // set late fee
                 $late_fees = $config->late_fees_base + ($config->late_fees_increment * ($diff-1));
+                // flash message
+                Session::flash('LateFee', 'Late Fee: RM' . sprintf('%.2f', $late_fees));
             }
 
             // update Borrow History
@@ -284,6 +286,7 @@ class BorrowBookController extends Controller
                 // set next booking to use this material
                 $nextBooking->material_no = $request->material_no;
                 $nextBooking->status = 1;
+                $nextBooking->expire_at = date('Y-m-d', strtotime("+7 days"));
                 $nextBooking->save();
                 // update material status to booked
                 $material->status = 3;
@@ -304,6 +307,27 @@ class BorrowBookController extends Controller
         }
         return redirect()->back()->with('Fail', 'Material was not Borrowed!');
         
+    }
+
+    /**
+     * Calculate the late fee
+     * 
+     * @return float
+     */
+    public function calculateLateFees($due_at, $privilege){
+        // calculate Late Fee
+        $today = date('Y-m-d');
+        if ($due_at < $today){ // if late
+            $dueDate = date_create($due_at);
+            $today = date_create($today);
+            $diff = date_diff($dueDate, $today);
+            $diff = $diff->format("%a");
+
+            $config = Configuration::find($privilege);
+            $late_fee = $config->late_fees_base + ($config->late_fees_increment * ($diff-1));
+
+            return $late_fee;
+        }
     }
 
     /**

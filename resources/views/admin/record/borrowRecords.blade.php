@@ -58,11 +58,6 @@
                     Unclaimed Rewards
                 </a>
             </li>
-            <li>
-                <a href="{{ route('admin_booking_records') }}">
-                    Booking Records
-                </a>
-            </li>
         </ul>
     </div>
 
@@ -90,7 +85,7 @@
                         ISBN: {{ $record -> ISBN }} <br>
                         Material No: {{ sprintf('%08d', $record->material_no) }}
                         <div class = "row justify-content-center">
-                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->material_no), 'UPCA') !!}
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->material_no), 'C128') !!}
                         </div>
                         </a>
                     </td>

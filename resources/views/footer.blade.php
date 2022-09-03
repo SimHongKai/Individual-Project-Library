@@ -2,7 +2,7 @@
     <footer class="footer_section">
         <div class="container">
             <p>
-                <a>Some Undecided Footer Stuff here?</a>
+                <a>Footer Contents</a>
             </p>
         </div>
     </footer>

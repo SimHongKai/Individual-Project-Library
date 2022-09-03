@@ -20,9 +20,7 @@ class ProfileController extends Controller
      */
     public function bookmarkView()
     {
-        $user = Auth::user();
-        $config = Configuration::find($user->privilege);
-        $user->point_limit = $config->point_limit;
+        $user = $this->getUserProfileInfo();
 
         $bookmarks = DB::table('bookmarks')
             ->select('books.ISBN', 'books.title', 'books.cover_img', 'books.available_qty')
@@ -40,9 +38,7 @@ class ProfileController extends Controller
      */
     public function borrowHistoryView()
     {
-        $user = Auth::user();
-        $config = Configuration::find($user->privilege);
-        $user->point_limit = $config->point_limit;
+        $user = $this->getUserProfileInfo();
 
         $borrowHistory = DB::table('borrowHistory')
             ->select('books.ISBN', 'books.title', 'books.cover_img', 'borrowHistory.status',
@@ -63,17 +59,51 @@ class ProfileController extends Controller
      */
     public function rewardHistoryView()
     {
-        $user = Auth::user();
-        $config = Configuration::find($user->privilege);
-        $user->point_limit = $config->point_limit;
+        $user = $this->getUserProfileInfo();
 
         $rewardHistory = DB::table('rewardHistory')
-            ->select('name', 'description', 'points_required', 'status', 'created_at')
+            ->select('id', 'name', 'description', 'points_required', 'status', 'created_at')
             ->where('user_id', '=', $user->id)
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
         return view('rewardHistory')->with(compact('rewardHistory', 'user'));
+    }
+
+    /**
+     * Return list of Bookings for user
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function bookingHistoryView()
+    {
+        $user = $this->getUserProfileInfo();
+
+        $bookings = DB::table('bookings')
+                ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                'books.title', 'bookings.created_at', 'bookings.updated_at')
+                ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
+                ->join('users', 'bookings.user_id', '=' ,'users.id')
+                ->where('user_id', '=', $user->id)
+                ->orderBy('bookings.status')
+                ->orderBy('bookings.created_at', 'desc')
+                ->paginate(10);
+
+        return view('bookingHistory')->with(compact('bookings', 'user'));
+    }
+
+    /**
+     * Return list of user info for profile
+     * 
+     * @return User
+     */
+    public function getUserProfileInfo()
+    {
+        $user = Auth::user();
+        $config = Configuration::find($user->privilege);
+        $user->point_limit = $config->point_limit;
+
+        return $user;
     }
 
     /**

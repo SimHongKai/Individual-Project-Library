@@ -15,6 +15,7 @@ class Booking extends Model
         'IBSN',
         'material_no',
         'status',
+        'expire_at',
     ];
     public $timestamps = true;
 }

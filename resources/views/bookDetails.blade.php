@@ -121,7 +121,7 @@
                     {{ sprintf('%08d', $material->material_no) }}<br>
                 </td>
                 <td>{{ $material->call_no }}</td>
-                <td>
+                <td class = "col-4">
                     @switch($material->status)
                         @case(1)
                             Available
@@ -131,6 +131,11 @@
                             @break
                         @case(3)
                             Booked
+                            @if(isset($booking -> expire_at) && $booking->material_no == $material->material_no)
+                                | Expires at: {{ $booking -> expire_at }}
+                            @else
+                                -    
+                            @endif
                             @break
                         @case(4)
                             Missing

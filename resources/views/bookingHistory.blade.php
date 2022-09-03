@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Booking Records</title>
+    <title>Booking History</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -23,49 +23,27 @@
 
     <!-- Custom styles -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/profile.css') }}" rel="stylesheet" />
     <!-- responsive style -->
     <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" />
 </head>
 
 <body>
     @include('header')
-    <div class="container">
-        <!-- Action Buttons -->
-        <div class="row">
-            <div class="col-6 text-left"> 
-                <div class = 'btn'>
-                    <a href="{{ route('admin_panel') }}" class="btn btn-info">Return</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- action bar -->
-    <div class="container">
-        <ul class="action_bar">
-            <li>
-                <a href="{{ route('admin_booking_records') }}">
-                    Booking Records
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin_booked_only_records') }}">
-                    Booked Only
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin_booked_material_records') }}">
-                    Booked with Material Only
-                </a>
-            </li>
-        </ul>
+    @include('profile')
+
+    <div class="heading_container heading_center my-3">
+        <h2>
+            Booking History
+        </h2>
     </div>
 
     <!-- Booking Table -->
     <div class = "container my-3">
 
         @if($bookings->count() == 0)
-        <h2 class="text-muted text-center">No Bookings Found</h2>
+            <h2 class="text-muted text-center">No Bookings Found</h2>
         @else
         <table class = "record-table">
             <tr>
@@ -74,7 +52,7 @@
                 <th>Book</th>
                 <th>Specific Material</th>
                 <th>Status</th>
-                <th>Booked On</th>
+                <th>Made On</th>
                 <th>Expires On</th>
             </tr>
             @foreach($bookings as $record) 
@@ -86,15 +64,14 @@
                         </div>
                     </td>
                     <td>{{ $record->username }}</td>
-                    <td class = "col-lg-3 col-md-4 col-sm-6">
+                    <td class = "record-table-title">
                         <a href = "{{ route('manage_book_details', [ 'ISBN'=> $record->ISBN ]) }}">
                         Title: {{ $record -> title }} <br>
                         ISBN: {{ $record -> ISBN }} <br>
                         </a>
                     </td>
-                    <td>
-                        @if(isset($record->material_no))
-                            {{ sprintf('%08d', $record -> material_no) }}
+                    <td>@if(isset($record->material_no))
+                            {{ sprintf('%08d', $record->material_no) }}
                         @else
                             -    
                         @endif

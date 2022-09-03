@@ -33,27 +33,6 @@
 
     @include('profile')
 
-    <!-- action bar -->
-    <div class="container">
-        <ul class="action_bar">
-            <li>
-                <a href="{{ route('profile') }}">
-                    Bookmarks
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('profile_borrows') }}">
-                    Borrow History
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('profile_rewards') }}">
-                    Reward History
-                </a>
-            </li>
-        </ul>
-    </div>
-
     <div class="heading_container heading_center my-3">
         <h2>
             Borrow History
@@ -64,7 +43,7 @@
     <div class = "container">
 
         @if($borrowHistory->count() == 0)
-        <h2 class="text-muted text-center">No Borrow History Found</h2>
+            <h2 class="text-muted text-center">No Borrow History Found</h2>
         @else
         <table class = "record-table">
             <tr>

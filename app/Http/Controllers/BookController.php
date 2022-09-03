@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Configuration;
 use App\Models\Book;
 use App\Models\Booking;
 use App\Models\Bookmark;
@@ -49,6 +51,11 @@ class BookController extends Controller
             // run recommendation with FPGrowth
             $recsISBN = app('App\Http\Controllers\RecommendationController')->getRecommendationsISBN($request->ISBN);
             $recs = Book::whereIn('ISBN', $recsISBN)->get();
+
+            // reward authenticated user with points
+            if (Auth::id()){
+                $this->giveUserPoints(Auth::id(), 10);
+            }
 
             return view('bookDetails')->with(compact('book', 'materials', 'recs', 'booking', 'bookingQueue'));
         }
@@ -131,5 +138,26 @@ class BookController extends Controller
         return view('catalog')->with(compact('books'));
     }
         
-    
+    /**
+     * Give User Points
+     *
+     * @return
+     */
+    public function giveUserPoints($user_id, $increase)
+    {
+        $user = User::find($user_id);
+        $config = Configuration::find($user->privilege);
+
+        $weekly_points = $user->weekly_points + $increase;
+
+        // check if over point limit
+        if($weekly_points > $config->point_limit){
+            // if over add till the max point_limit add(limit - current weekly), if max then will add 0
+            $increase = $config->point_limit - $user->weekly_points;
+        }
+        
+        $user->increment('total_points', $increase);
+        $user->increment('current_points', $increase);
+        $user->increment('weekly_points', $increase);
+    }
 }

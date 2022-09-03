@@ -44,7 +44,7 @@
 					</li>				
 					@else
 					<li class="nav-item">
-						<a class="nav-link" href="{{ route('profile') }}">{{ Auth::user()->username }}</a>
+						<a class="nav-link" href="{{ route('profile') }}">{{ Str::limit(Auth::user()->username, 15) }}</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('logout') }}"

@@ -56,7 +56,11 @@
                     @if(Session::has('Fail'))
                         <div class="alert alert-danger">{{Session::get('Fail')}}</div>
                     @endif
-                    <!-- Print error message that Books has a booking -->
+                    <!-- Print message for Late Fee -->
+                    @if(Session::has('LateFee'))
+                        <div class="alert alert-danger">{{Session::get('LateFee')}}</div>
+                    @endif
+                    <!-- Print message that Books has a booking -->
                     @if(Session::has('Booking'))
                         <div class="alert alert-primary">{{Session::get('Booking')}}</div>
                     @endif

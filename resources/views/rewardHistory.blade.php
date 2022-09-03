@@ -32,28 +32,7 @@
     @include('header')
 
     @include('profile')
-
-    <!-- action bar -->
-    <div class="container">
-        <ul class="action_bar">
-            <li>
-                <a href="{{ route('profile') }}">
-                    Bookmarks
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('profile_borrows') }}">
-                    Borrow History
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('profile_rewards') }}">
-                    Reward History
-                </a>
-            </li>
-        </ul>
-    </div>
-
+    
     <div class="heading_container heading_center my-3">
         <h2>
             Reward History
@@ -66,18 +45,21 @@
         @if($rewardHistory->count() == 0)
         <h2 class="text-muted text-center">No Reward History Found</h2>
         @else
-        <table class = "table-responsive record-table">
+        <table class = "record-table">
             <tr>
-                <th>Time Claimed</th>
+                <th>Redemption Code</th>
                 <th>Reward</th>
                 <th>Description</th>
                 <th>Points Spent</th>
                 <th>Status</th>
+                <th>Time Claimed</th>
             </tr>
             @foreach($rewardHistory as $record) 
                 <tr>
-                    <td class = "record-table-title">
-                        <span>{{ $record->created_at }}</span>
+                    <td class = "col-lg-2 col-md-4 col-sm-6">
+                        <div class = "row justify-content-center">
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->id), 'C128') !!}
+                        </div>
                     </td>
                     <td>{{ $record -> name }}</td>
                     <td>{{ $record -> description }}</td>
@@ -98,6 +80,9 @@
                             @default
                                 Error Status
                         @endswitch
+                    </td>
+                    <td class = "record-table-title">
+                        <span>{{ $record->created_at }}</span>
                     </td>
                 </tr>
             @endforeach
