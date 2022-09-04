@@ -14,7 +14,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <title>Borrow Book</title>
+    <title>Borrow Book - Booking</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
@@ -41,7 +41,7 @@
             </div>
             <div class="col-6 text-right"> 
                 <div class = 'btn'>
-                    <a href="{{ route('borrow_booked_book') }}" class="btn btn-primary">Bookings</a>
+                    <a href="{{ route('borrow_book') }}" class="btn btn-primary">Regular Borrows</a>
                 </div>
             </div>
         </div>
@@ -62,6 +62,18 @@
                         <div class="alert alert-danger">{{Session::get('Fail')}}</div>
                     @endif
 
+                    <!-- Form Input -->   
+                    <div class="form-group row">
+                        <label for="booking_id" class="col-5 col-form-label"><b>Booking ID</b></label> 
+                        <div class="col-lg-5">
+                            <input id="booking_id" name="booking_id" placeholder="Booking ID" type="text" 
+                            class="form-control" required onkeyup="getBookingDetails(this.value)">
+
+                            <span class="text-danger">@error('user_id') {{ $message }} @enderror</span>
+                        </div>
+                    </div>   
+                    <!-- Form Input End -->   
+
                     <!-- User Borrowing -->
                     <div class="card my-3">
                         <div class="card-header">
@@ -74,9 +86,9 @@
                                 <label for="user_id" class="col-4 col-form-label">User ID</label> 
                                 <div class="col-5">
                                     <input id="user_id" name="user_id" placeholder="User ID" type="text" 
-                                    class="form-control" required onkeyup="getUserDetails(this.value)"
+                                    readonly class="form-control" required"
                                     @if ($user->id)
-                                        value="{{ sprintf('%08d', $user->id) }}" 
+                                        value="{{ $user->id }}" 
                                     @endif>
                                     <span class="text-danger">@error('user_id') {{ $message }} @enderror</span>
                                 </div>
@@ -122,8 +134,7 @@
                                         <label for="material_no" class="col-3 col-form-label">Material No</label> 
                                         <div class="col-6">
                                             <input id="material_no" name="material_no" placeholder="Material No" 
-                                            type="text" class="form-control" required
-                                            onkeyup="getMaterialDetails(this.value)">
+                                            type="text" class="form-control" readonly required">
                                             <span class="text-danger">@error('material_no') {{ $message }} @enderror</span>
                                         </div>
                                     </div>   

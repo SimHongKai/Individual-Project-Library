@@ -43,5 +43,28 @@ class RewardHistoryController extends Controller
 
         return view('admin.record.unclaimedRewardList')->with(compact('rewardHistory'));
     }
+    
+    /**
+     * Return Claim Reward Details
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function getClaimRewardDetails(Request $request)
+    {
+        // Get Reward that is unclaimed
+        $rewardHistory = DB::table('rewardHistory')
+            ->select('users.username', 'rewards.reward_img', 'rewardHistory.id', 
+            'rewardHistory.name', 'rewardHistory.description', 'rewardHistory.points_required', 'rewardHistory.created_at')
+            ->join('rewards', 'rewardHistory.reward_id', '=' ,'rewards.id')
+            ->join('users', 'rewardHistory.user_id', '=' ,'users.id')
+            ->where('rewardHistory.id', $request->reward_history_id)
+            ->where('rewardHistory.status', 1)
+            ->first();
 
+        if ($rewardHistory){
+            return $rewardHistory;
+        }
+        return null;
+
+    }
 }

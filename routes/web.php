@@ -128,17 +128,20 @@ Route::middleware('authAdmin')->group(function(){
 
     // Borrow Book Form
     Route::get('/borrow_book', [BorrowBookController::class, 'borrowBookView'])->name('borrow_book');
+    // Borrow Booked Book Form
+    Route::get('/borrow_booked_book', [BorrowBookController::class, 'borrowBookedBookView'])->name('borrow_booked_book');
     // Borrow Book Submit
     Route::post('/borrow_book', [BorrowBookController::class, 'borrowBook'])->name('borrow_book_submit');
-    // Route for XMLHttp Requests using fetch
+    // Route for XMLHttp Requests using fetch for Borrow Book Details
     Route::post('/borrow_book/get-user', [BorrowBookController::class, 'getUser'])->name('borrow_book_get_user');
     Route::post('/borrow_book/get-material', [BorrowBookController::class, 'getMaterial'])->name('borrow_book_get_material');
+    Route::post('/borrow_booked_book/get-booking', [BorrowBookController::class, 'getBooking'])->name('borrow_book_get_booking');
 
     // Return Book Form
     Route::get('/return_book', [BorrowBookController::class, 'returnBookView'])->name('return_book');
     // Return Book Submit
     Route::post('/return_book', [BorrowBookController::class, 'returnBook'])->name('return_book_submit');
-    // Route for XMLHttp Requests using fetch
+    // Route for XMLHttp Requests using fetch for Return Book Details
     Route::post('/return_book/get-return-details', [BorrowBookController::class, 'getReturnDetails'])->name('get_return_details');
 
     // Borrow Records Views
@@ -170,6 +173,12 @@ Route::middleware('authAdmin')->group(function(){
     Route::post('/edit_reward', [ManageRewardController::class, 'editReward'])->name('edit_reward_submit');
     // Delete Reward Submit
     Route::get('/delete_reward/{reward_id}', [ManageRewardController::class, 'deleteReward'])->name('delete_reward');
+    // Claim Reward Form
+    Route::get('/claim_reward', [ManageRewardController::class, 'claimRewardView'])->name('claim_reward_view');
+    // Claim Reward Submit
+    Route::post('/claim_reward', [ManageRewardController::class, 'claimReward'])->name('claim_reward_submit');
+    // Route for XMLHttp Requests using fetch for Claim Reward Details
+    Route::post('/claim_reward/get-claim-details', [RewardHistoryController::class, 'getClaimRewardDetails'])->name('get_claim_details');
 
     // Edit Config Form
     Route::get('/edit_configuration', [ManageConfigurationController::class, 'editConfigurationView'])->name('edit_configuration');

@@ -30,6 +30,18 @@ class BorrowBookController extends Controller
     }
 
     /**
+     * Return view for Form to enter Book that will be borrowed
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function borrowBookedBookView(Request $request)
+    {
+        // pass empty User as the view will use a user variable in another route
+        $user = new User();
+        return view('admin.borrow.borrowBookedBook')->with(compact('user'));
+    }
+
+    /**
      * Return user info
      * 
      * @return \Illuminate\Http\Response
@@ -67,6 +79,24 @@ class BorrowBookController extends Controller
             $book = Book::find($material->ISBN);
             if ($book != null){
                 return $book;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Return Booking info
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function getBooking(Request $request)
+    {
+        if ($request->booking_id != null){
+            // $request->material_no = ltrim($request->material_no, '0');
+
+            $booking = Booking::find($request->booking_id);
+            if ($booking != null){
+                return $booking;
             }
         }
         return null;
@@ -167,6 +197,10 @@ class BorrowBookController extends Controller
             $user->available = $user->available - 1;
             // flash message
             Session::flash('Success', 'Book has been Borrowed Successfully');
+            
+            if ($request->booking_id){
+                return redirect()->back();
+            }
             return view('admin.borrow.borrowBook')->with(compact('user'));
         }
         // fail
@@ -301,8 +335,10 @@ class BorrowBookController extends Controller
             // update BookQty
             $this->updateBookQty($borrowHistory->ISBN);
 
-            // reward user with points
-            $this->giveUserPoints($borrowHistory->user_id, 50);
+            // reward user with points if not late
+            if ($late_fees == 0){
+                $this->giveUserPoints($borrowHistory->user_id, 50);
+            }
             return redirect()->route('return_book')->with('Success', 'Book Returned Successfully!');
         }
         return redirect()->back()->with('Fail', 'Material was not Borrowed!');

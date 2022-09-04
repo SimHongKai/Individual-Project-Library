@@ -1,4 +1,7 @@
 // set variables
+var user_id = document.getElementById("user_id");
+var material_no = document.getElementById("material_no");
+
 var title = document.getElementById("title");
 var ISBN = document.getElementById("ISBN");
 var author = document.getElementById("author");
@@ -140,10 +143,42 @@ function setUserDetails(user){
     }
 }
 
-// function to claer USER information in BorrowBook Blade
+// function to clear USER information in BorrowBook Blade
 function clearUserDetails(){
     username.innerHTML = "";
     borrowed.innerHTML = "";
     available.innerHTML = "";
     privilege.innerHTML = "";
+}
+
+// function to get Booking Details and pass to other function to call
+function getBookingDetails(booking_id){
+
+    // fetch
+    fetch('borrow_booked_book/get-booking', {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-Token": $('meta[name="csrf_token"]').attr('content')
+        },
+        body: JSON.stringify({booking_id: booking_id}),
+        method: 'post',
+        credentials: "same-origin",})
+    .then(function (response) {
+        // get response and convert to JSON
+        return response.json();
+    })
+    .then(function (response) {
+        // handle response JSON
+        console.log(response);
+        user_id.value = String(response.user_id).padStart(8, '0');
+        material_no.value = String(response.material_no).padStart(8, '0');
+        getUserDetails(user_id.value);
+        getMaterialDetails(material_no.value);
+    })
+    .catch(function(error){
+        // log errors
+        console.log(error);
+    });    
 }

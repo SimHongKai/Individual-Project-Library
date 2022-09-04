@@ -177,6 +177,44 @@ class ManageRewardController extends Controller
     }
 
     /**
+     * Return view for Admin to Add Rewards
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function claimRewardView(Request $request)
+    {
+        return view('admin.reward.claimReward');
+    }
+
+    /**
+     * Claim Reward
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function claimReward(Request $request){
+
+        //validate book info before storing to database
+        $request->validate([
+            'reward_history_id' => 'required|exists:rewardHistory,id',
+        ]);
+
+        $reward_history = RewardHistory::find($request->reward_history_id);
+
+        // check reward History found
+        if ($reward_history != null){
+            // update Status
+            $reward_history->status = 2;
+            $res = $reward_history->save();
+            // Success
+            if ($res){
+                return redirect()->back()->with('Success', 'Reward Claimed Successfully!');
+            }
+        }
+        // Fail
+        return redirect()->back()->with("Error", "Failed to Claim Reward!");
+    }
+
+    /**
      * Claim Reward
      * 
      * @return \Illuminate\Http\Response
@@ -192,7 +230,7 @@ class ManageRewardController extends Controller
             $res = $reward_history->save();
             // Success
             if ($res){
-                return redirect()->route('admin_unclaimed_rewards')->with('Success', 'Reward set to Claimed Successfully!');
+                return redirect()->back()->with('Success', 'Reward Claimed Successfully!');
             }
         }
         // Fail
@@ -215,7 +253,7 @@ class ManageRewardController extends Controller
             $res = $reward_history->save();
             // if Success
             if ($res){
-                // Refund points
+                // Refund points don't increment weekly or total
                 $user = User::find($reward_history->user_id);
                 $user->increment('current_points', $reward_history->points_required);
 
