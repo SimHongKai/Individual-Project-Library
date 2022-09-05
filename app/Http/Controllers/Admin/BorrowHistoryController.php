@@ -20,7 +20,7 @@ class BorrowHistoryController extends Controller
             'borrowHistory.material_no', 'borrowHistory.borrowed_at', 'borrowHistory.due_at', 
             'borrowHistory.returned_at', 'borrowHistory.late_fees')
             ->join('books', 'borrowHistory.ISBN', '=', 'books.ISBN')
-            ->join('users', 'borrowHistory.user_id', '=' ,'users.id')
+            ->join('users', 'borrowHistory.user_id', '=' ,'users.user_id')
             ->orderBy('borrowHistory.borrowed_at', 'desc')
             ->paginate(10);
             

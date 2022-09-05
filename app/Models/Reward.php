@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reward extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'reward_id';
     protected $table = 'rewards';
     protected $fillable = [
         'name',

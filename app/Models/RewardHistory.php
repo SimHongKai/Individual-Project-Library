@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RewardHistory extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'reward_history_id';
     protected $table = 'rewardhistory';
     protected $fillable = [
         'user_id',

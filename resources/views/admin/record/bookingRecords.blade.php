@@ -80,9 +80,9 @@
             @foreach($bookings as $record) 
                 <tr>
                     <td class = "col-lg-2 col-md-4 col-sm-6">
-                        {{ sprintf('%08d', $record->id) }}
+                        {{ sprintf('%08d', $record->booking_id) }}
                         <div class = "row justify-content-center">
-                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->id), 'C128') !!}
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->booking_id), 'C128') !!}
                         </div>
                     </td>
                     <td>{{ $record->username }}</td>

@@ -67,7 +67,7 @@
                 <div class="card-footer text-center">
                     <!-- Only enable Link if User has ENOUGH points to CLAIM reward -->
                     @if (Auth::user()->current_points >= $reward->points_required)
-                        <a href="{{ route('redeem_reward', [ 'reward_id'=> $reward->id ]) }}" class="card-link"
+                        <a href="{{ route('redeem_reward', [ 'reward_id'=> $reward->reward_id ]) }}" class="card-link"
                         onclick="return confirm('Are you sure you wish to Claim this Reward? {{ $reward->name }}');">
                     @else
                         <a class="card-subtitle mb-2 text-muted">

@@ -151,7 +151,7 @@ class RecommendationController extends Controller
      * 
      * @return Array/Null
      */
-    public function getSimilarUserIds($user_id = '1'){
+    public function getSimilarUserIds($user_id){
 
         /* SELECT COUNT(DISTINCT `ISBN`) AS 'Match', `user_id` FROM `borrowhistory` 
         WHERE `ISBN` IN (SELECT DISTINCT `ISBN` FROM `borrowhistory` WHERE `user_id`='1') 

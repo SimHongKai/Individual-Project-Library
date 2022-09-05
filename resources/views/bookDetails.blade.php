@@ -97,7 +97,7 @@
             </div>
         @else
             <div class="col-lg-12 col-sm-12 text-right">
-                <a href="{{ route('cancel_booking', [ 'bookingID'=> $booking->id ]) }}" class="btn btn-info">
+                <a href="{{ route('cancel_booking', [ 'bookingID'=> $booking->booking_id ]) }}" class="btn btn-info">
                     Cancel Current Booking
                 </a>
             </div>

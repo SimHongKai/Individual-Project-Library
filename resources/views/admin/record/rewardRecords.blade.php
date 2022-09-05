@@ -81,7 +81,7 @@
                 <tr>
                     <td class = "col-lg-2 col-md-4 col-sm-6">
                         <div class = "row justify-content-center">
-                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->id), 'C128') !!}
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->reward_history_id), 'C128') !!}
                         </div>
                     </td>
                     <td>{{ $record -> username }}</td>

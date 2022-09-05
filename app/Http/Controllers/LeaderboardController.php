@@ -19,7 +19,7 @@ class LeaderboardController extends Controller
         $user = Auth::user();
         // find number of people that have points higer than user then + 1 to get user pos
         $position = User::where('total_points','>',$user->total_points)->count() + 1;
-        $pageNumber = $position/$paginationValue;
+        $pageNumber = ceil($position/$paginationValue);
 
         $users = User::orderBy('total_points', 'desc')->paginate($paginationValue);
         $topUsers = User::orderBy('total_points', 'desc')->limit(3)->get();
@@ -38,7 +38,7 @@ class LeaderboardController extends Controller
         $user = Auth::user();
         // find number of people that have points higer than user then + 1 to get user pos
         $position = User::where('weekly_points','>',$user->weekly_points)->count() + 1;
-        $pageNumber = $position/$paginationValue;
+        $pageNumber = ceil($position/$paginationValue);
 
         $users = User::orderBy('weekly_points', 'desc')->paginate($paginationValue);
         $topUsers = User::orderBy('weekly_points', 'desc')->limit(3)->get();

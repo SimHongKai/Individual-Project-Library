@@ -19,10 +19,10 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = DB::table('bookings')
-                    ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                    ->select('bookings.booking_id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
                     'books.title', 'bookings.created_at', 'bookings.expire_at')
                     ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
-                    ->join('users', 'bookings.user_id', '=' ,'users.id')
+                    ->join('users', 'bookings.user_id', '=' ,'users.user_id')
                     ->orderBy('bookings.status')
                     ->orderBy('bookings.created_at', 'desc')
                     ->paginate(10);
@@ -38,11 +38,11 @@ class BookingController extends Controller
     public function bookedOnlyView()
     {
         $bookings = DB::table('bookings')
-                    ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                    ->select('bookings.booking_id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
                     'books.title', 'bookings.created_at', 'bookings.expire_at')
                     ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
-                    ->join('users', 'bookings.user_id', '=' ,'users.id')
-                    ->where('status', 2)
+                    ->join('users', 'bookings.user_id', '=' ,'users.user_id')
+                    ->where('bookings.status', 2)
                     ->orderBy('bookings.status')
                     ->orderBy('bookings.created_at', 'desc')
                     ->paginate(10);
@@ -58,11 +58,11 @@ class BookingController extends Controller
     public function bookedWithMaterialView()
     {
         $bookings = DB::table('bookings')
-                    ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                    ->select('bookings.booking_id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
                     'books.title', 'bookings.created_at', 'bookings.expire_at')
                     ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
-                    ->join('users', 'bookings.user_id', '=' ,'users.id')
-                    ->where('status', 1)
+                    ->join('users', 'bookings.user_id', '=' ,'users.user_id')
+                    ->where('bookings.status', 1)
                     ->orderBy('bookings.status')
                     ->orderBy('bookings.created_at', 'desc')
                     ->paginate(10);
@@ -81,7 +81,7 @@ class BookingController extends Controller
         $book = Book::find($ISBN);
 
         // Check if User already has an existing booking
-        $bookingCount = Booking::where('user_id', $user->id)
+        $bookingCount = Booking::where('user_id', $user->user_id)
                         ->where('status', '!=', 3)
                         ->count();
         // TODO Add check for borrow History
@@ -94,7 +94,7 @@ class BookingController extends Controller
         if ($this->checkUserPrivilege($user->privilege, $book->access_level)){
             // if true, user has access, then proceed to create booking
             $booking = new Booking();
-            $booking->user_id = $user->id;
+            $booking->user_id = $user->user_id;
             $booking->ISBN = $ISBN;
             $booking->status = 2; //default no material found yet
 
@@ -137,7 +137,7 @@ class BookingController extends Controller
 
         $user = Auth::user();
         // only admin or the user who made the booking can cancel it
-        if ($user->privilege == 1 || $user->id == $booking->user_id){
+        if ($user->privilege == 1 || $user->user_id == $booking->user_id){
             
             // when booking hasn't assigned material yet
             if ($booking->status == 2){

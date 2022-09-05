@@ -108,7 +108,7 @@ class ManageRewardController extends Controller
     {
         //validate book info before storing to database
         $request->validate([
-            'reward_id' => 'required|exists:rewards,id',
+            'reward_id' => 'required|exists:rewards,reward_id',
             'name' => 'required|max:255',
             'description' => 'required',
             'points_required' => 'required|numeric|min:0',
@@ -195,7 +195,7 @@ class ManageRewardController extends Controller
 
         //validate book info before storing to database
         $request->validate([
-            'reward_history_id' => 'required|exists:rewardHistory,id',
+            'reward_history_id' => 'required|exists:rewardHistory,reward_history_id',
         ]);
 
         $reward_history = RewardHistory::find($request->reward_history_id);

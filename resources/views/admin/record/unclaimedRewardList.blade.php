@@ -91,7 +91,7 @@
                 <tr>
                     <td class = "col-lg-2 col-md-4 col-sm-6">
                         <div class = "row justify-content-center">
-                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->id), 'C128') !!}
+                        {!! DNS1D::getBarcodeHTML(sprintf('%08d', $record->reward_history_id), 'C128') !!}
                         </div>
                     </td>
                     <td>{{ $record -> username }}</td>
@@ -105,9 +105,9 @@
                     </td>
                     <td>
                         <!-- Claim or Cancel -->
-                        <a href="{{ route('claim_reward', [ 'reward_history_id'=> $record->id ]) }}" class="btn btn-success"
+                        <a href="{{ route('claim_reward', [ 'reward_history_id'=> $record->reward_history_id ]) }}" class="btn btn-success"
                         onclick="return confirm('Set the Reward as Claimed?');">Claim</a>
-                        <a href="{{ route('cancel_reward', [ 'reward_history_id'=> $record->id ]) }}" class="btn btn-danger"
+                        <a href="{{ route('cancel_reward', [ 'reward_history_id'=> $record->reward_history_id ]) }}" class="btn btn-danger"
                         onclick="return confirm('Cancel Reward Redemption?');">Cancel</a>
                     </td>
                 </tr>

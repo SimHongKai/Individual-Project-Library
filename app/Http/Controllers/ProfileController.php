@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $bookmarks = DB::table('bookmarks')
             ->select('books.ISBN', 'books.title', 'books.cover_img', 'books.available_qty')
             ->join('books', 'bookmarks.ISBN', '=', 'books.ISBN')
-            ->where('bookmarks.user_id', '=', $user->id)
+            ->where('bookmarks.user_id', '=', $user->user_id)
             ->paginate(10);
             
         return view('bookmarks')->with(compact('bookmarks', 'user'));
@@ -45,7 +45,7 @@ class ProfileController extends Controller
             'borrowHistory.material_no', 'borrowHistory.borrowed_at', 'borrowHistory.due_at', 
             'borrowHistory.returned_at', 'borrowHistory.late_fees')
             ->join('books', 'borrowHistory.ISBN', '=', 'books.ISBN')
-            ->where('borrowHistory.user_id', '=', $user->id)
+            ->where('borrowHistory.user_id', '=', $user->user_id)
             ->orderBy('borrowHistory.borrowed_at', 'desc')
             ->paginate(10);
             
@@ -62,8 +62,8 @@ class ProfileController extends Controller
         $user = $this->getUserProfileInfo();
 
         $rewardHistory = DB::table('rewardHistory')
-            ->select('id', 'name', 'description', 'points_required', 'status', 'created_at')
-            ->where('user_id', '=', $user->id)
+            ->select('reward_history_id', 'name', 'description', 'points_required', 'status', 'created_at')
+            ->where('user_id', '=', $user->user_id)
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
@@ -80,11 +80,11 @@ class ProfileController extends Controller
         $user = $this->getUserProfileInfo();
 
         $bookings = DB::table('bookings')
-                ->select('bookings.id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
+                ->select('bookings.booking_id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
                 'books.title', 'bookings.created_at', 'bookings.updated_at')
                 ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
-                ->join('users', 'bookings.user_id', '=' ,'users.id')
-                ->where('user_id', '=', $user->id)
+                ->join('users', 'bookings.user_id', '=' ,'users.user_id')
+                ->where('bookings.user_id', '=', $user->user_id)
                 ->orderBy('bookings.status')
                 ->orderBy('bookings.created_at', 'desc')
                 ->paginate(10);
@@ -117,7 +117,7 @@ class ProfileController extends Controller
         $current_date = date('Y-m-d');
         // check if reward was claimed today
         if (strcmp($user->last_check_in, $current_date) != 0 ){
-            $this->giveUserPoints($user->id, 100);
+            $this->giveUserPoints($user->user_id, 100);
 
             // update last check-in
             $user->last_check_in = $current_date;

@@ -16,9 +16,9 @@ class RewardHistoryController extends Controller
     public function index()
     {
         $rewardHistory = DB::table('rewardHistory')
-            ->select('users.username', 'rewardHistory.id', 'rewardHistory.status',
+            ->select('users.username', 'rewardHistory.reward_history_id', 'rewardHistory.status',
             'rewardHistory.name', 'rewardHistory.description', 'rewardHistory.points_required', 'rewardHistory.created_at')
-            ->join('users', 'rewardHistory.user_id', '=' ,'users.id')
+            ->join('users', 'rewardHistory.user_id', '=' ,'users.user_id')
             ->orderBy('rewardHistory.updated_at', 'desc')
             ->paginate(10);
 
@@ -34,10 +34,10 @@ class RewardHistoryController extends Controller
     {
         // Get All Rewards that were unclaimed
         $rewardHistory = DB::table('rewardHistory')
-            ->select('users.username', 'rewardHistory.id', 'rewardHistory.status',
+            ->select('users.username', 'rewardHistory.reward_history_id', 'rewardHistory.status',
             'rewardHistory.name', 'rewardHistory.description', 'rewardHistory.points_required', 'rewardHistory.created_at')
-            ->join('users', 'rewardHistory.user_id', '=' ,'users.id')
-            ->where('status', 1)
+            ->join('users', 'rewardHistory.user_id', '=' ,'users.user_id')
+            ->where('rewardHistory.status', 1)
             ->orderBy('rewardHistory.created_at', 'desc')
             ->paginate(10);
 
@@ -53,11 +53,11 @@ class RewardHistoryController extends Controller
     {
         // Get Reward that is unclaimed
         $rewardHistory = DB::table('rewardHistory')
-            ->select('users.username', 'rewards.reward_img', 'rewardHistory.id', 
+            ->select('users.username', 'rewards.reward_img', 'rewardHistory.reward_history_id', 
             'rewardHistory.name', 'rewardHistory.description', 'rewardHistory.points_required', 'rewardHistory.created_at')
-            ->join('rewards', 'rewardHistory.reward_id', '=' ,'rewards.id')
-            ->join('users', 'rewardHistory.user_id', '=' ,'users.id')
-            ->where('rewardHistory.id', $request->reward_history_id)
+            ->join('rewards', 'rewardHistory.reward_id', '=' ,'rewards.reward_id')
+            ->join('users', 'rewardHistory.user_id', '=' ,'users.user_id')
+            ->where('rewardHistory.reward_history_id', $request->reward_history_id)
             ->where('rewardHistory.status', 1)
             ->first();
 

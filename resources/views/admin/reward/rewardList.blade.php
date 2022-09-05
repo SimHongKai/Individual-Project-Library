@@ -70,8 +70,8 @@
                     </p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{{ route('edit_reward', [ 'reward_id'=> $reward->id ]) }}" class="card-link">Edit</a>
-                    <a href="{{ route('delete_reward', [ 'reward_id'=> $reward->id ]) }}" 
+                    <a href="{{ route('edit_reward', [ 'reward_id'=> $reward->reward_id ]) }}" class="card-link">Edit</a>
+                    <a href="{{ route('delete_reward', [ 'reward_id'=> $reward->reward_id ]) }}" 
                     class="card-link" onclick="return confirm('Are you sure you wish to Delete this Reward? {{ $reward->name }}');">
                         Delete
                     </a>

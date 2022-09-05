@@ -42,7 +42,7 @@
                     @endif
                     <!-- Form Data -->
                     <!-- Hidden Old Call No -->
-                    <input type="hidden" id="reward_id" name="reward_id" value="{{ $reward->id }}">
+                    <input type="hidden" id="reward_id" name="reward_id" value="{{ $reward->reward_id }}">
                     <div class="form-group row">
                         <label for="name" class="col-3 col-form-label">Reward Name</label> 
                         <div class="col-8">

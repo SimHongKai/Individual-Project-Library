@@ -69,7 +69,7 @@
                             <input id="booking_id" name="booking_id" placeholder="Booking ID" type="text" 
                             class="form-control" required onkeyup="getBookingDetails(this.value)">
 
-                            <span class="text-danger">@error('user_id') {{ $message }} @enderror</span>
+                            <span class="text-danger">@error('booking_id') {{ $message }} @enderror</span>
                         </div>
                     </div>   
                     <!-- Form Input End -->   
@@ -87,8 +87,8 @@
                                 <div class="col-5">
                                     <input id="user_id" name="user_id" placeholder="User ID" type="text" 
                                     readonly class="form-control" required"
-                                    @if ($user->id)
-                                        value="{{ $user->id }}" 
+                                    @if ($user->user_id)
+                                        value="{{ $user->user_id }}" 
                                     @endif>
                                     <span class="text-danger">@error('user_id') {{ $message }} @enderror</span>
                                 </div>

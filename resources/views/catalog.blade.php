@@ -115,6 +115,9 @@
                     </div>
                 </div>
             @endforeach
+            @if ($books->count() == 0)
+                <h2 class="text-muted text-center">No Books Found</h2>
+            @endif
         </div>
     
     </div>
