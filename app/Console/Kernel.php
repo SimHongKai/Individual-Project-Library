@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // set point limits to 0 weekly
+        $schedule->call(function () {
+            DB::table('users')->update(['weekly_points' => 0]);
+        })->everyMinute(); //weekly()
+
+        // runs the expire Bookings cancel every day
+        $schedule->call('\App\Http\Controllers\BookingController@cancelExpiredBookings')->everyMinute()->evenInMaintenanceMode();
+        // daily
     }
 
     /**

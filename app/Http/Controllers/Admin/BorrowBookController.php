@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Traits\BookingEmailTrait;
+use App\Http\Traits\AwardPointsTrait;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -16,6 +19,9 @@ use Session;
 
 class BorrowBookController extends Controller
 {
+
+    use BookingEmailTrait;
+    use AwardPointsTrait;
 
     /**
      * Return view for Form to enter Book that will be borrowed
@@ -306,6 +312,8 @@ class BorrowBookController extends Controller
                 $material->status = 3;
                 // flash message
                 Session::flash('Booking', 'Returned Book has a Booking!');
+                // send booking notification email
+                $this->sendBookingNotificationEmail($nextBooking->booking_id);
             }else{
                 // update material status to available
                 $material->status = 1;
@@ -321,7 +329,7 @@ class BorrowBookController extends Controller
             }
             return redirect()->route('return_book')->with('Success', 'Book Returned Successfully!');
         }
-        return redirect()->back()->with('Fail', 'Material was not Borrowed!');
+        return redirect()->back()->with('Fail', 'Book was not Returned!');
         
     }
 
@@ -397,26 +405,4 @@ class BorrowBookController extends Controller
         $book->save();
     }
 
-    /**
-     * Give User Points
-     *
-     * @return
-     */
-    public function giveUserPoints($user_id, $increase)
-    {
-        $user = User::find($user_id);
-        $config = Configuration::find($user->privilege);
-
-        $weekly_points = $user->weekly_points + $increase;
-
-        // check if over point limit
-        if($weekly_points > $config->point_limit){
-            // if over add till the max point_limit add(limit - current weekly), if max then will add 0
-            $increase = $config->point_limit - $user->weekly_points;
-        }
-        
-        $user->increment('total_points', $increase);
-        $user->increment('current_points', $increase);
-        $user->increment('weekly_points', $increase);
-    }
 }

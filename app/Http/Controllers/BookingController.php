@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\BookingEmailTrait;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Book;
@@ -11,6 +12,8 @@ use DB;
 
 class BookingController extends Controller
 {
+    use BookingEmailTrait;
+    
     /**
      * Return list of Bookings for admin
      * 
@@ -26,7 +29,8 @@ class BookingController extends Controller
                     ->orderBy('bookings.status')
                     ->orderBy('bookings.created_at', 'desc')
                     ->paginate(10);
-
+        // temporary measure
+        $this->cancelExpiredBookings();
         return view('admin.record.bookingRecords')->with(compact('bookings'));
     }
 
@@ -114,9 +118,15 @@ class BookingController extends Controller
                 $booking->material_no = $material->material_no;
                 $booking->status = 1;
                 $booking->expire_at = date('Y-m-d', strtotime("+7 days"));
+                // save booking
+                $res = $booking->save();
+
+                $this->sendBookingNotificationEmail($booking->booking_id);
+            }else{
+                // else just save the booking
+                $res = $booking->save();
             }
-            // else just save the booking
-            $res = $booking->save();
+            
 
         }else{
             // else return back to page
@@ -133,43 +143,14 @@ class BookingController extends Controller
      */
     public function cancelBooking(Request $request, $bookingID){
         
-        // $booking = Booking::find($bookingID);
-
-        // $user = Auth::user();
-        // // only admin or the user who made the booking can cancel it
-        // if ($user->privilege == 1 || $user->user_id == $booking->user_id){
-            
-        //     // when booking hasn't assigned material yet
-        //     if ($booking->status == 2){
-        //         // just delete no need to keep log
-        //         $booking->delete();
-        //     }else if ($booking->status == 1){
-        //         // check if there is another booking for this book in queue
-        //         $nextBooking = Booking::where('ISBN', $booking->ISBN)
-        //                         ->where('status', 2)
-        //                         ->orderBy('created_at')
-        //                         ->first();
-        //         // if another booking exists
-        //         if ($nextBooking){
-        //             // set next booking to use this material
-        //             $nextBooking->material_no = $booking->material_no;
-        //             $nextBooking->status = 1;
-        //             $nextBooking->save();
-        //         }else{
-        //             // if no more booking
-        //             // update $material to be available
-        //             $material = Material::find($booking->material_no);
-        //             $material->status = 1;
-        //             $material->save();
-        //             // update Book qty
-        //             $this->updateBookQty($booking->ISBN);
-        //         }
-        //         // update booking to be cancelled/complete
-        //         $booking->status = 3;
-        //         $booking->save();
-        //     }
-        $success = $this->processCancelBooking($bookingID);
+        $user = Auth::user();
         $booking = Booking::find($bookingID);
+        $success = false;
+        // only admin or the user who made the booking can cancel it
+        if ($user->privilege == 1 || $user->user_id == $booking->user_id){
+            $success = $this->processCancelBooking($bookingID);
+        }
+        
         if(!$success){
             return redirect()->route('book_details', [ 'ISBN'=> $booking->ISBN ])->with("Fail", "Booking was not cancelled!");
         }
@@ -184,11 +165,8 @@ class BookingController extends Controller
      */
     public function processCancelBooking($bookingID){
         $booking = Booking::find($bookingID);
-
-        $user = Auth::user();
-        // only admin or the user who made the booking can cancel it
-        if ($user->privilege == 1 || $user->user_id == $booking->user_id){
             
+        if ($booking){
             // when booking hasn't assigned material yet
             if ($booking->status == 2){
                 // just delete no need to keep log
@@ -207,7 +185,7 @@ class BookingController extends Controller
                     $nextBooking->save();
 
                     // send notification email to next booking
-
+                    $this->sendBookingNotificationEmail($nextBooking->booking_id);
                 }else{
                     // if no more booking
                     // update $material to be available
@@ -220,14 +198,15 @@ class BookingController extends Controller
                 // update booking to be cancelled/complete
                 $booking->status = 3;
                 $booking->save();
+                // cancel booking
             }
-            // cancel booking
+            // booking cancelled
             return true;
-
         }else{
-            // failed to cancel
+            // booking not cancelled
             return false;
         }
+            
     }
 
     /**
@@ -235,8 +214,19 @@ class BookingController extends Controller
      *
      * @return null
      */
-    public function cancelExpiredBookings(Request $request){
-        
+    public function cancelExpiredBookings(){
+        $today = date('Y-m-d');
+
+        $expiredBookings = DB::table('bookings')
+                ->select('booking_id')
+                ->where('bookings.status', '=', 1)
+                ->where('bookings.expire_at', '<', $today)
+                ->orderBy('bookings.created_at', 'desc')
+                ->get();
+
+        foreach($expiredBookings as $booking){
+            $this->processCancelBooking($booking->booking_id);
+        }
     }
 
 
