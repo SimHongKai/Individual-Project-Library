@@ -81,7 +81,7 @@ class ProfileController extends Controller
 
         $bookings = DB::table('bookings')
                 ->select('bookings.booking_id', 'users.username', 'bookings.ISBN', 'bookings.material_no', 'bookings.status',
-                'books.title', 'bookings.created_at', 'bookings.updated_at')
+                'books.title', 'bookings.created_at', 'bookings.expire_at')
                 ->join('books', 'bookings.ISBN', '=' ,'books.ISBN')
                 ->join('users', 'bookings.user_id', '=' ,'users.user_id')
                 ->where('bookings.user_id', '=', $user->user_id)

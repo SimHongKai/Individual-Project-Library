@@ -42,7 +42,7 @@
 
     <!-- action bar -->
     <div class="container">
-        <ul class="action_bar">
+        <ul class="action_bar font-weight-bold">
             <li>
                 <a href="{{ route('admin_booking_records') }}">
                     Booking Records

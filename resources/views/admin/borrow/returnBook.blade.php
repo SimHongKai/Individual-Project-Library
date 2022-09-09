@@ -67,7 +67,7 @@
                     
                     <!-- Form Input -->   
                     <div class="form-group row">
-                        <label for="material_no" class="col-3 col-form-label">Material No</label> 
+                        <label for="material_no" class="col-3 col-form-label font-weight-bold">Material No</label> 
                         <div class="col-6">
                             <input id="material_no" name="material_no" placeholder="Material No" 
                             type="text" class="form-control" required
@@ -79,7 +79,7 @@
 
                     <!-- User Returning -->
                     <div class="card my-3">
-                        <div class="card-header">
+                        <div class="card-header font-weight-bold">
                             User Details
                         </div>
                         <div class="card-body">                       
@@ -99,7 +99,7 @@
 
                     <!-- Book Being Returned -->
                     <div class="card my-3">
-                        <div class="card-header">Book to be Returned</div>
+                        <div class="card-header font-weight-bold">Book to be Returned</div>
                         <div class="row no-gutters">                            
                             <div class="col-sm-3">
                                 <img src="{{ asset('images/book_covers/no_book_cover.jpg') }}" class="card-img" id="cover_img">

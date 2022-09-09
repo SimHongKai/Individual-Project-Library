@@ -133,6 +133,56 @@ class BookingController extends Controller
      */
     public function cancelBooking(Request $request, $bookingID){
         
+        // $booking = Booking::find($bookingID);
+
+        // $user = Auth::user();
+        // // only admin or the user who made the booking can cancel it
+        // if ($user->privilege == 1 || $user->user_id == $booking->user_id){
+            
+        //     // when booking hasn't assigned material yet
+        //     if ($booking->status == 2){
+        //         // just delete no need to keep log
+        //         $booking->delete();
+        //     }else if ($booking->status == 1){
+        //         // check if there is another booking for this book in queue
+        //         $nextBooking = Booking::where('ISBN', $booking->ISBN)
+        //                         ->where('status', 2)
+        //                         ->orderBy('created_at')
+        //                         ->first();
+        //         // if another booking exists
+        //         if ($nextBooking){
+        //             // set next booking to use this material
+        //             $nextBooking->material_no = $booking->material_no;
+        //             $nextBooking->status = 1;
+        //             $nextBooking->save();
+        //         }else{
+        //             // if no more booking
+        //             // update $material to be available
+        //             $material = Material::find($booking->material_no);
+        //             $material->status = 1;
+        //             $material->save();
+        //             // update Book qty
+        //             $this->updateBookQty($booking->ISBN);
+        //         }
+        //         // update booking to be cancelled/complete
+        //         $booking->status = 3;
+        //         $booking->save();
+        //     }
+        $success = $this->processCancelBooking($bookingID);
+        $booking = Booking::find($bookingID);
+        if(!$success){
+            return redirect()->route('book_details', [ 'ISBN'=> $booking->ISBN ])->with("Fail", "Booking was not cancelled!");
+        }
+
+        return redirect()->route('book_details', [ 'ISBN'=> $booking->ISBN ])->with("Success", "Booking has been cancelled!");
+    }
+    
+    /**
+     * Cancel Booking Process
+     * 
+     * @return boolean
+     */
+    public function processCancelBooking($bookingID){
         $booking = Booking::find($bookingID);
 
         $user = Auth::user();
@@ -155,6 +205,9 @@ class BookingController extends Controller
                     $nextBooking->material_no = $booking->material_no;
                     $nextBooking->status = 1;
                     $nextBooking->save();
+
+                    // send notification email to next booking
+
                 }else{
                     // if no more booking
                     // update $material to be available
@@ -168,14 +221,25 @@ class BookingController extends Controller
                 $booking->status = 3;
                 $booking->save();
             }
+            // cancel booking
+            return true;
 
         }else{
-            return redirect()->route('book_details', [ 'ISBN'=> $booking->ISBN ])->with("Fail", "Booking was not cancelled!");
+            // failed to cancel
+            return false;
         }
-
-        return redirect()->route('book_details', [ 'ISBN'=> $booking->ISBN ])->with("Success", "Booking has been cancelled!");
     }
-    
+
+    /**
+     * Cancel Expired Booking 
+     *
+     * @return null
+     */
+    public function cancelExpiredBookings(Request $request){
+        
+    }
+
+
     /**
      * Check Privilege
      * 

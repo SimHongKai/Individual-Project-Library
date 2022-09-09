@@ -76,14 +76,14 @@
 
                     <!-- User Borrowing -->
                     <div class="card my-3">
-                        <div class="card-header">
+                        <div class="card-header font-weight-bold">
                             Borrowing User Details
                         </div>
                         <div class="card-body">      
                             <!-- Form Input -->   
                             <div class="form-group row">
                                 <div class="col-sm-1"></div>
-                                <label for="user_id" class="col-4 col-form-label">User ID</label> 
+                                <label for="user_id" class="col-4 col-form-label font-weight-bold">User ID</label> 
                                 <div class="col-5">
                                     <input id="user_id" name="user_id" placeholder="User ID" type="text" 
                                     readonly class="form-control" required"
@@ -122,7 +122,7 @@
 
                     <!-- Book Being Borrowed -->
                     <div class="card my-3">
-                        <div class="card-header">Book to be Borrowed</div>
+                        <div class="card-header font-weight-bold">Book to be Borrowed</div>
                         <div class="row no-gutters">                            
                             <div class="col-sm-3">
                                 <img src="{{ asset('images/book_covers/no_book_cover.jpg') }}" class="card-img" id="cover_img">
@@ -131,7 +131,7 @@
                                 <div class="card-body">      
                                     <!-- Form Input -->   
                                     <div class="form-group row">
-                                        <label for="material_no" class="col-3 col-form-label">Material No</label> 
+                                        <label for="material_no" class="col-3 col-form-label font-weight-bold">Material No</label> 
                                         <div class="col-6">
                                             <input id="material_no" name="material_no" placeholder="Material No" 
                                             type="text" class="form-control" readonly required">

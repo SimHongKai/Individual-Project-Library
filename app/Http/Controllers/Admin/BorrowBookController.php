@@ -246,19 +246,8 @@ class BorrowBookController extends Controller
             // temporarily override as it is faster
             $returnDetails->borrowed = $borrowed;
             $returnDetails->available = $available;
-            $returnDetails->late_fee = 0.00;
-
             // calculate Late Fee
-            $today = date('Y-m-d');
-            if ($returnDetails->due_at < $today){ // if late
-                $dueDate = date_create($returnDetails->due_at);
-                $today = date_create($today);
-                $diff = date_diff($dueDate, $today);
-                $diff = $diff->format("%a");
-
-                $config = Configuration::find($returnDetails->privilege);
-                $returnDetails->late_fee = $config->late_fees_base + ($config->late_fees_increment * ($diff-1));
-            }
+            $returnDetails->late_fee = $this->calculateLateFees($returnDetails->due_at, $returnDetails->privilege);
 
             return $returnDetails;
     }
@@ -286,17 +275,8 @@ class BorrowBookController extends Controller
 
             // calculate Late Fee
             $today = date('Y-m-d');
-            $late_fees = 0;
-            if ($borrowHistory->due_at < $today){ // if late
-                $dueDate = date_create($borrowHistory->due_at);
-                $today = date_create($today);
-                $diff = date_diff($dueDate, $today);
-                $diff = $diff->format("%a");
-
-                // penalty is equal for all
-                $config = Configuration::find(1);
-                // set late fee
-                $late_fees = $config->late_fees_base + ($config->late_fees_increment * ($diff-1));
+            $late_fees = $this->calculateLateFees($borrowHistory->due_at, 1);
+            if ($late_fees > 0){ // if late fee > 0
                 // flash message
                 Session::flash('LateFee', 'Late Fee: RM' . sprintf('%.2f', $late_fees));
             }
@@ -364,6 +344,8 @@ class BorrowBookController extends Controller
 
             return $late_fee;
         }
+        // if not late no fee
+        return 0.00;
     }
 
     /**

@@ -57,7 +57,7 @@
             </tr>
             @foreach($borrowHistory as $record) 
                 <tr id = "{{ $record->ISBN }}Row">
-                    <td class = "record-table-title">
+                    <td class = "record-table-title col-lg-3 col-md-4 col-sm-6">
                         <a href = "{{ route('book_details', [ 'ISBN'=> $record->ISBN ]) }}">
                         Title: {{ $record -> title }} <br>
                         ISBN: {{ $record -> ISBN }} <br>

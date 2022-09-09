@@ -64,8 +64,8 @@
                         </div>
                     </td>
                     <td>{{ $record->username }}</td>
-                    <td class = "record-table-title">
-                        <a href = "{{ route('manage_book_details', [ 'ISBN'=> $record->ISBN ]) }}">
+                    <td class = "record-table-title col-lg-3 col-md-4 col-sm-6">
+                        <a href = "{{ route('book_details', [ 'ISBN'=> $record->ISBN ]) }}">
                         Title: {{ $record -> title }} <br>
                         ISBN: {{ $record -> ISBN }} <br>
                         </a>

@@ -124,7 +124,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-sm-12 col-md-12 ">
+                    <div class="col-sm-6 col-md-4 ">
                         <a href="{{ route('admin_booking_records') }}">
                             <div class="box ">
                             <div class="img-box">
@@ -133,6 +133,34 @@
                             <div class="detail-box">
                                 <h5>
                                     Bookings
+                                </h5>
+                            </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4 ">
+                        <a href="{{ route('claim_reward_view') }}">
+                            <div class="box ">
+                            <div class="img-box">
+                                <img src="{{ asset('images/icons/claim_reward.png')}}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    Claim Reward
+                                </h5>
+                            </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4 ">
+                        <a href="{{ route('register') }}">
+                            <div class="box ">
+                            <div class="img-box">
+                                <img src="{{ asset('images/icons/register.png')}}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    Register User
                                 </h5>
                             </div>
                             </div>

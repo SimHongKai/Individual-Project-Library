@@ -44,7 +44,7 @@
 
                     <div class="px-4 mt-1">
                         <p class="fonts">
-                            This is Your Personal Profile. View your Bookmarks, History of Borrows and Rewards through the Buttons Below.
+                            This is Your Personal Profile. View your Bookmarks, Bookings, History of Borrows, and Rewards through the Buttons Below.
                         </p>    
                     </div>
                     
@@ -72,7 +72,7 @@
 
 <!-- profile action bar -->
 <div class="container">
-    <ul class="action_bar">
+    <ul class="action_bar font-weight-bold">
         <li>
             <a href="{{ route('profile') }}">
                 Bookmarks
