@@ -146,12 +146,12 @@
     </div>
     @include('footer')
 
-<!-- jQery -->
-<script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-<!-- bootstrap js -->
-<script src="{{ asset('js/bootstrap.js') }}"></script>
-<!-- addBooks JS -->
-<script src="{{ URL::asset('js/addBook.js') }}"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <!-- bootstrap js -->
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <!-- addBooks JS -->
+    <script src="{{ URL::asset('js/addBook.js') }}"></script>
 
 </body>
 

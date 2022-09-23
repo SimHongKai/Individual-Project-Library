@@ -129,9 +129,14 @@ class RecommendationController extends Controller
         $similarUsers = $this->getSimilarUserIds($user_id);
 
         // $similarUsers = []; to test result when empty. will return empty array
-        /* SELECT DISTINCT ISBN FROM `borrowhistory` WHERE `user_id` IN $similarUsers */
+        /* SELECT DISTINCT ISBN FROM `borrowhistory` WHERE `user_id` IN $similarUsers not borrowed already by user*/
         $similarISBNs = DB::table('borrowHistory')->select('ISBN')->distinct()
                         ->whereIn('user_id', $similarUsers)
+                        ->whereNotIn('ISBN', function ($query) use($user_id){
+                            $query->select('ISBN')->distinct()
+                            ->from('borrowhistory')
+                            ->where('user_id', $user_id);
+                        })
                         ->limit(5)
                         ->inRandomOrder()
                         ->get();

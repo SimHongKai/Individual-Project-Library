@@ -14,7 +14,7 @@ trait BookingEmailTrait
 
 
     /**
-     * Main Function to call send Email for Bookig Notification
+     * Main Function to call send Email for Booking Notification
      * 
      * @return null
      */
@@ -79,23 +79,27 @@ trait BookingEmailTrait
         $emailBody  = '<div class="container" style="padding: 1rem; background-color: #FFFFFF;">
                         <p>Your Booking is now available to be Borrowed.</p>
                         <p>Please Proceed to the Library within the booking expiry date listed below.</p>
-                        <table style="border:1px solid;width:600px;text-align:left">
+                        <table style="border:1px solid;border-collapse:collapse;width:1080px;text-align:left">
                             <tbody>
-                                <tr>
-                                    <th>Booking ID</th>
-                                    <th>Username</th>
-                                    <th>Book</th>
-                                    <th>Material No</th>
-                                    <th>Expires At</th>
+                                <tr style = "background-color: #95A5A6;
+                                font-size: 14px;
+                                text-transform: uppercase;
+                                letter-spacing: 0.03em;
+                                padding-top: 12px;">
+                                    <th style="border:1px solid">Booking ID</th>
+                                    <th style="border:1px solid">Username</th>
+                                    <th style="border:1px solid">Book</th>
+                                    <th style="border:1px solid">Material No</th>
+                                    <th style="border:1px solid">Expires At</th>
                                 </tr>';
 
         // booking Info
         $emailBody .=  '<tr>
-                            <td>' . sprintf('%08d', $bookingInfo->booking_id) . '</td>
-                            <td>' . $bookingInfo->username . '</td>
-                            <td> Title: ' . $bookingInfo->title .  '<br> ISBN: ' . $bookingInfo->ISBN . '</td>
-                            <td> Material No: ' . $bookingInfo->material_no . '</td>
-                            <td>' . $bookingInfo->expire_at . '</td>
+                            <td style="border:1px solid">' . sprintf('%08d', $bookingInfo->booking_id) . '</td>
+                            <td style="border:1px solid">' . $bookingInfo->username . '</td>
+                            <td style="border:1px solid"> Title: ' . $bookingInfo->title .  '<br> ISBN: ' . $bookingInfo->ISBN . '</td>
+                            <td style="border:1px solid"> Material No: ' . sprintf('%08d', $bookingInfo->material_no) . '</td>
+                            <td style="border:1px solid">' . $bookingInfo->expire_at . '</td>
                         </tr>';
 
         // closing email

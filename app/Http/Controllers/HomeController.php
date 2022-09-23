@@ -8,18 +8,9 @@ use App\Models\BorrowHistory;
 use DB;
 use Auth;
 
+
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
     /**
      * Show the application home screen.
      *
@@ -36,7 +27,9 @@ class HomeController extends Controller
             $similarRecsISBN = app('App\Http\Controllers\RecommendationController')->getSimilarISBNs(Auth::id());
             $similarRecs = Book::findMany($similarRecsISBN);
         }
-        
+
+        $this->sendDueReminderEmails();
+
         return view('home')->with(compact('popularBooks', 'newBooks', 'recentBooks', 'similarRecs'));
     }
 

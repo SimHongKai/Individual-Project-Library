@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Traits\BookingEmailTrait;
+use App\Http\Traits\BorrowDueEmailTrait;
 use App\Http\Traits\AwardPointsTrait;
 
 use App\Http\Controllers\Controller;
@@ -21,6 +22,7 @@ class BorrowBookController extends Controller
 {
 
     use BookingEmailTrait;
+    use BorrowDueEmailTrait;
     use AwardPointsTrait;
 
     /**
@@ -100,7 +102,9 @@ class BorrowBookController extends Controller
         if ($request->booking_id != null){
             // $request->material_no = ltrim($request->material_no, '0');
 
-            $booking = Booking::find($request->booking_id);
+            $booking = Booking::where('booking_id', $request->booking_id)
+                        ->where('status', 1)
+                        ->first();
             if ($booking != null){
                 return $booking;
             }

@@ -25,6 +25,10 @@ class Kernel extends ConsoleKernel
         // runs the expire Bookings cancel every day
         $schedule->call('\App\Http\Controllers\BookingController@cancelExpiredBookings')->everyMinute()->evenInMaintenanceMode();
         // daily
+        
+        // Sends email reminders for near due and overdue borrows
+        $schedule->call('\App\Http\Controllers\BorrowBookController@sendDueReminderEmails')->everyMinute()->evenInMaintenanceMode();
+        // daily
     }
 
     /**
