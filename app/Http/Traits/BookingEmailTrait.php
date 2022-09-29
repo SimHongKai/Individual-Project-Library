@@ -29,9 +29,9 @@ trait BookingEmailTrait
                 ->first();
 
         // email Body
-        $emailBody = $this->composeEmailBody($bookingInfo);
+        $emailBody = $this->composeBookingEmailBody($bookingInfo);
         // send Email
-        $this->sendEmail($bookingInfo->email, $emailBody);
+        $this->sendBookingEmail($bookingInfo->email, $emailBody);
     }
 
     /**
@@ -39,7 +39,7 @@ trait BookingEmailTrait
      * 
      * @return route
      */
-    public function sendEmail($emailTo, $emailBody) {
+    public function sendBookingEmail($emailTo, $emailBody) {
         //require base_path("vendor/autoload.php");
         $mail = new PHPMailer();     // Passing `true` enables exceptions
  
@@ -74,7 +74,7 @@ trait BookingEmailTrait
      * 
      * @return String
      */
-    public function composeEmailBody($bookingInfo){
+    public function composeBookingEmailBody($bookingInfo){
 
         $emailBody  = '<div class="container" style="padding: 1rem; background-color: #FFFFFF;">
                         <p>Your Booking is now available to be Borrowed.</p>
