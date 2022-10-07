@@ -31,7 +31,10 @@ class RewardController extends Controller
     {
         // get Reward
         $reward = Reward::find($reward_id);
-        
+        if(!$reward){
+            return redirect()->back();
+        }
+
         // find user to deduct Points
         $user = User::find(Auth::id());
         

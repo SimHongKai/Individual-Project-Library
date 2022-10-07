@@ -70,8 +70,8 @@ class ManageMaterialController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editMaterialView(Request $request){
-        if ($request->material_no != null){
-            $material = Material::find($request->material_no);
+        $material = Material::find($request->material_no);
+        if ($material){
             $book = Book::find($material->ISBN);
             return view('admin.catalog.editMaterial')->with(compact('material', 'book'));
         }

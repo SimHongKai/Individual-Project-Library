@@ -35,22 +35,24 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function bookDetailsView(Request $request){
-        if ($request->ISBN != null){
-            $book = Book::find($request->ISBN);
+        $book = Book::find($request->ISBN);
+        if (!$book){
+            return redirect(route('home'));
+        }else{
             // check bookmark
             $book->bookmarked = Bookmark::where('user_id', Auth::id())->where('ISBN', $request->ISBN)
-                                ->count();
+            ->count();
             $materials = Material::where('ISBN', $request->ISBN)->get();
 
             // check Booking
             $booking = Booking::where('ISBN', $book->ISBN)
-                        ->whereIn('status', [1, 2])
-                        ->where('user_id', Auth::id())
-                        ->first();
+                ->whereIn('status', [1, 2])
+                ->where('user_id', Auth::id())
+                ->first();
             // get number of people in queue
             $bookingQueue = Booking::where('ISBN', $book->ISBN)
-                            ->where('status', 2)
-                            ->count();
+                    ->where('status', 2)
+                    ->count();
 
             // run recommendation with FPGrowth
             $recsISBN = app('App\Http\Controllers\RecommendationController')->getRecommendationsISBN($request->ISBN);
@@ -58,13 +60,10 @@ class BookController extends Controller
 
             // reward authenticated user with points
             if (Auth::id()){
-                $this->giveUserPoints(Auth::id(), 10);
+            $this->giveUserPoints(Auth::id(), 10);
             }
 
             return view('bookDetails')->with(compact('book', 'materials', 'recs', 'booking', 'bookingQueue'));
-        }
-        else{
-            return view('home');
         }
     }
 

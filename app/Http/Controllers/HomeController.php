@@ -28,8 +28,6 @@ class HomeController extends Controller
             $similarRecs = Book::findMany($similarRecsISBN);
         }
 
-        $this->sendDueReminderEmails();
-
         return view('home')->with(compact('popularBooks', 'newBooks', 'recentBooks', 'similarRecs'));
     }
 

@@ -84,6 +84,11 @@ class BookingController extends Controller
         $user = Auth::user();
         $book = Book::find($ISBN);
 
+        // no such book found
+        if(!$book){
+            return redirect()->back();
+        }
+
         // Check if User already has an existing booking
         $bookingCount = Booking::where('user_id', $user->user_id)
                         ->where('status', '!=', 3)
@@ -145,6 +150,11 @@ class BookingController extends Controller
         
         $user = Auth::user();
         $booking = Booking::find($bookingID);
+
+        if (!$booking){
+            return redirect()->back();
+        }
+
         $success = false;
         // only admin or the user who made the booking can cancel it
         if ($user->privilege == 1 || $user->user_id == $booking->user_id){

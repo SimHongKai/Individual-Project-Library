@@ -247,7 +247,7 @@ class ManageRewardController extends Controller
         $reward_history = RewardHistory::find($reward_history_id);
 
         // check reward History found
-        if ($reward_history != null){
+        if ($reward_history){
             // update Status
             $reward_history->status = 3;
             $res = $reward_history->save();

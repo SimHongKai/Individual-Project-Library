@@ -27,13 +27,14 @@ class ManageBookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function manageBookDetailsView(Request $request){
-        if ($request->ISBN != null){
-            $book = Book::find($request->ISBN);
+        
+        $book = Book::find($request->ISBN);
+        if ($book){
             $materials = Material::where('ISBN', $request->ISBN)->get();
             return view('admin.catalog.manageBookDetails')->with(compact('book', 'materials'));
         }
         else{
-            return view('home');
+            return redirect()->back();
         }
     }
 
@@ -111,8 +112,8 @@ class ManageBookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editBookView(Request $request){
-        if ($request->ISBN != null){
-            $book = Book::find($request->ISBN);
+        $book = Book::find($request->ISBN);
+        if ($book){
             return view('admin.catalog.editBook')->with(compact('book'));
         }
         else{
@@ -186,8 +187,8 @@ class ManageBookController extends Controller
      */
     public function deleteBook(Request $request){
         // check ISBN passed
-        if ($request->ISBN != null){
-            $book = Book::find($request->ISBN);
+        $book = Book::find($request->ISBN);
+        if ($book){
             // check if any material is being borrowed
             if ($this->borrowedExists($request->ISBN)){
                 return redirect()->back()
