@@ -34,6 +34,9 @@
 
     <!-- Action Buttons -->
     <div class="container">
+        <div class='row justify-content-center my-3'>
+            <h1><font face='Impact'>Weekly Leaderboard</font></h1>
+        </div>
         <div class="row">
             <div class="col-12 text-right"> 
                 <div class = 'btn'>
@@ -41,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="row my-3">
+        <div class="row my">
             <div class="col-12 text-center"> 
                 <h6 class = 'title'>
                     <span>You are ranked No.{{ $position }}, with {{ Auth::user()->weekly_points }} points.</span>

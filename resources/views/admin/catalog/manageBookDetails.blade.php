@@ -71,7 +71,7 @@
                 </li>
                 <li>
                     <a href="{{ route('remove_book', [ 'ISBN'=> $book->ISBN ]) }}"
-                    onclick="return confirm('Are you sure you wish to Remove this Book?: {{ $book->ISBN }}');">
+                    onclick="return confirm('Are you sure you wish to Remove this Book? {{ $book->title }}, {{ $book->ISBN }}');">
                         <img class="icon" src = "{{ asset('images/icons/remove.png') }}"/>
                         <span>Remove</span>
                     </a>
@@ -149,7 +149,7 @@
                 </td>
                 <td>
                     <a href="{{ route('remove_material', [ 'material_no'=> $material->material_no ]) }}" class="btn btn-outline-danger"
-                    onclick="return confirm('Are you sure you wish to Remove this Material?: {{ sprintf(' %08d', $material->material_no) }}');">
+                    onclick="return confirm('Are you sure you wish to Remove this Material? {{ sprintf(' %08d', $material->material_no) }}');">
                         <span>Remove</span>
                     </a>
                 </td>

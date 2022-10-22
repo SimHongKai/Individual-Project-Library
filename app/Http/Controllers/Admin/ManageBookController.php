@@ -189,12 +189,11 @@ class ManageBookController extends Controller
         // check ISBN passed
         $book = Book::find($request->ISBN);
         if ($book){
-            // check if any material is being borrowed
+            // check if any material is being borrowed or booked
             if ($this->borrowedExists($request->ISBN)){
                 return redirect()->back()
                 ->with("Fail", "Failed to Delete. This Book still has Material that is being Borrowed!");
             }
-
             // delete
             $res = $book->delete();
             if ($res){
@@ -212,7 +211,7 @@ class ManageBookController extends Controller
      */
     public function borrowedExists($ISBN){
         $count = Material::where('ISBN', $ISBN)
-                ->where('status', [2, 3])
+                ->whereIn('status', [2, 3])
                 ->count();
         if ($count){
             return true;

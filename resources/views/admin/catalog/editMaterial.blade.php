@@ -50,7 +50,7 @@
     <!-- Book Details -->
     @include('admin.catalog.bookDetailsSection')
 
-    <!-- Add Material Form -->
+    <!-- Edit Material Form -->
     <div class="container">
         <div class='row justify-content-center'>
             <div class = 'col-md-8'>
@@ -58,7 +58,7 @@
                 <form action="{{route('edit_material_submit')}}" method="post" enctype="multipart/form-data"
                         onSubmit="return confirm('Are you sure you wish to Edit Material?');">
                     @csrf
-                    <!-- Print error message that Books was NOT added -->
+                    <!-- Print error message that Material was NOT edited -->
                     @if(Session::has('Fail'))
                         <div class="alert alert-danger">{{Session::get('Fail')}}</div>
                     @endif
@@ -69,7 +69,7 @@
                         <label for="material_no" class="col-4 col-form-label">Material No</label> 
                         <div class="col-8">
                             <input id="material_no" name="material_no" type="text" class="form-control" 
-                            required readonly value="{{ $material->material_no }}">
+                            required readonly value="{{ sprintf('%08d', $material->material_no) }}">
                             <span class="text-danger">@error('material_no') {{ $message }} @enderror</span>
                         </div>
                     </div>

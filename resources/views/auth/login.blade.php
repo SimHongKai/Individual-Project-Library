@@ -88,9 +88,9 @@
                                     </button>
 
                                     @if (Route::has('register'))
-                                        <a class="btn btn-link" href="{{ route('register') }}">
+                                        <!-- <a class="btn btn-link" href="{{ route('register') }}">
                                             {{ __('Register Here') }}
-                                        </a>
+                                        </a> -->
                                     @endif
                                 </div>
                             </div>

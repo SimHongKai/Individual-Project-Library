@@ -32,7 +32,10 @@
     
     <!-- Action Buttons -->
     <div class="container">
-        <div class="row my-3">
+        <div class='row justify-content-center my-3'>
+                <h1><font face='Impact'>Manage Rewards</font></h1>
+        </div>
+        <div class="row">
             <div class="col-6 text-left"> 
                 <div class = 'btn'>
                     <a href="{{ route('admin_panel') }}" class="btn btn-info">Return</a>

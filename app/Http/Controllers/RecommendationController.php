@@ -29,7 +29,7 @@ class RecommendationController extends Controller
         $ISBN_array = $this->getBorrowedISBNs($user_id_array, $limit);
         
         // 20% support
-        $support = count($ISBN_array)/10;
+        $support = count($ISBN_array)/5;
         // confidence set to 1 so will get rules that always contain the ISBN wanted as consequent
         $confidence = 1;
         // create the FPGrowth based on above variables
@@ -58,7 +58,7 @@ class RecommendationController extends Controller
 
         return $recommendations;
 
-        // return view('debug.varDump')->with(compact('patterns', 'rules', 'user_id_array', 'ISBN_array', 'recommendations'));
+        //return view('debug.varDump')->with(compact('support', 'patterns', 'rules', 'user_id_array', 'ISBN_array', 'recommendations'));
     }
 
     /**
@@ -68,7 +68,7 @@ class RecommendationController extends Controller
      */
     public function getBorrowedUserIds($ISBN, $limit, $floor){
 
-        // select list of recent (last 50) user ids that have borrowed the particular ISBN
+        // select list of recent (last 50 currently) user ids that have borrowed the particular ISBN
         $user_id_list = DB::query()->select('user_id')
                         ->fromSub(function ($query) use($ISBN){
                             $query->from('borrowhistory')->where('ISBN', $ISBN);

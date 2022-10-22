@@ -42,7 +42,7 @@ class HomeController extends Controller
         $popularBooks = DB::table('borrowHistory')
                         ->select('ISBN', DB::raw('count(*) as total'))
                         ->groupBy('ISBN')
-                        ->orderBy('total')
+                        ->orderBy('total', 'DESC')
                         ->limit(3)
                         ->pluck('ISBN')->toArray();
         

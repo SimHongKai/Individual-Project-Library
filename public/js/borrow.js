@@ -16,7 +16,7 @@ var borrowed = document.getElementById("borrowed");
 var available = document.getElementById("available");
 var privilege = document.getElementById("privilege");
 
-// function to get Material information with AJAX
+// function to get Material information with Fetch API
 function getMaterialDetails(material_no){
     clearMaterialDetails();
     // do nothing unless 8 characters are entered
@@ -51,6 +51,7 @@ function getMaterialDetails(material_no){
 
 // function to set Material information in BorrowBook Blade
 function setMaterialDetails(book){
+    var ESAPI = require('node-esapi');
     title.innerHTML = book.title;
     ISBN.innerHTML = book.ISBN;
     author.innerHTML = book.author;

@@ -50,6 +50,9 @@
     </div>    
 
     <!-- Var Dump -->
+    @foreach($recommendations as $recommendation)        
+        {{ $recommendation }}
+    @endforeach
     <div class="container">
         @dd($__data)
     </div>

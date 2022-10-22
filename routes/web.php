@@ -31,7 +31,7 @@ use App\Http\Controllers\Admin\RewardHistoryController;
 */
 
 // Debug View Only, Remember to Comment out TODO
-Route::get('/debug', [RecommendationController::class, 'getSimilarISBNs'])->name('debug');
+Route::get('/debug', [RecommendationController::class, 'getRecommendationsISBN'])->name('debug');
 
 Route::get('/', function () {
     return view('home');

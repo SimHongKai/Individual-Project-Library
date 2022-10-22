@@ -52,9 +52,8 @@ class ManageConfigurationController extends Controller
                     'late_fees_increment' => $request->late_fees_increment,
                     'point_limit' => $request->point_limit]);
 
-            if ($res){
-                return redirect()->route('edit_configuration')->with('Success', 'Configuration Edited Successfully');
-            }
+            
+            return redirect()->route('edit_configuration')->with('Success', 'Configuration Edited Successfully');
         }
         return redirect()->route('edit_configuration')->with('Fail', 'Configuration Could Not Be Edited');
     }

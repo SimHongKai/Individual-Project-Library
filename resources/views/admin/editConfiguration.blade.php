@@ -67,7 +67,7 @@
                         <span class="text-danger">@error('admin_borrow_no') {{$message}} @enderror</span>
                     </div>
                     <div class="form-group row">
-                        <label for="admin_borrow_duration" class="col-4 col-form-label">Admin Borrow Duration</label>
+                        <label for="admin_borrow_duration" class="col-4 col-form-label">Admin Borrow Duration (Days)</label>
                         <div class="col-8">
                         <input id="admin_borrow_duration" name="admin_borrow_duration" type="number" step="1" min="0" max="100" required
                             value="{{ $config[0]->borrow_duration }}" placeholder="0" class="form-control">
@@ -84,7 +84,7 @@
                         <span class="text-danger">@error('privileged_borrow_no') {{$message}} @enderror</span>
                     </div>
                     <div class="form-group row">
-                        <label for="privileged_borrow_duration" class="col-4 col-form-label">Privileged Borrow Duration</label>
+                        <label for="privileged_borrow_duration" class="col-4 col-form-label">Privileged Borrow Duration (Days)</label>
                         <div class="col-8">
                         <input id="privileged_borrow_duration" name="privileged_borrow_duration" type="number" step="1" min="0" max="100" required
                             value="{{ $config[1]->borrow_duration }}" placeholder="0" class="form-control">
@@ -101,7 +101,7 @@
                         <span class="text-danger">@error('regular_borrow_no') {{$message}} @enderror</span>
                     </div>
                     <div class="form-group row">
-                        <label for="regular_borrow_duration" class="col-4 col-form-label">Regular Borrow Duration</label>
+                        <label for="regular_borrow_duration" class="col-4 col-form-label">Regular Borrow Duration (Days)</label>
                         <div class="col-8">
                         <input id="regular_borrow_duration" name="regular_borrow_duration" type="number" step="1" min="0" max="100" required
                             value="{{ $config[2]->borrow_duration }}" placeholder="0" class="form-control">
@@ -111,7 +111,7 @@
 
                     <!-- Late Fees -->
                     <div class="form-group row">
-                        <label for="late_fees_base" class="col-4 col-form-label">Late Fees Base</label>
+                        <label for="late_fees_base" class="col-4 col-form-label">Late Fees Base (RM)</label>
                         <div class="col-8">
                         <input id="late_fees_base" name="late_fees_base" type="number" step="0.10" min="0" max="100" required
                             value="{{ $config[0]->late_fees_base }}" placeholder="0" class="form-control">
@@ -119,7 +119,7 @@
                         <span class="text-danger">@error('late_fees_base') {{$message}} @enderror</span>
                     </div>
                     <div class="form-group row">
-                        <label for="late_fees_increment" class="col-4 col-form-label">Late Fees Increment</label>
+                        <label for="late_fees_increment" class="col-4 col-form-label">Late Fees Increment (RM)</label>
                         <div class="col-8">
                         <input id="late_fees_increment" name="late_fees_increment" type="number" step="0.10" min="0" max="100" required
                             value="{{ $config[0]->late_fees_increment }}" placeholder="0" class="form-control">
