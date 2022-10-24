@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Configuration;
 use App\Models\User;
+use Auth;
 
 trait AwardPointsTrait
 {
@@ -16,6 +17,9 @@ trait AwardPointsTrait
     public function giveUserPoints($user_id, $increase)
     {
         $user = User::find($user_id);
+        if ($user == null){
+            $user = Auth::user();
+        }
         $config = Configuration::find($user->privilege);
 
         $weekly_points = $user->weekly_points + $increase;

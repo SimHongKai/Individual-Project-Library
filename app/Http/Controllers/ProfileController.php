@@ -117,6 +117,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $current_date = date('Y-m-d');
+        
         // check if reward was claimed today
         if (strcmp($user->last_check_in, $current_date) != 0 ){
             $this->giveUserPoints($user->user_id, 100);

@@ -11,9 +11,8 @@ class Booking extends Model
     protected $primaryKey = 'booking_id';
     protected $table = 'bookings';
     protected $fillable = [
-        'id',
         'user_id',
-        'IBSN',
+        'ISBN',
         'material_no',
         'status',
         'expire_at',

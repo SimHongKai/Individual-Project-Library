@@ -36,7 +36,7 @@ class RewardController extends Controller
         }
 
         // find user to deduct Points
-        $user = User::find(Auth::id());
+        $user = Auth::user();
         
         // check if points sufficient and reward still available
         if ($user->current_points >= $reward->points_required && $reward->available_qty > 0){

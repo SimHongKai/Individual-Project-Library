@@ -29,8 +29,7 @@ class BookingController extends Controller
                     ->orderBy('bookings.status')
                     ->orderBy('bookings.created_at', 'desc')
                     ->paginate(10);
-        // temporary measure
-        $this->cancelExpiredBookings();
+                    
         return view('admin.record.bookingRecords')->with(compact('bookings'));
     }
 
@@ -256,7 +255,7 @@ class BookingController extends Controller
                     return true;
                 break;
             case 3: // Regular user only borrow no restricted books
-                if ($access_level = 1)
+                if ($access_level == 1)
                     return true;
                 break;
             default:
