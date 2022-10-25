@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use DB;
 use Hash;
 
-class RewardTableSeeder extends Seeder
+class RewardHistoryTableSeeder extends Seeder
 {
     /**
      * Seed Book
@@ -15,12 +15,14 @@ class RewardTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('rewards')->insert([
+        DB::table('rewardHistory')->insert([
+            'reward_history_id' => 999999,
+            'user_id' => 1,
             'reward_id' => 999999,
             'name' => 'TestRewardName',
-            'description' => 'TestRewardDescription',
-            'points_required' => 1000,
-            'available_qty' => 1,
+            'description' => 'TestRewardDesc',
+            'points_required' => 0, 
+            'status' => 1,
         ]);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use DB;
 use Hash;
 
-class MaterialTableSeeder extends Seeder
+class BorrowHistoryTableSeeder extends Seeder
 {
     /**
      * Seed Book
@@ -15,11 +15,12 @@ class MaterialTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('materials')->insert([
+        DB::table('borrowhistory')->insert([
+            'user_id' => 999999,
             'material_no' => 999999,
             'ISBN' => '1234567891011',
-            'call_no' => 'TestCallNo',
-            'status' => 1,
+            'status'=> 1,
+            'created_by' => 1,
         ]);
     }
 }

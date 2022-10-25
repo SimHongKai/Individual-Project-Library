@@ -16,7 +16,7 @@ class BookTableSeeder extends Seeder
     public function run()
     {
         DB::table('books')->insert([
-            'ISBN' => 'TestISBN12345',
+            'ISBN' => '1234567891011',
             'title' => 'TestTitle',
             'description' => 'TestDesc',
             'author' => 'TestAuthor',
@@ -24,6 +24,8 @@ class BookTableSeeder extends Seeder
             'publication_date'=> date("Y-m-d"),
             'price'=> 50,
             'language'=> '(EN) English',
+            'total_qty' => 1,
+            'available_qty' => 1,
             'access_level'=> 1,
         ]);
     }

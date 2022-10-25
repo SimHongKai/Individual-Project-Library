@@ -51,7 +51,6 @@ function getMaterialDetails(material_no){
 
 // function to set Material information in BorrowBook Blade
 function setMaterialDetails(book){
-    var ESAPI = require('node-esapi');
     title.innerHTML = book.title;
     ISBN.innerHTML = book.ISBN;
     author.innerHTML = book.author;

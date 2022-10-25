@@ -11,8 +11,9 @@ use BookTableSeeder;
 
 class BookmarkTest extends TestCase
 {
+    //php artisan test --filter BookmarkTest
     use DatabaseTransactions;
-
+    
     /**
      * Test create bookmark
      * 
@@ -27,11 +28,11 @@ class BookmarkTest extends TestCase
         // route to create bookmark
         $response = $this->actingAs($user)
                     ->post(route('add_bookmark'), [
-                        'ISBN' => 'testISBN12345'
+                        'ISBN' => '1234567891011'
                     ]);
 
         $this->assertDatabaseHas('bookmarks', [
-            'ISBN' => 'testISBN12345',
+            'ISBN' => '1234567891011',
             'user_id' => $user->user_id,
         ]);
     }
@@ -49,7 +50,7 @@ class BookmarkTest extends TestCase
         // route to delete bookmark
         $response = $this->actingAs($user)
                     ->post(route('delete_bookmark'), [
-                        'ISBN' => 'testISBN12345'
+                        'ISBN' => '1234567891011'
                     ]);
 
         $this->assertTrue($response != null);

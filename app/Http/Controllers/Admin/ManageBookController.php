@@ -59,10 +59,10 @@ class ManageBookController extends Controller
             'ISBN'=>'required|min:13|max:13|unique:books,ISBN|regex:/[0-9]/',
             'title'=>'required|max:255',
             'description' => 'required',
-            'author' => 'required|max:255|regex:/[a-z]/|regex:/[A-Z]/',
+            'author' => 'required|max:255',
             'publication' => 'required|max:255',
             'publication_date'=>'required|date_format:Y-m-d|before_or_equal:today',
-            'price'=>'required|numeric|max:100',
+            'price'=>'required|numeric|min:0|max:100',
             'language'=>'required',
             'access_level'=>'required|numeric|min:1|max:3',
         ]);

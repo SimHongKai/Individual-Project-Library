@@ -85,18 +85,18 @@ class BookingTest extends TestCase
         ]);
 
         // route to Book Details Page
-        $response = $this->actingAs($user)->from(route('book_details', [ 'ISBN'=> 'TestISBN12345' ]))
-                    ->get(route('create_booking', [ 'ISBN'=> 'TestISBN12345' ]));
+        $response = $this->actingAs($user)->from(route('book_details', [ 'ISBN'=> '1234567891011' ]))
+                    ->get(route('create_booking', [ 'ISBN'=> '1234567891011' ]));
         
         $this->AssertDatabaseHas('bookings', [
             'user_id' => $user->user_id,
-            'ISBN' => 'TestISBN12345',
+            'ISBN' => '1234567891011',
             'status' => 1,
             'expire_at' => date('Y-m-d', strtotime("+7 days"))
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('book_details', [ 'ISBN'=> 'TestISBN12345' ]));
+        $response->assertRedirect(route('book_details', [ 'ISBN'=> '1234567891011' ]));
     }
 
     /**
